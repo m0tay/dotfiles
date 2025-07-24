@@ -1,0 +1,36 @@
+#!/bin/sh
+
+SHOW_NAME=false
+URL=""
+
+for arg in "$@"; do
+    case $arg in
+        -n|--name)
+            SHOW_NAME=true
+            ;;
+        http*)
+            URL=$arg
+            ;;
+        *)
+            echo "Uso: $0 [-n|--name] <URL do canal YouTube>"
+            exit 1
+            ;;
+    esac
+done
+
+if [ -z "$URL" ]; then
+    echo "Uso: $0 [-n|--name] <URL do canal YouTube>"
+    exit 1
+fi
+
+html=$(curl -s "$URL")
+
+# extrai o link RSS
+rss=$(echo "$html" | grep -o '<link rel="alternate" type="application/rss+xml" title="RSS" href="[^"]*">' | sed -E 's/.*href="([^"]*)".*/\1/')
+
+if $SHOW_NAME; then
+    name=$(echo "$html" | grep -o '<meta property="og:title" content="[^"]*"' | sed -E 's/.*content="([^"]*)"/\1/')
+    echo "$rss \"$name\""
+else
+    echo "$rss"
+fi

@@ -1,0 +1,40 @@
+{
+	"motd": {
+		"cloudBuildErrorAfter": 1594252800000,
+		"cloudBuildWarnAfter": 1590019200000,
+		"defaultNode10After": 1594252800000,
+		"minVersion": "3.0.5",
+		"node8DeploysDisabledAfter": 1613390400000,
+		"node8RuntimeDisabledAfter": 1615809600000,
+		"node8WarnAfter": 1600128000000,
+		"fetched": 1710977589493
+	},
+	"usage": true,
+	"analytics-uuid": "e83543b1-3379-4a55-ab0c-88e5a2bbd350",
+	"user": {
+		"iss": "accounts.google.com",
+		"azp": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"aud": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"sub": "108270215183797371611",
+		"email": "mail.roi.douglas@gmail.com",
+		"email_verified": true,
+		"at_hash": "t8uIrlF0RcIrgVFRTEtGXg",
+		"iat": 1710977603,
+		"exp": 1710981203
+	},
+	"tokens": {
+		"expires_at": 1710981201928,
+		"access_token": "ya29.a0Ad52N39qdu0oJIVdW0l3L7Hu02zvNzyJJXcX58p6W-gG9psU092ELfRN5TvXinp-gQtjpeaqkZAKXziY5XsMrAkGlBiWVf4xZO1WPg5Y938qZjzGg3y2cGH6GrUyiE-W93w_GvBBS6bAcmoBlxWQPc1Gh1pCz6bdOyAJz8kyeAaCgYKAS0SARASFQHGX2MiHscEKFsV6cVUno75W_mEng0177",
+		"expires_in": 3599,
+		"refresh_token": "1//03TRqCHVKh8ZjCgYIARAAGAMSNwF-L9IrSPSY_Z4UTKNE_oq6OP8Gcxs2QmESiwZYzLs2lnl1hX72iTgmtpP4USWvpyWyGJ0hBNs",
+		"scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/firebase openid https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/userinfo.email",
+		"token_type": "Bearer",
+		"id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjA5YmNmODAyOGUwNjUzN2Q0ZDNhZTRkODRmNWM1YmFiY2YyYzBmMGEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTYzNTg0MzM1ODY5LWZncmhnbWQ0N2JxbmVraWo1aThiNXByMDNobzg0OWU2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTYzNTg0MzM1ODY5LWZncmhnbWQ0N2JxbmVraWo1aThiNXByMDNobzg0OWU2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA4MjcwMjE1MTgzNzk3MzcxNjExIiwiZW1haWwiOiJtYWlsLnJvaS5kb3VnbGFzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoidDh1SXJsRjBSY0lyZ1ZGUlRFdEdYZyIsImlhdCI6MTcxMDk3NzYwMywiZXhwIjoxNzEwOTgxMjAzfQ.dLEflyi4i3JbQzijiWH81_ilsY60hNOgH_W1jxudKcdLEPT6Vsqi50rleoOIwFITSzHZ89kV6mgqFaJWI4QZllc8Png-qVIw6AdTiAUGOkfkeRkJUdhx7DaG_kQ_b8q00NT1ywoe_4QXS37liPtqeEviV7sFkR0EJ7KTcqdeEDN89rBHVFbEh3IgkPJAg711I-uLELVPnF9OnHf9l-jhzleJnvXQfBomybwMrsSv1H80Xcy6w-M2-36F9C_S91y8fsbf7jQQd3QLdmEuwxv7UPUDt9KnYbLVg6BCRaiKm05zPloPtoe9l1oNTPuEiA_-8l_t0ZX6W7YkVIQGGcA-4A"
+	},
+	"previews": {
+		"webframeworks": true
+	},
+	"activeProjects": {
+		"/Users/douglaslobo/Projects/trying-astro": "trying-astro"
+	}
+}

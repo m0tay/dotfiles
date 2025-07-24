@@ -1,0 +1,10 @@
+# Zathura configuration file
+# See man `man zathura`
+
+set selection-clipboard clipboard
+set synctex true
+set synctex-editor-command "nvr --remote-silent +%{line} %{input}"
+# set synctex true
+# set synctex-editor-command "nvim --headless -c \"VimtexInverseSearch %{line} '%{input}'\""
+set font "monospace normal 14"
+set adjust-open "best-fit"

@@ -1,0 +1,50 @@
+[
+    {
+        "context": "VimControl && !menu",
+        "bindings": {}
+    },
+    {
+        "context": "vim_mode == normal && !menu",
+        "bindings": {
+            "ctrl-u": [
+                "workspace::SendKeystrokes",
+                "1 0 k z z"
+            ],
+            "ctrl-d": [
+                "workspace::SendKeystrokes",
+                "1 0 j z z"
+            ],
+            "shift-k": "editor::Hover", // Learn about any symbol
+            "n": [
+                "workspace::SendKeystrokes",
+                "n z z z v"
+            ],
+            "N": [
+                "workspace::SendKeystrokes",
+                "N z z z v"
+            ],
+        }
+    },
+    {
+        "context": "vim_mode == insert",
+        "bindings": {
+            "j k": "vim::NormalBefore", // Make jk escape to normal mode in insert.
+            "ctrl-h": "vim::Left",
+            "ctrl-j": "vim::Down",
+            "ctrl-k": "vim::Up",
+            "ctrl-l": "vim::Right"
+        }
+    },
+    {
+        "context": "EmptyPane || SharedScreen",
+        "bindings": {
+            // Add global context-specific bindings here if needed.
+        }
+    },
+    {
+        "context": "Workspace",
+        "bindings": {
+            "ctrl-`": "workspace::ToggleBottomDock"
+        }
+    }
+]
