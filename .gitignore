@@ -38,3 +38,7 @@ user-dirs.locale
 lazy-lock.json
 wireguard/
 wireshark/
+psysh/
+lazyvim/
+.DS_Store
+StardewValley/
