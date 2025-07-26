@@ -1,1 +1,26 @@
-/Users/douglaslobo/Library/Application Support/com.mitchellh.ghostty/config
+term = xterm-ghostty
+
+# theme = CyberpunkScarletProtocol
+theme = rose-pine
+# custom-shader = ~/.config/ghostty/ghostty-shaders/retro-terminal.glsl
+
+shell-integration = zsh
+
+clipboard-read = allow
+clipboard-write = allow
+
+window-height = 32
+window-width = 96
+
+font-size = 20
+font-thicken = true
+
+cursor-color =  #ff0000
+adjust-cursor-thickness = 4
+
+
+window-decoration = true
+background-opacity = 0.75
+background-blur = true
+
+# toggle_background_opacity = super+u # not yet implemented
