@@ -1,6 +1,0 @@
-#!/bin/sh
-
-selected_ip=$(ip neigh | awk '{ print $1 }' | fzf)
-if [ -n "$selected_ip" ]; then
-  gping -s --clear --ping-args='-c 64' $selected_ip
-fi
