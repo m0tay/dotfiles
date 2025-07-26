@@ -1,3 +1,0 @@
-
-2025/01/14 (11:36:28) | ===> btop++ v.1.4.0
-2025/01/14 (11:36:28) | ERROR: Exception during Config::unlock() : unordered_map::at: key not found
