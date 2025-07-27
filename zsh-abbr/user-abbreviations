@@ -1,3 +1,7 @@
 abbr "ga"="git add"
+abbr "gl"="git log"
 abbr "gm"="git commit -m"
+abbr "gma"="git commit --amend"
+abbr "gP"="git pull"
+abbr "gp"="git push"
 abbr "gst"="git status"
