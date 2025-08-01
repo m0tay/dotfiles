@@ -1,28 +1,23 @@
 {
-    "icon_theme": "Catppuccin Latte",
     "agent": {
+        "single_file_review": false,
         "default_model": {
             "provider": "zed.dev",
-            "model": "claude-3-7-sonnet-latest"
-        },
-        "version": "2"
+            "model": "claude-3-7-sonnet"
+        }
     },
-    "features": {
-        "edit_prediction_provider": "zed"
+    "languages": {
+        "Plain Text": {
+            "show_edit_predictions": false
+        }
     },
+    "theme": "Rosé Pine",
     "vim_mode": true,
-    "zoom_level": 1.2,
-    "theme": {
-        "mode": "system",
-        "light": "Neovim default accented light",
-        "dark": "Rosé Pine"
-    },
+    "disable_ai": true,
     "tab_size": 4,
-    "insert_spaces": true, // no more tabs bitches
+    "insert_spaces": true,
     "soft_wrap": "none",
-    "preferred_line_length": 120,
-    "cursor_blink": true,
-    "base_keymap": "VSCode",
+    "preferred_line_length": 80,
     "relative_line_numbers": true,
     "auto_indent_on_paste": true,
     "scrollbar": {
@@ -39,12 +34,22 @@
             "custom": 1.4
         }
     },
+    "toolbar": {
+        "breadcrumbs": false,
+        "quick_actions": false,
+        "selections_menu": false,
+        "agent_review": false,
+        "code_actions": false
+    },
+    "edit_predictions": {
+        "disabled_globs": [
+            "*"
+        ]
+    },
     "diagnostics": {
-        // Whether to show warnings or not by default.
         "include_warnings": false
     },
     "collaboration_panel": {
-        // Whether to show the collaboration panel button in the status bar.
         "button": false
     },
     "chat_panel": {
@@ -63,7 +68,8 @@
         }
     },
     // Buffer settings
-    "buffer_font_size": 16,
+    "buffer_font_size": 18,
+    "ui_font_size": 18,
     "buffer_font_family": "0xProto Nerd Font Mono",
     "buffer_font_fallbacks": [
         "Zed Plex Mono"
@@ -86,211 +92,20 @@
     "autosave": "on_focus_change",
     // Autocomplete Settings
     "show_completions_on_input": true,
-    "show_edit_predictions": true,
+    "show_edit_predictions": false,
     // Inlay Hints
     "inlay_hints": {
         "enabled": true,
         "show_type_hints": true,
         "show_parameter_hints": true,
-        "show_other_hints": true
+        "show_other_hints": true,
+        "show_background": false,
+        "edit_debounce_ms": 700,
+        "scroll_debounce_ms": 50,
+        "toggle_on_modifiers_press": null
     },
     // Language-specific Configurations
     "hover_popover_enabled": true,
     "enable_language_server": true,
-    "languages": {
-        "Python": {
-            "language_servers": [
-                "pyright",
-                "ruff"
-            ],
-            "format_on_save": "on",
-            "tab_size": 4 // Ensures Python uses 4 spaces
-        },
-        "JavaScript": {
-            "code_actions_on_format": {
-                "source.fixAll.eslint": true,
-            }
-        },
-        "TypeScript": {
-            "language_servers": [
-                "typescript-language-server",
-                "!vtsls",
-                "..."
-            ]
-        }
-    },
-    "lsp": {
-        "jdtls": {
-            "initialization_options": {
-                "bundles": [],
-                "workspaceFolders": [
-                    "file:///Users/douglaslobo/Projects"
-                ],
-                "settings": {
-                    "java": {
-                        "home": "/opt/homebrew/opt/openjdk/bin",
-                        "errors": {
-                            "incompleteClasspath": {
-                                "severity": "warning"
-                            }
-                        },
-                        "configuration": {
-                            "updateBuildConfiguration": "interactive",
-                            "maven": {
-                                "userSettings": null
-                            }
-                        },
-                        "trace": {
-                            "server": "verbose"
-                        },
-                        "import": {
-                            "gradle": {
-                                "enabled": true
-                            },
-                            "maven": {
-                                "enabled": true
-                            },
-                            "exclusions": [
-                                "**/node_modules/**",
-                                "**/.metadata/**",
-                                "**/archetype-resources/**",
-                                "**/META-INF/maven/**",
-                                "/**/test/**"
-                            ]
-                        },
-                        "referencesCodeLens": {
-                            "enabled": false
-                        },
-                        "signatureHelp": {
-                            "enabled": false
-                        },
-                        "implementationsCodeLens": {
-                            "enabled": false
-                        },
-                        "format": {
-                            "enabled": true
-                        },
-                        "saveActions": {
-                            "organizeImports": false
-                        },
-                        "contentProvider": {
-                            "preferred": null
-                        },
-                        "autobuild": {
-                            "enabled": false
-                        },
-                        "completion": {
-                            "favoriteStaticMembers": [
-                                "org.junit.Assert.*",
-                                "org.junit.Assume.*",
-                                "org.junit.jupiter.api.Assertions.*",
-                                "org.junit.jupiter.api.Assumptions.*",
-                                "org.junit.jupiter.api.DynamicContainer.*",
-                                "org.junit.jupiter.api.DynamicTest.*"
-                            ],
-                            "importOrder": [
-                                "java",
-                                "javax",
-                                "com",
-                                "org"
-                            ]
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "pyright": {
-        "settings": {
-            "python.analysis.diagnosticMode": "workspace",
-            "python.analysis.typeCheckingMode": "strict",
-            "python.analysis.ignore": [
-                "reportAttributeAccessIssue",
-                "reportArgumentType",
-                "reportAssignmentType"
-            ],
-            "python.analysis.logLevel": "Error",
-            "python.pythonPath": ".venv/bin/python"
-        }
-    },
-    "eslint": {
-        "settings": {
-            "codeActionOnSave": {
-                "rules": [
-                    "import/order"
-                ]
-            }
-        },
-        "vtsls": {
-            "settings": {
-                // For JavaScript:
-                "javascript": {
-                    "inlayHints": {
-                        "parameterNames": {
-                            "enabled": "all",
-                            "suppressWhenArgumentMatchesName": false
-                        },
-                        "parameterTypes": {
-                            "enabled": true
-                        },
-                        "variableTypes": {
-                            "enabled": true,
-                            "suppressWhenTypeMatchesName": true
-                        },
-                        "propertyDeclarationTypes": {
-                            "enabled": true
-                        },
-                        "functionLikeReturnTypes": {
-                            "enabled": true
-                        },
-                        "enumMemberValues": {
-                            "enabled": true
-                        }
-                    }
-                },
-                // For TypeScript:
-                "typescript": {
-                    "inlayHints": {
-                        "parameterNames": {
-                            "enabled": "all",
-                            "suppressWhenArgumentMatchesName": false
-                        },
-                        "parameterTypes": {
-                            "enabled": true
-                        },
-                        "variableTypes": {
-                            "enabled": true,
-                            "suppressWhenTypeMatchesName": true
-                        },
-                        "propertyDeclarationTypes": {
-                            "enabled": true
-                        },
-                        "functionLikeReturnTypes": {
-                            "enabled": true
-                        },
-                        "enumMemberValues": {
-                            "enabled": true
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "language_overrides": {
-        "Python": {
-            "format_on_save": {
-                "external": {
-                    "command": "ruff",
-                    "arguments": [
-                        "check",
-                        "--exit-zero",
-                        "--fix",
-                        "--stdin-filename",
-                        "{buffer_path}",
-                        "-"
-                    ]
-                }
-            }
-        }
-    }
+    "use_smartcase_search": true
 }

@@ -72,3 +72,4 @@ latexmk/
 .DS_Store
 zed/prompts/*
 zed/settings_backup.json
+zed/config_bak
