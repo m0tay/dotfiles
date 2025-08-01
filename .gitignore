@@ -70,3 +70,5 @@ iterm2/
 helix/
 latexmk/
 .DS_Store
+zed/prompts/*
+zed/settings_backup.json
