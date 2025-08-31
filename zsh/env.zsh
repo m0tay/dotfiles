@@ -13,6 +13,7 @@ export LC_ALL="en_US.UTF-8"
 
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/3.4.0/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+# export PATH="$HOME/.local/share/mise/installs/ubi-adwinying-php/8.4.10/php:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@14/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
