@@ -1,0 +1,16 @@
+# binding o to open qutebrowser
+bind o exec open -a qutebrowser "%l"
+
+# binding e to mark all entries as read
+bind e mark-read-all
+
+# binding E to mark all entries as unread
+bind E mark-unread-all
+
+# This will launch mpv in the background.
+bind m exec mpv --no-terminal --ytdl-format="bestvideo[ext=mp4][height<=1440]+bestaudio[ext=m4a]/best[ext=mp4][height<=1440]" --cache=yes --cache-secs=60 --demuxer-max-bytes=50000000 --demuxer-max-back-bytes=20000000 "%l" &
+
+
+
+# This will launch mpv interactively.
+# bind M exec mpv "%l"
