@@ -73,3 +73,5 @@ latexmk/
 zed/prompts/*
 zed/settings_backup.json
 zed/config_bak
+kanata/
+karabiner/
