@@ -9,7 +9,7 @@ return {
             ensure_installed = {
                 -- LSP servers (matching your vim.lsp.enable() config)
                 "lua-language-server",         -- Lua LSP
-                "solagraph",
+                "solargraph",
                 "rubocop",
                 "black",
                 "isort",
