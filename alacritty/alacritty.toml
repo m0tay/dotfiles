@@ -15,13 +15,14 @@ style = "Regular"
 
 [window]
 # opacity = 0.9
-decorations = "none"
+decorations = "Full"
 dynamic_padding = true
 option_as_alt = "Both"
 
-[window.dimensions]
-columns = 100
-lines = 30
+# [window.dimensions]
+# columns = 100
+# lines = 30
+
 
 [window.class]
 instance = "Alacritty"
@@ -41,33 +42,33 @@ working_directory = "None"
 history = 10000
 multiplier = 3
 
-[colors]
-draw_bold_text_with_bright_colors = true
-
-[colors.primary]
-background = "0x2E3440"
-foreground = "0xD8DEE9"
-
-[colors.normal]
-black = "0x3B4252"
-red = "0xBF616A"
-green = "0xA3BE8C"
-yellow = "0xEBCB8B"
-blue = "0x81A1C1"
-magenta = "0xB48EAD"
-cyan = "0x88C0D0"
-white = "0xE5E9F0"
-
-[colors.bright]
-black = "0x4C566A"
-red = "0xBF616A"
-green = "0xA3BE8C"
-yellow = "0xEBCB8B"
-blue = "0x81A1C1"
-magenta = "0xB48EAD"
-cyan = "0x8FBCBB"
-white = "0xECEFF4"
-
+# [colors]
+# draw_bold_text_with_bright_colors = true
+#
+# [colors.primary]
+# background = "0x2E3440"
+# foreground = "0xD8DEE9"
+#
+# [colors.normal]
+# black = "0x3B4252"
+# red = "0xBF616A"
+# green = "0xA3BE8C"
+# yellow = "0xEBCB8B"
+# blue = "0x81A1C1"
+# magenta = "0xB48EAD"
+# cyan = "0x88C0D0"
+# white = "0xE5E9F0"
+#
+# [colors.bright]
+# black = "0x4C566A"
+# red = "0xBF616A"
+# green = "0xA3BE8C"
+# yellow = "0xEBCB8B"
+# blue = "0x81A1C1"
+# magenta = "0xB48EAD"
+# cyan = "0x8FBCBB"
+# white = "0xECEFF4"
+#
 
 [selection]
 semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
