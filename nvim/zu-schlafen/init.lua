@@ -3,7 +3,6 @@ vim.cmd([[set noswapfile]])
 vim.opt.winborder = "rounded"
 vim.opt.tabstop = 2
 vim.opt.wrap = false
--- vim.opt.cursorcolumn = false
 vim.opt.ignorecase = true
 vim.opt.shiftwidth = 2
 vim.opt.smartindent = true
@@ -26,9 +25,10 @@ vim.pack.add({
 -- ts.disable("cpp")
 require "mini.pick".setup()
 require "oil".setup({
-view_options = {
-	show_hidden = true}}
- )
+	view_options = {
+		show_hidden = true }
+}
+)
 require "mason".setup()
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -47,17 +47,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.lsp.enable(
 	{
 		"lua_ls",
-		"svelte",
-		"tinymist",
 		"emmetls",
-		"rust_analyzer",
+		"ts_ls",
 		"clangd",
 		"ruff",
-		"glsl_analyzer",
-		"hlint",
-
+		"texlab",
+		"bashls",
 	}
 )
+-- vim.diagnostic.config({ virtual_text = true })
+
+
 vim.cmd [[set completeopt+=noselect]]
 
 vim.cmd("colorscheme vague")
@@ -68,8 +68,10 @@ vim.g.mapleader = " "
 map('n', '<leader>w', '<Cmd>write<CR>')
 map('n', '<leader>q', '<Cmd>quit<CR>')
 map('n', '<C-f>', '<Cmd>Open .<CR>')
+map('n', '<leader>M', ':update<CR> :make<CR>')
 
 map({ 'n', 'v', 'x' }, '<leader>m', ':move ')
+map("n", "grf", ":lua vim.lsp.buf.format()<CR>")
 
 -- I use norm and sed so much this makes sense
 map({ 'n', 'v' }, '<leader>n', ':norm ')
@@ -84,6 +86,7 @@ map('n', '<leader>f', "<Cmd>Pick files<CR>")
 map('n', '<leader>r', "<Cmd>Pick buffers<CR>")
 map('n', '<leader>h', "<Cmd>Pick help<CR>")
 map('n', '<leader>e', "<Cmd>Oil<CR>")
+map('n', '<leader>g', ':Pick grep_live<CR>')
 
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
@@ -99,7 +102,7 @@ local api = vim.api
 api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
 
 api.nvim_create_autocmd("TextYankPost", {
-		callback = function()
+	callback = function()
 		vim.highlight.on_yank()
 	end,
 })
