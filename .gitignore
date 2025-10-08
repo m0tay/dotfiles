@@ -75,3 +75,7 @@ zed/settings_backup.json
 zed/config_bak
 kanata/
 karabiner/
+zsh/.zcompdump
+zsh/.zcompcache/
+zsh/.zshsessions/
+
