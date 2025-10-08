@@ -2,6 +2,7 @@ vim.cmd([[set mouse=]])
 vim.cmd([[set noswapfile]])
 vim.opt.winborder = "rounded"
 vim.opt.tabstop = 2
+vim.opt.cursorline = true
 vim.opt.wrap = false
 vim.opt.ignorecase = true
 vim.opt.shiftwidth = 2
@@ -10,7 +11,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.opt.undofile = true
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "yes:2"
 
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
@@ -65,12 +66,12 @@ vim.cmd(":hi statusline guibg=NONE")
 
 local map = vim.keymap.set
 vim.g.mapleader = " "
-map('n', '<leader>w', '<Cmd>write<CR>')
-map('n', '<leader>q', '<Cmd>quit<CR>')
-map('n', '<C-f>', '<Cmd>Open .<CR>')
-map('n', '<leader>M', ':update<CR> :make<CR>')
+map('n', '<leader>w', ':write<CR>')
+map('n', '<leader>q', ':quit<CR>')
+map('n', '<leader>Q', ':qa<CR>')
+map('n', '<C-f>', ':Open .<CR>')
+map('n', '<leader>m', ':update<CR> :make<CR>')
 
-map({ 'n', 'v', 'x' }, '<leader>m', ':move ')
 map("n", "grf", ":lua vim.lsp.buf.format()<CR>")
 
 -- I use norm and sed so much this makes sense
@@ -82,10 +83,10 @@ map({ 'n', 'v' }, '<leader>d', '"+d')
 
 map({ 'n', 'v' }, '<leader>o', ':update<CR> :source<CR>')
 
-map('n', '<leader>f', "<Cmd>Pick files<CR>")
-map('n', '<leader>r', "<Cmd>Pick buffers<CR>")
-map('n', '<leader>h', "<Cmd>Pick help<CR>")
-map('n', '<leader>e', "<Cmd>Oil<CR>")
+map('n', '<leader>f', ":Pick files<CR>")
+map('n', '<leader>r', ":Pick buffers<CR>")
+map('n', '<leader>h', ":Pick help<CR>")
+map('n', '<leader>e', ":Oil<CR>")
 map('n', '<leader>g', ':Pick grep_live<CR>')
 
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
@@ -106,3 +107,5 @@ api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+
