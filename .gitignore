@@ -79,3 +79,7 @@ zsh/.zcompdump
 zsh/.zcompcache/
 zsh/.zshsessions/
 
+.android/
+swiftpm
+tool_state
+

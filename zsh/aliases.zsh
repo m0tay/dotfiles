@@ -7,7 +7,7 @@ alias rm="rm -I"
 alias cp="cp -i"       
 alias mv="mv -i"       
 
-alias ls='ls -G'         
+alias ls='ls -C -t -U -A -p -G'         
 alias ll='ls -lahG'      
 
 alias finder='open .'
