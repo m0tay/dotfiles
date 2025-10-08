@@ -77,7 +77,7 @@ kanata/
 karabiner/
 zsh/.zcompdump
 zsh/.zcompcache/
-zsh/.zshsessions/
+zsh/.zsh_sessions/
 
 .android/
 swiftpm
