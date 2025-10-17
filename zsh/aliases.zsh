@@ -20,6 +20,25 @@ alias mkdir='mkdir -p'
 alias cltx='find . -type f | grep -v "\.tex" | grep -v "\.pdf" | xargs rm' # clean tex, log, aux and other files to generate pdf from LaTeX
 alias play='fzf | xargs vlc'
 
+retro() {
+    local config="$HOME/.config/ghostty/config"
+    local shader_line="custom-shader"
+
+    if [[ ! -f $config ]]; then
+        echo 'Ghostty config not found at $config'
+        return 1
+    fi
+
+		if [[ -n $(grep -E "^# ${shader_line}" $config) ]]; then
+			sed -i "" -e "s/^# ${shader_line}/${shader_line}/" $config
+		elif [[ -n $(grep -E "^${shader_line}" $config) ]]; then
+			sed -i "" -e "s/^${shader_line}/# ${shader_line}/" $config	
+		else
+			echo 'ahh'
+			return 1
+		fi
+}
+
 lfcd () {
     tmp="$(mktemp)"
     lf -last-dir-path="$tmp" "$@"
