@@ -1,7 +1,6 @@
 term = xterm-ghostty
 
 # theme = CyberpunkScarletProtocol
-theme = rose-pine
 # custom-shader = ~/.config/ghostty/ghostty-shaders/retro-terminal.glsl
 
 shell-integration = zsh
@@ -9,8 +8,9 @@ shell-integration = zsh
 clipboard-read = allow
 clipboard-write = allow
 
-window-height = 32
-window-width = 96
+mouse-hide-while-typing = true
+minimum-contrast = 1.05
+cursor-invert-fg-bg = true
 
 font-size = 20
 font-thicken = true
