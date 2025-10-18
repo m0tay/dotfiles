@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+newsraft -e reload-all
