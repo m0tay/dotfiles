@@ -7,7 +7,7 @@ alias rm="rm -I"
 alias cp="cp -i"       
 alias mv="mv -i"       
 
-alias ls='ls -C -t -U -A -p -G'         
+alias ls='ls -CtUApG'         
 alias ll='ls -lahG'      
 
 alias finder='open .'
@@ -18,21 +18,36 @@ alias sed='sed -E'
 alias grep='grep --color'
 alias mkdir='mkdir -p'
 alias cltx='find . -type f | grep -v "\.tex" | grep -v "\.pdf" | xargs rm' # clean tex, log, aux and other files to generate pdf from LaTeX
-alias play='fzf | xargs vlc'
+# alias play='fzf | xargs vlc'
+alias devd='open https://devdocs.io'
 
-retro() {
+play () {
+	set +m
+	mpv --no-terminal \
+		--ytdl-format="bestvideo[ext=mp4][height<=1440]+bestaudio[ext=m4a]/best[ext=mp4][height<=1440]" \
+		--cache=yes \
+		--cache-secs=60 \
+		--demuxer-max-bytes=50000000 \
+		--demuxer-max-back-bytes=20000000 \
+		$1 > /dev/null & \
+		disown
+	set -m
+}
+
+retro () {
     local config="$HOME/.config/ghostty/config"
-    local shader_line="custom-shader"
+    local from="# custom-shader"
+		local to="custom-shader"
 
     if [[ ! -f $config ]]; then
         echo 'Ghostty config not found at $config'
         return 1
     fi
 
-		if [[ -n $(grep -E "^# ${shader_line}" $config) ]]; then
-			sed -i "" -e "s/^# ${shader_line}/${shader_line}/" $config
-		elif [[ -n $(grep -E "^${shader_line}" $config) ]]; then
-			sed -i "" -e "s/^${shader_line}/# ${shader_line}/" $config	
+		if [[ -n $(grep -E "^${from}" $config) ]]; then
+			sed -i "" -e "s/^${from}/${to}/" $config
+		elif [[ -n $(grep -E "^${to}" $config) ]]; then
+			sed -i "" -e "s/^${to}/${from}/" $config	
 		else
 			echo 'ahh'
 			return 1
