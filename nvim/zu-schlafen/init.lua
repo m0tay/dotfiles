@@ -19,6 +19,7 @@ vim.pack.add({
 	{ src = "https://github.com/echasnovski/mini.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
+	{ src = "https://github.com/echaya/neowiki.nvim" },
 })
 
 -- local ts = require("treesitter")
@@ -31,6 +32,13 @@ require "oil".setup({
 }
 )
 require "mason".setup()
+require "neowiki".setup({
+	wiki_dirs = {
+		{ name = "wiki",  path = "~/Documents/wiki" },
+		{ name = "m0tay", path = "~/Documents/wiki/m0tay" },
+		{ name = "ua",    path = "~/Documents/wiki/ua" },
+	},
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('my.lsp', {}),
@@ -89,14 +97,16 @@ map('n', '<leader>h', ":Pick help<CR>")
 map('n', '<leader>e', ":Oil<CR>")
 map('n', '<leader>g', ':Pick grep_live<CR>')
 
-vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
+map("n", "n", "nzzzv", { desc = "next search result (centered)" })
+map("n", "n", "nzzzv", { desc = "previous search result (centered)" })
+map("n", "<c-d>", "<c-d>zz", { desc = "half page down (centered)" })
+map("n", "<c-u>", "<c-u>zz", { desc = "half page up (centered)" })
 
-vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
-vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
+map("v", "<", "<gv", { desc = "Indent left and reselect" })
+map("v", ">", ">gv", { desc = "Indent right and reselect" })
 
+map('n', '<leader>ww', "<cmd>lua require('neowiki').open_wiki()<cr>")
+-- map('n', '<leader>wp', ":lua require('markdown-preview').
 
 local api = vim.api
 
@@ -107,5 +117,3 @@ api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
-
-
