@@ -11,6 +11,8 @@ export MANPAGER="less -R --use-color"
 export LESS="R --use-color"
 export LC_ALL="en_US.UTF-8"
 
+export CTESP="$HOME/Documents/CTeSP"
+
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/3.4.0/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 # export PATH="$HOME/.local/share/mise/installs/ubi-adwinying-php/8.4.10/php:$PATH"
