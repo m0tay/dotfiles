@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+use v5.34;
+use strict;
+use warnings;
+
+my $config = "$ENV{HOME}/.config/ghostty/config";
+my $setting = "custom-shader";
+
+# `-e <target>` asserts whether the file exists or not
+die "Ghostty config not found at $config" unless -e $config;
+
+# `-M <target>` retrieves in days how long ago it was modified
+warn "So now you are feeling like a hacker?" if -M $config > 28;
+
+# `<` read mode, `$!` returns the system error
+open my $f_config, '<', $config or die "Couldn't open $config: $!";
+# `<file>` reads one line each time through the loop
+my @lines = <$f_config>;
+close $f_config;
+
+
+if (grep /^# $setting/, @lines) {
+  s/^# $setting/$setting/ for @lines;
+} elsif (grep /^$setting/, @lines) {
+	s/^$setting/# $setting/ for @lines;
+} else {
+	warn "ahh"
+}
+
+# `>` write mode
+open my $out, '>', $config or die "Could not write to $config: $!";
+print $out @lines;
+close $out;

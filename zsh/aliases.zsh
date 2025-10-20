@@ -34,25 +34,27 @@ play () {
 	set -m
 }
 
-retro () {
-    local config="$HOME/.config/ghostty/config"
-    local from="# custom-shader"
-		local to="custom-shader"
+alias retro='~/.config/scripts/retro'
 
-    if [[ ! -f $config ]]; then
-        echo 'Ghostty config not found at $config'
-        return 1
-    fi
-
-		if [[ -n $(grep -E "^${from}" $config) ]]; then
-			sed -i "" -e "s/^${from}/${to}/" $config
-		elif [[ -n $(grep -E "^${to}" $config) ]]; then
-			sed -i "" -e "s/^${to}/${from}/" $config	
-		else
-			echo 'ahh'
-			return 1
-		fi
-}
+# retro () {
+#     local config="$HOME/.config/ghostty/config"
+#     local from="# custom-shader"
+# 		local to="custom-shader"
+#
+#     if [[ ! -f $config ]]; then
+#         echo 'Ghostty config not found at $config'
+#         return 1
+#     fi
+#
+# 		if [[ -n $(grep -E "^${from}" $config) ]]; then
+# 			sed -i "" -e "s/^${from}/${to}/" $config
+# 		elif [[ -n $(grep -E "^${to}" $config) ]]; then
+# 			sed -i "" -e "s/^${to}/${from}/" $config	
+# 		else
+# 			echo 'ahh'
+# 			return 1
+# 		fi
+# }
 
 lfcd () {
     tmp="$(mktemp)"
