@@ -11,6 +11,7 @@ clipboard-write = allow
 mouse-hide-while-typing = true
 minimum-contrast = 1.05
 cursor-invert-fg-bg = true
+macos-option-as-alt = true
 
 font-size = 20
 font-thicken = true
