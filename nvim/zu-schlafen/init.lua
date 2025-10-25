@@ -6,6 +6,8 @@ vim.opt.cursorline = true
 vim.opt.wrap = false
 vim.opt.ignorecase = true
 vim.opt.shiftwidth = 2
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 19
 vim.opt.smartindent = true
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -41,6 +43,7 @@ require "neowiki".setup({
 	},
 })
 
+
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('my.lsp', {}),
 	callback = function(args)
@@ -67,8 +70,7 @@ vim.lsp.enable(
 )
 -- vim.diagnostic.config({ virtual_text = true })
 
-
-vim.cmd [[set completeopt+=noselect]]
+vim.cmd [[set completeopt+=menuone,noinsert,noselect,preview,fuzzy,popup]]
 
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
@@ -99,7 +101,7 @@ map('n', '<leader>e', ":Oil<CR>")
 map('n', '<leader>g', ':Pick grep_live<CR>')
 
 map("n", "n", "nzzzv", { desc = "next search result (centered)" })
-map("n", "n", "nzzzv", { desc = "previous search result (centered)" })
+map("n", "N", "Nzzzv", { desc = "previous search result (centered)" })
 map("n", "<c-d>", "<c-d>zz", { desc = "half page down (centered)" })
 map("n", "<c-u>", "<c-u>zz", { desc = "half page up (centered)" })
 
@@ -107,7 +109,6 @@ map("v", "<", "<gv", { desc = "Indent left and reselect" })
 map("v", ">", ">gv", { desc = "Indent right and reselect" })
 
 map('n', '<leader>ww', "<cmd>lua require('neowiki').open_wiki()<cr>")
--- map('n', '<leader>wp', ":lua require('markdown-preview').
 
 local api = vim.api
 
