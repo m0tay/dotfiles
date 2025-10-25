@@ -1,5 +1,5 @@
 # binding o to open qutebrowser
-bind o exec open -a qutebrowser "%l"
+bind o exec open "%l"
 
 # binding e to mark all entries as read
 bind e mark-read-all
