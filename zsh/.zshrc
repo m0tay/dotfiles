@@ -5,6 +5,6 @@ source $ZDOTDIR/completions.zsh
 source $ZDOTDIR/prompt.zsh
 source $ZDOTDIR/aliases.zsh
 source $ZDOTDIR/plugins.zsh
-source $ZDOTDIR/tmux.zsh
+# source $ZDOTDIR/tmux.zsh
 # eval "$(~/.local/bin/mise/activate zsh)"
 eval "$(mise activate zsh)"

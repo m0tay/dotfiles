@@ -65,3 +65,7 @@ lfcd () {
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
 }
+
+mkcd () {
+	mkdir -p "$1" && cd "$1"
+}
