@@ -1,3 +1,22 @@
-vim.lsp.enable 'texlab'
+local snippets = {
+	be = [[\begin{${1|enumerate,tabular,minted|}}
+	${2:-- body}
+\end{$1}]],
+	it = [[\textit{$1}]],
+	bo = [[\textbf{$1}]],
+	nd = [[\documentclass{${1|article,book,report|}}
 
--- vim.bo.commentstring = '% %s'
+\begin{document}
+	${2:% komm süsser Tod}
+\end{document}]],
+ 	se = [[\section*{$1}
+${2:% paragraph goes her}]],
+}
+
+for key, body in pairs(snippets) do
+	vim.keymap.set('i', ';' .. key, function()
+		vim.snippet.expand(body)
+	end, { buffer = true })
+end
+
+vim.lsp.enable 'texlab'
