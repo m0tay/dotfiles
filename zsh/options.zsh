@@ -11,3 +11,6 @@ bindkey -e  # emacs keybindings
 unset ZLE_KEYMAP_SELECT
 zle -A .self-insert zle-keymap-select 2>/dev/null
 
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line

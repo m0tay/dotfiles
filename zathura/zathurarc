@@ -6,5 +6,11 @@ set synctex true
 set synctex-editor-command "nvr --remote-silent +%{line} %{input}"
 # set synctex true
 # set synctex-editor-command "nvim --headless -c \"VimtexInverseSearch %{line} '%{input}'\""
-set font "monospace normal 14"
+set font "monospace normal 20"
 set adjust-open "best-fit"
+
+map r reload
+map R rotate
+map d half-down
+map u half-up
+map D toggle_page_mode

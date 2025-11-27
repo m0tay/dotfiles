@@ -68,9 +68,9 @@ local root_markers1 = {
   'build.gradle',
   'build.gradle.kts',
   -- Single-module projects
-  'build.xml', -- Ant
-  'pom.xml', -- Maven
-  'settings.gradle', -- Gradle
+  'build.xml',           -- Ant
+  'pom.xml',             -- Maven
+  'settings.gradle',     -- Gradle
   'settings.gradle.kts', -- Gradle
 }
 local root_markers2 = {
@@ -89,10 +89,11 @@ return {
   },
   filetypes = { 'java' },
   root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers1, root_markers2 }
-    or vim.list_extend(root_markers1, root_markers2),
+      or vim.list_extend(root_markers1, root_markers2),
   init_options = {
     workspace = get_jdtls_workspace_dir(),
     jvm_args = {},
+    ---@diagnostic disable-next-line: assign-type-mismatch
     os_config = nil,
   },
 }

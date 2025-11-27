@@ -5,8 +5,8 @@ autoload -Uz compinit
 fpath+=("$ZDOTDIR/plugins/zsh-completions")
 
 if command -v brew &>/dev/null; then
-  HOMEBREW_PREFIX="$(brew --prefix)"
   fpath+=("$HOMEBREW_PREFIX/share/zsh-completions")
+  fpath+=("$HOMEBREW_PREFIX/share/zsh-abbr")
 fi
 
 _compdump="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/zcompdump"

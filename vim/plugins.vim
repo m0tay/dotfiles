@@ -1,21 +1,24 @@
-let s:plugin_dir = expand('~/vim/plugged')
+vim9script
 
-function! s:ensure(repo)
-    let name = split(a:repo, '/')[-1]
-    let path = s:plugin_dir . '/' . name
+var plugin_dir = expand('~/.config/vim/plugged')
 
-    if !isdirectory(path)
-        if !isdirectory(s:plugin_dir)
-            call mkdir(s:plugin_dir, 'p')
-        endif
-        execute '!git clone --depth=1 https://github.com/' . a:repo . ' ' . shellescape(path)
+def Ensure(repo: string)
+  var name = split(repo, '/')[len(split(repo, '/')) - 1]
+  var path = plugin_dir .. '/' .. name
+
+  if !isdirectory(path)
+    if !isdirectory(plugin_dir)
+      mkdir(plugin_dir, 'p')
     endif
+    system('git clone --depth=1 https://github.com/' .. repo .. ' ' .. shellescape(path))
+  endif
 
-    execute 'set runtimepath+=' . fnameescape(path)
-endfunction
-    
-call s:ensure('rose-pine/vim')
-call s:ensure('junegunn/fzf')
-call s:ensure('junegunn/fzf.vim')
-call s:ensure('itchyny/lightline.vim')
-call s:ensure('yegappan/lsp')
+  execute('set runtimepath+=' .. fnameescape(path))
+enddef
+
+Ensure('rose-pine/vim')
+Ensure('junegunn/fzf')
+Ensure('junegunn/fzf.vim')
+Ensure('itchyny/lightline.vim')
+Ensure('yegappan/lsp')
+

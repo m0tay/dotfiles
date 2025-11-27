@@ -13,7 +13,7 @@ minimum-contrast = 1.05
 cursor-invert-fg-bg = true
 macos-option-as-alt = true
 
-font-size = 20
+font-size = 40
 font-thicken = true
 
 cursor-color =  #ff0000
@@ -21,7 +21,8 @@ adjust-cursor-thickness = 4
 
 
 window-decoration = true
-background-opacity = 0.75
-background-blur = true
+# background-opacity = 0.75
+# background-blur = true
 
 # toggle_background_opacity = super+u # not yet implemented
+

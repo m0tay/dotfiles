@@ -3,7 +3,7 @@ start-at-login = true
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
-accordion-padding = 10
+accordion-padding = 5
 
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
@@ -21,7 +21,13 @@ outer.bottom =     16
 outer.top =        16
 outer.right =      16
 
+# in this mode I can type freely on my portuguese diacritics
+[mode.input.binding]
+alt-shift-i = 'mode main'
+
 [mode.main.binding]
+alt-shift-i = 'mode input'
+
 alt-shift-f = 'fullscreen'
 
 alt-slash = 'layout tiles horizontal vertical'
@@ -49,16 +55,23 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
+# alt-shift-1 = 'move-node-to-workspace 1'
+# alt-shift-2 = 'move-node-to-workspace 2'
+# alt-shift-3 = 'move-node-to-workspace 3'
+# alt-shift-4 = 'move-node-to-workspace 4'
+# alt-shift-5 = 'move-node-to-workspace 5'
+# alt-shift-6 = 'move-node-to-workspace 6'
+# alt-shift-7 = 'move-node-to-workspace 7'
+# alt-shift-8 = 'move-node-to-workspace 8'
+# alt-shift-9 = 'move-node-to-workspace 9'
 alt-tab = 'workspace-back-and-forth'
+
+alt-a = 'workspace A' # Obsidian
+alt-t = 'workspace T' # Terminal
+alt-s = 'workspace S' # Search (browser)
+alt-d = 'workspace D' # Emacs / Android Studio / IntelliJ / Zed
+alt-r = 'workspace R' # PDFs / Kiwix / Dash
+alt-m = 'workspace M' # Mail
 
 alt-shift-semicolon = 'mode service'
 
@@ -75,4 +88,80 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = 'move-node-to-workspace S'
+
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = 'move-node-to-workspace S'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace T'
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.intellij'
+run = 'move-node-to-workspace D'
+
+[[on-window-detected]]
+if.app-id = 'com.google.android.studio'
+run = 'move-node-to-workspace D'
+
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = 'move-node-to-workspace D'
+
+[[on-window-detected]]
+if.app-id = 'org.kicad.kicad'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'self.Kiwix'
+run = 'move-node-to-workspace R'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iBooksX'
+run = 'move-node-to-workspace R'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace A'
+
+[[on-window-detected]]
+if.app-id = 'net.ankiweb.dtop'
+run = 'move-node-to-workspace R'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Preview'
+run = 'move-node-to-workspace R'
+
+[[on-window-detected]]
+if.app-id = 'com.seriflabs.affinitydesigner'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-id = 'com.seriflabs.affinityphoto'
+run = 'move-node-to-workspace 8'
+
+[[on-window-detected]]
+if.app-id = 'org.gnu.Emacs'
+run = 'move-node-to-workspace D'
+
+[[on-window-detected]]
+if.app-id = 'com.electron.logseq'
+run = 'move-node-to-workspace A'
+
+# [[on-window-detected]]
+# if.app-id = 'com.figma.Desktop'
+# run = 'move-node-to-workspace C'
 

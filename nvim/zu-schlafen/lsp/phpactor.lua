@@ -2,12 +2,22 @@
 ---
 --- https://github.com/phpactor/phpactor
 ---
---- Installation: https://phpactor.readthedocs.io/en/master/usage/standalone.html#global-installation
+--- Installation: Latest PHAR version (2025.10.17.0)
 
 ---@type vim.lsp.Config
 return {
-  cmd = { 'phpactor', 'language-server' },
+  -- The command to start phpactor's language server
+  -- Using latest PHAR version with full PHP 8.x support
+  cmd = { '/Users/douglaslobo/.local/bin/phpactor-latest', 'language-server' },
+
+  -- Which file types should trigger this LSP
   filetypes = { 'php' },
-  root_markers = { '.git', 'composer.json', '.phpactor.json', '.phpactor.yml' },
-  workspace_required = true,
+
+  -- Files/folders that indicate the project root
+  root_markers = {
+    'composer.json',
+    '.git',
+    '.phpactor.json',
+    '.phpactor.yml'
+  },
 }

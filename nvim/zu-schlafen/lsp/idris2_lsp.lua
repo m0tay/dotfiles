@@ -36,7 +36,7 @@ return {
   cmd = { 'idris2-lsp' },
   filetypes = { 'idris2' },
   root_dir = function(bufnr, on_dir)
-    local fname = vim.api.nvim_buf_get_name(bufnr)
+    local fname = vimr.api.nvim_buf_get_name(bufnr)
     on_dir(util.root_pattern '*.ipkg'(fname))
   end,
 }

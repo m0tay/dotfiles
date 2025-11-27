@@ -1,8 +1,9 @@
-set termguicolors
+vim9script
 
+set termguicolors
 set laststatus=2
 set background=dark
  
-let g:lightline = { 'colorscheme' : 'rosepine' }
+g:lightline = { 'colorscheme': 'rosepine' }
 
 colorscheme rosepine

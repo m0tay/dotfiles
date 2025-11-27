@@ -1,3 +1,5 @@
+vim9script
+
 source ~/.config/vim/options.vim
 source ~/.config/vim/keybinds.vim
 source ~/.config/vim/plugins.vim

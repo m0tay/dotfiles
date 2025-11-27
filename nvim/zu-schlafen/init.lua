@@ -1,79 +1,108 @@
-vim.cmd([[set mouse=]])
-vim.cmd([[set noswapfile]])
+vim.opt.mouse = ""
+vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
+vim.opt.swapfile = false
 vim.opt.winborder = "rounded"
-vim.opt.tabstop = 2
 vim.opt.cursorline = true
 vim.opt.wrap = false
 vim.opt.ignorecase = true
+vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
 vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 19
+vim.opt.sidescrolloff = 16
 vim.opt.smartindent = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.signcolumn = "yes:2"
+vim.opt.completeopt = { "menuone", "noinsert", "preview", "fuzzy", "popup" }
+vim.o.foldenable = true
+vim.o.foldlevel = 99
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr'
+vim.g.netrw_banner = 0
+vim.diagnostic.config({ virtual_text = true })
 
 vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/echasnovski/mini.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
-	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = "https://github.com/echaya/neowiki.nvim" },
-	{ src = "https://github.com/iamcco/markdown-preview.nvim" },
+  { src = "https://github.com/rose-pine/neovim" },
+  { src = "https://github.com/echaya/neowiki.nvim" },
+  { src = "https://github.com/iamcco/markdown-preview.nvim" },
 })
 
--- local ts = require("treesitter")
--- ts.setup()
--- ts.disable("cpp")
-require "mini.pick".setup()
-require "oil".setup({
-	view_options = {
-		show_hidden = true }
-}
-)
-require "mason".setup()
+-- Native Neovim 0.11+ Treesitter (yes!)
+local parsers = { "ada", "bash", "c", "cpp", "css", "html", "javascript", "json", "latex", "lua", "markdown",
+  "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc" }
+
+vim.treesitter.language.register('bash', 'sh')
+
+for _, lang in ipairs(parsers) do
+  vim.treesitter.language.add(lang)
+end
+
+require "rose-pine".setup({
+  styles = {
+    bold = false,
+    italic = true,
+    transparency = true,
+  }
+})
 require "neowiki".setup({
-	wiki_dirs = {
-		{ name = "wiki",  path = "~/Documents/wiki" },
-		{ name = "m0tay", path = "~/Documents/wiki/m0tay" },
-		{ name = "ua",    path = "~/Documents/wiki/ua" },
-	},
+  wiki_dirs = {
+    { name = "wiki",  path = "~/Documents/wiki" },
+    { name = "m0tay", path = "~/Documents/wiki/m0tay" },
+    { name = "ua",    path = "~/Documents/wiki/ua" },
+  },
 })
-
 
 vim.api.nvim_create_autocmd('LspAttach', {
-	group = vim.api.nvim_create_augroup('my.lsp', {}),
-	callback = function(args)
-		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-		if client:supports_method('textDocument/completion') then
-			-- Optional: trigger autocompletion on EVERY keypress. May be slow!
-			local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
-			client.server_capabilities.completionProvider.triggerCharacters = chars
-			vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-		end
-	end,
+  group = vim.api.nvim_create_augroup('my.lsp', {}),
+  callback = function(args)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    if client:supports_method('textDocument/completion') then
+      -- Optional: trigger autocompletion on EVERY keypress. May be slow!
+      local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+      client.server_capabilities.completionProvider.triggerCharacters = chars
+      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+      vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help)
+      vim.keymap.set('n', 'grd', vim.lsp.buf.definition)
+      vim.keymap.set('n', 'grD', vim.lsp.buf.declaration)
+      vim.keymap.set('n', 'grf', vim.lsp.buf.format)
+      vim.keymap.set('n', 'gri', vim.lsp.buf.implementation)
+      vim.keymap.set('n', 'grr', vim.lsp.buf.references)
+      vim.keymap.set('n', 'grn', vim.lsp.buf.rename)
+      vim.keymap.set('n', 'gra', vim.lsp.buf.code_action)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+    end
+  end,
 })
 
-vim.lsp.enable(
-	{
-		"lua_ls",
-		"emmetls",
-		"ts_ls",
-		"clangd",
-		"ruff",
-		"texlab",
-		"bashls",
-	}
-)
--- vim.diagnostic.config({ virtual_text = true })
+vim.lsp.enable({
+  "ada_language_server",
+  "bashls",
+  "clangd",
+  "cssls",
+  "emmet_ls",
+  "html",
+  "intelephense",
+  "jdtls",
+  "lua_ls",
+  "perlnavigator",
+  -- "phpactor",
+  "racket_langserver",
+  "ruff",
+  "sqlls",
+  "marksman",
+  "sqls",
+  "texlab",
+  "ts_ls",
+})
 
-vim.cmd [[set completeopt+=menuone,noinsert,noselect,preview,fuzzy,popup]]
-
-vim.cmd("colorscheme vague")
-vim.cmd(":hi statusline guibg=NONE")
+vim.cmd [[colorscheme rose-pine]]
+vim.cmd [[hi statusline guibg=NONE]]
+vim.cmd [[packadd nohlsearch]] -- life changer
 
 local map = vim.keymap.set
 vim.g.mapleader = " "
@@ -82,8 +111,6 @@ map('n', '<leader>q', ':quit<CR>')
 map('n', '<leader>Q', ':qa<CR>')
 map('n', '<C-f>', ':Open .<CR>')
 map('n', '<leader>m', ':update<CR> :make<CR>')
-
-map("n", "grf", ":lua vim.lsp.buf.format()<CR>")
 
 -- I use norm and sed so much this makes sense
 map({ 'n', 'v' }, '<leader>n', ':norm ')
@@ -94,28 +121,39 @@ map({ 'n', 'v' }, '<leader>d', '"+d')
 
 map({ 'n', 'v' }, '<leader>o', ':update<CR> :source<CR>')
 
-map('n', '<leader>f', ":Pick files<CR>")
-map('n', '<leader>r', ":Pick buffers<CR>")
-map('n', '<leader>h', ":Pick help<CR>")
-map('n', '<leader>e', ":Oil<CR>")
-map('n', '<leader>g', ':Pick grep_live<CR>')
+map('n', '<leader>e', ":Ex<CR>")
 
 map("n", "n", "nzzzv", { desc = "next search result (centered)" })
 map("n", "N", "Nzzzv", { desc = "previous search result (centered)" })
-map("n", "<c-d>", "<c-d>zz", { desc = "half page down (centered)" })
-map("n", "<c-u>", "<c-u>zz", { desc = "half page up (centered)" })
+map("n", "<C-d>", "<C-d>zz", { desc = "half page down (centered)" })
+map("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
 
 map("v", "<", "<gv", { desc = "Indent left and reselect" })
 map("v", ">", ">gv", { desc = "Indent right and reselect" })
 
-map('n', '<leader>ww', "<cmd>lua require('neowiki').open_wiki()<cr>")
+map('n', '<leader>ww', ":lua require('neowiki').open_wiki()<cr>")
+map('n', '<leader>wp', ":MarkdownPreviewToggle<CR>")
 
-local api = vim.api
-
-api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
-
-api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+-- highlight briefly yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
+
+-- open help in vertical split
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'help',
+  command = [[wincmd L]],
+})
+
+-- vim.net.request('google.com',
+--   { retry = 3 },
+--   vim.schedule_wrap(function(err, content)
+--     if err then
+--       vim.notify(tostring(err), vim.log.levels.INFO)
+--       return
+--     end
+--
+--     vim.print((vim.split(content.body, '\n', { plain = true })[1]))
+--   end))
