@@ -1,0 +1,5 @@
+{
+  "language_server_completion.trim_leading_dollar": true,
+  "php.version": "8.4"
+}
+
