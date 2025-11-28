@@ -1,4 +1,5 @@
 abbr "ga"="git add"
+abbr "gap"="git add -p"
 abbr "gi"="git init"
 abbr "gl"="git log"
 abbr "gm"="git commit -m"
