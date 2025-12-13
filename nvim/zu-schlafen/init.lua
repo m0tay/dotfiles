@@ -28,8 +28,9 @@ vim.diagnostic.config({ virtual_text = true })
 
 vim.pack.add({
   { src = "https://github.com/rose-pine/neovim" },
-  { src = "https://github.com/echaya/neowiki.nvim" },
-  { src = "https://github.com/iamcco/markdown-preview.nvim" },
+  { src = "https://github.com/tpope/vim-fugitive" },
+  { src = "https://github.com/chomosuke/typst-preview.nvim" },
+  { src = "https://github.com/Myriad-Dreamin/tinymist" },
 })
 
 -- Native Neovim 0.11+ Treesitter (yes!)
@@ -48,13 +49,6 @@ require "rose-pine".setup({
     italic = true,
     transparency = true,
   }
-})
-require "neowiki".setup({
-  wiki_dirs = {
-    { name = "wiki",  path = "~/Documents/wiki" },
-    { name = "m0tay", path = "~/Documents/wiki/m0tay" },
-    { name = "ua",    path = "~/Documents/wiki/ua" },
-  },
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -98,6 +92,7 @@ vim.lsp.enable({
   "sqls",
   "texlab",
   "ts_ls",
+  "tinymist",
 })
 
 vim.cmd [[colorscheme rose-pine]]
@@ -109,12 +104,8 @@ vim.g.mapleader = " "
 map('n', '<leader>w', ':write<CR>')
 map('n', '<leader>q', ':quit<CR>')
 map('n', '<leader>Q', ':qa<CR>')
-map('n', '<C-f>', ':Open .<CR>')
+map('n', 'O', ':Open .<CR>')
 map('n', '<leader>m', ':update<CR> :make<CR>')
-
--- I use norm and sed so much this makes sense
-map({ 'n', 'v' }, '<leader>n', ':norm ')
-map({ 'n', 'v' }, '<leader>s', ':s/')
 
 map({ 'n', 'v' }, '<leader>y', '"+y')
 map({ 'n', 'v' }, '<leader>d', '"+d')
@@ -131,8 +122,6 @@ map("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
 map("v", "<", "<gv", { desc = "Indent left and reselect" })
 map("v", ">", ">gv", { desc = "Indent right and reselect" })
 
-map('n', '<leader>ww', ":lua require('neowiki').open_wiki()<cr>")
-map('n', '<leader>wp', ":MarkdownPreviewToggle<CR>")
 
 -- highlight briefly yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -147,7 +136,7 @@ vim.api.nvim_create_autocmd('FileType', {
   command = [[wincmd L]],
 })
 
--- vim.net.request('google.com',
+-- vim.net.request('tmpfile.com',
 --   { retry = 3 },
 --   vim.schedule_wrap(function(err, content)
 --     if err then
