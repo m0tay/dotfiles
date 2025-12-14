@@ -53,8 +53,9 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 nnoremap <Esc> :nohlsearch<CR>
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+
+" vnoremap J :m '>+1<CR>gv=gv
+" vnoremap K :m '<-2<CR>gv=gv
 
 
 " Arrow key reminders

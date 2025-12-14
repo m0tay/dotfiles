@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage: append <filename> <text>"
+  exit
+fi
+
+echo "$2" >> "$1"

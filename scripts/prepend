@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage: prepend <filename> <text>"
+  exit
+fi
+
+tmpfile=$(mktemp)
+
+echo "$2" > "$tmpfile"
+cat "$1" >> "$tmpfile"
+mv "$tmpfile" "$1"
