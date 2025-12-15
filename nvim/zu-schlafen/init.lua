@@ -28,7 +28,9 @@ vim.diagnostic.config({ virtual_text = true })
 
 vim.pack.add({
   { src = "https://github.com/rose-pine/neovim" },
-  { src = "https://github.com/tpope/vim-fugitive" },
+  { src = "https://github.com/NeogitOrg/neogit" },
+  { src = "https://github.com/nvim-lua/plenary.nvim" },   -- Neogit's dependencies
+  -- { src = "https://github.com/sindrets/diffview.nvim" },  -- Neogit's dependencies
   { src = "https://github.com/chomosuke/typst-preview.nvim" },
   { src = "https://github.com/Myriad-Dreamin/tinymist" },
 })
@@ -104,7 +106,7 @@ vim.g.mapleader = " "
 map('n', '<leader>w', ':write<CR>')
 map('n', '<leader>q', ':quit<CR>')
 map('n', '<leader>Q', ':qa<CR>')
-map('n', 'O', ':Open .<CR>')
+map('n', '<leader>O', ':Open .<CR>')
 map('n', '<leader>m', ':update<CR> :make<CR>')
 
 map({ 'n', 'v' }, '<leader>y', '"+y')
@@ -122,6 +124,7 @@ map("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
 map("v", "<", "<gv", { desc = "Indent left and reselect" })
 map("v", ">", ">gv", { desc = "Indent right and reselect" })
 
+map("n", "<leader>g", require "neogit".open, { desc = "Open Neogit UI" })
 
 -- highlight briefly yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
