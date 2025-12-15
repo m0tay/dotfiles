@@ -1,111 +1,22 @@
 {
-    "agent": {
-        "single_file_review": false,
-        "default_model": {
-            "provider": "zed.dev",
-            "model": "claude-3-7-sonnet"
-        }
-    },
-    "languages": {
-        "Plain Text": {
-            "show_edit_predictions": false
-        }
-    },
-    "theme": "Rosé Pine",
-    "vim_mode": true,
-    "disable_ai": true,
-    "tab_size": 4,
-    "insert_spaces": true,
-    "soft_wrap": "none",
-    "preferred_line_length": 80,
-    "relative_line_numbers": true,
-    "auto_indent_on_paste": true,
-    "scrollbar": {
-        "show": "never"
-    },
-    // Terminal settings
-    "terminal": {
-        "font_size": 16,
-        "font_family": "0xProto Nerd Font Propo",
-        "font_fallbacks": [
-            "Zed Plex Mono"
-        ],
-        "line_height": {
-            "custom": 1.4
-        }
-    },
-    "toolbar": {
-        "breadcrumbs": false,
-        "quick_actions": false,
-        "selections_menu": false,
-        "agent_review": false,
-        "code_actions": false
-    },
-    "edit_predictions": {
-        "disabled_globs": [
-            "*"
-        ]
-    },
-    "diagnostics": {
-        "include_warnings": false
-    },
-    "collaboration_panel": {
-        "button": false
-    },
-    "chat_panel": {
-        "button": "never"
-    },
-    "notification_panel": {
-        "button": false
-    },
-    "task": {
-        "show_status_indicator": false
-    },
-    "git": {
-        "git_gutter": "hide",
-        "inline_blame": {
-            "enabled": false
-        }
-    },
-    // Buffer settings
-    "buffer_font_size": 18,
-    "ui_font_size": 18,
-    "buffer_font_family": "0xProto Nerd Font Mono",
-    "buffer_font_fallbacks": [
-        "Zed Plex Mono"
-    ],
-    "buffer_line_height": "comfortable",
-    // Indentation, rainbow indentation
-    "indent_guides": {
-        "enabled": true,
-        "coloring": "indent_aware"
-    },
-    // Formatting and Whitespace
-    "trim_trailing_whitespace": true,
-    "format_on_save": "language_server",
-    "formatter": "language_server",
-    "ensure_final_newline_on_save": true,
-    "remove_trailing_whitespace_on_save": true,
-    // Visual Guides
-    "show_wrap_guides": false,
-    // Autosave
-    "autosave": "on_focus_change",
-    // Autocomplete Settings
-    "show_completions_on_input": true,
-    "show_edit_predictions": false,
-    // Inlay Hints
-    "inlay_hints": {
-        "enabled": true,
-        "show_type_hints": true,
-        "show_parameter_hints": true,
-        "show_other_hints": true,
-        "show_background": false,
-        "edit_debounce_ms": 700,
-        "scroll_debounce_ms": 50,
-        "toggle_on_modifiers_press": null
-    },
-    // Language-specific Configurations
-    "hover_popover_enabled": true,
-    "enable_language_server": true,
-    "use_smartcase_search": true
+  "calls": {
+    "mute_on_join": true
+  },
+  "terminal": {
+    "shell": "system"
+  },
+  "search": {
+    "regex": true
+  },
+  "relative_line_numbers": "enabled",
+  "buffer_line_height": "standard",
+  "buffer_font_size": 20.0,
+  "buffer_font_family": "0xProto Nerd Font Propo",
+  "theme": {
+    "mode": "system",
+    "light": "Neovim default dark",
+    "dark": "Neovim default dark"
+  },
+  "vim_mode": true,
+  "helix_mode": false
 }
