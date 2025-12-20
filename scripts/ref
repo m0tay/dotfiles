@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# Usage: ref <command>                - Get ref to open in default browser
+#        ref update <command> [link]  - Update ref, when giving a link it will either add or update, when not it will erase it
+
+if [ ! -e ~/.refs ]; then
+ touch ~/.refs
+fi
+
+function get_ref() {
+  # $1 = "typst"
+  # displays it
+  
+  grep -i "$1" ~/.refs | cut -d , -f 2
+}
+
+function erase_ref() {
+  # $1 = "update"
+  # $2 = "typst"
+  # deletes it
+  
+  sed -i '' "/^$1,/d" ~/.refs
+}
+
+function update_ref() {
+    # $1 = "update"
+    # $2 = command name
+    # $3 = link (the URL)
+    
+    if grep -q "^$2," ~/.refs; then
+        # Update existing entry
+        sed -i '' "s|^$2,.*|$2,$3|i" ~/.refs
+    else
+        # Add new entry
+        echo "$2,$3" >> ~/.refs
+    fi
+}
+
+case $# in
+  1)
+    if [ "$1" != "update" ]; then
+      get_ref "$1"
+      exit 0
+    fi
+    exit 1
+    ;;
+  2)
+    erase_ref "$2"
+    exit 0
+    ;;
+  3)
+    update_ref "$@"
+    exit 0
+    ;;
+  *)
+    echo "Usage:  ref <command>                 - Get ref to open in default browser"
+    echo "        ref update <command> [link]   - Update ref, when giving a link it will either add or update, when not it will erase it"
+    exit 1
+    ;;
+esac
+
