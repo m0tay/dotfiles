@@ -1,0 +1,3 @@
+man jq
+cat ~/Documents/wiki/m0tay/dont-panic.md
+cat ~/Documents/wiki/m0tay/the-joy-in-the-small-stuff.md
