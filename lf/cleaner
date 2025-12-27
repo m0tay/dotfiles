@@ -1,2 +1,3 @@
 #!/bin/sh
-exec kitten icat --clear --stdin no --transfer-mode memory </dev/null >/dev/tty
+# Cleaner script for lf (macOS version - no ueberzug cleanup needed)
+
