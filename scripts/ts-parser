@@ -1,0 +1,118 @@
+#!/bin/bash
+# Usage: ts-parser <language> [custom-repo-url]
+
+set -e
+
+if [[ $# -lt 1 ]] || [[ $# -gt 2 ]]; then
+    echo "Usage: ts-parser <language> [custom-repo-url]"
+    echo "Examples:"
+    echo "  ts-parser java"
+    echo "  ts-parser racket https://github.com/6cdh/tree-sitter-racket"
+    exit 1
+fi
+
+LANG="$1"
+PARSER_DIR="$HOME/.local/share/nvim/site/parser"
+TEMP_DIR="/tmp/tree-sitter-$LANG"
+
+if [[ $# -eq 2 ]]; then
+    REPO_URL="$2"
+    echo "   Using custom repository: $REPO_URL"
+else
+    REPO_URL="https://github.com/tree-sitter/tree-sitter-$LANG"
+fi
+
+mkdir -p "$PARSER_DIR"
+
+rm -rf "$TEMP_DIR"
+
+if ! git clone --depth=1 --quiet "$REPO_URL" "$TEMP_DIR" 2>/dev/null; then
+    echo "   Make sure the language name is correct."
+    exit 1
+fi
+
+cd "$TEMP_DIR"
+
+if [[ ! -f "src/parser.c" ]] && [[ -d "$LANG" ]]; then
+    echo "   Found subdirectory: $LANG/"
+    cd "$LANG"
+fi
+
+HAS_SCANNER_C=false
+HAS_SCANNER_CC=false
+
+if [[ -f "src/scanner.c" ]]; then
+    HAS_SCANNER_C=true
+    echo "   Found: src/scanner.c"
+fi
+
+if [[ -f "src/scanner.cc" ]]; then
+    HAS_SCANNER_CC=true
+    echo "   Found: src/scanner.cc"
+fi
+
+if [[ ! -f "src/parser.c" ]]; then
+    echo "    Not found: src/parser.c"
+    exit 1
+fi
+
+echo "   Found: src/parser.c"
+
+OUTPUT_FILE="$PARSER_DIR/$LANG.so"
+
+compile_with_c_scanner() {
+    clang -o "$OUTPUT_FILE" \
+        -I./src src/parser.c src/scanner.c \
+        -shared -Os -lstdc++ -fPIC 2>/dev/null
+}
+
+compile_with_cc_scanner() {
+    clang++ -o "$OUTPUT_FILE" \
+        -I./src src/parser.c src/scanner.cc \
+        -shared -Os -fPIC 2>/dev/null
+}
+
+compile_without_scanner() {
+    clang -o "$OUTPUT_FILE" \
+        -I./src src/parser.c \
+        -shared -Os -fPIC 2>/dev/null
+}
+
+COMPILED=false
+
+if [[ "$HAS_SCANNER_C" == true ]]; then
+    if compile_with_c_scanner; then
+        COMPILED=true
+        echo "   Compiled successfully"
+    fi
+fi
+
+if [[ "$COMPILED" == false && "$HAS_SCANNER_CC" == true ]]; then
+    if compile_with_cc_scanner; then
+        COMPILED=true
+        echo "   Compiled successfully"
+    fi
+fi
+
+if [[ "$COMPILED" == false ]]; then
+    if compile_without_scanner; then
+        COMPILED=true
+        echo "   Compiled successfully"
+    else
+        echo "    Error: All compilation attempts failed"
+        exit 1
+    fi
+fi
+
+if [[ ! -f "$OUTPUT_FILE" ]]; then
+    echo "    Error: Output file not created"
+    exit 1
+fi
+
+FILE_SIZE=$(ls -lh "$OUTPUT_FILE" | awk '{print $5}')
+chmod 755 "$OUTPUT_FILE"
+
+cd - > /dev/null
+rm -rf "$TEMP_DIR"
+
+echo "It's done"
