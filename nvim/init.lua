@@ -33,14 +33,43 @@ vim.pack.add({
 })
 
 -- Native Neovim 0.11+ Treesitter (yes!)
-local parsers = { "ada", "bash", "c", "cpp", "css", "html", "javascript", "json", "latex", "lua", "markdown",
+local parsers = { "just", "typst", "ada", "bash", "c", "cpp", "css", "html", "java", "javascript", "json", "latex", "lua", "markdown",
   "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc" }
 
 vim.treesitter.language.register('bash', 'sh')
+vim.treesitter.language.register('just', 'just')
 
 for _, lang in ipairs(parsers) do
   vim.treesitter.language.add(lang)
 end
+
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function(args)
+    pcall(vim.treesitter.start, args.buf)
+  end,
+})
+
+
+vim.lsp.enable({
+  "ada_language_server",
+  "bashls",
+  "clangd",
+  "cssls",
+  "emmet_ls",
+  "html",
+  "intelephense",
+  "jdtls",
+  "lua_ls",
+  "perlnavigator",
+  "racket_langserver",
+  "ruff",
+  "sqlls",
+  "marksman",
+  "sqls",
+  "texlab",
+  "ts_ls",
+  "tinymist",
+})
 
 require "rose-pine".setup({
   styles = {
@@ -59,6 +88,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
       local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
       client.server_capabilities.completionProvider.triggerCharacters = chars
       vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+
+      -- Disable Enter to accept completion, only use Ctrl-y
+      vim.keymap.set('i', '<CR>', function()
+        if vim.fn.pumvisible() == 1 then
+          return '<C-e><CR>'
+        else
+          return '<CR>'
+        end
+      end, { buffer = args.buf, expr = true })
+
       vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help)
       vim.keymap.set('n', 'grd', vim.lsp.buf.definition)
       vim.keymap.set('n', 'grD', vim.lsp.buf.declaration)
@@ -70,28 +109,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set('n', 'K', vim.lsp.buf.hover)
     end
   end,
-})
-
-vim.lsp.enable({
-  "ada_language_server",
-  "bashls",
-  "clangd",
-  "cssls",
-  "emmet_ls",
-  "html",
-  "intelephense",
-  "jdtls",
-  "lua_ls",
-  "perlnavigator",
-  -- "phpactor",
-  "racket_langserver",
-  "ruff",
-  "sqlls",
-  "marksman",
-  "sqls",
-  "texlab",
-  "ts_ls",
-  "tinymist",
 })
 
 vim.cmd [[colorscheme rose-pine]]
