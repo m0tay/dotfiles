@@ -72,6 +72,7 @@ alt-s = 'workspace S' # Search (browser)
 alt-d = 'workspace D' # Emacs / Android Studio / IntelliJ / Zed
 alt-r = 'workspace R' # PDFs / Kiwix / Dash
 alt-m = 'workspace M' # Mail
+alt-v = 'workspace V' # DaVinci
 
 alt-shift-semicolon = 'mode service'
 
@@ -156,6 +157,10 @@ run = 'move-node-to-workspace D'
 [[on-window-detected]]
 if.app-id = 'com.electron.logseq'
 run = 'move-node-to-workspace A'
+
+[[on-window-detected]]
+if.app-id = 'com.blackmagic-design.DaVinciResolve'
+run = 'move-node-to-workspace V'
 
 # [[on-window-detected]]
 # if.app-id = 'com.figma.Desktop'
