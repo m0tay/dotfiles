@@ -31,9 +31,6 @@ for key, body in pairs(snippets) do
   end, { buffer = true })
 end
 
--- vim.lsp.enable 'intelephense'
--- vim.lsp.enable 'phpactor'
-
 local job
 
 vim.api.nvim_buf_create_user_command(0, 'Serve', function(opts)
