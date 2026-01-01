@@ -62,11 +62,11 @@ vim.lsp.enable({
   "lua_ls",
   "perlnavigator",
   "racket_langserver",
+  "rust_analyzer",
   "ruff",
   "sqlls",
   "marksman",
   "sqls",
-  "texlab",
   "ts_ls",
   "tinymist",
 })
