@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# if ! tmux has-session -t bookmarks 2>/dev/null; then
+#     ~/.config/scripts/tmux-session-dispensary.sh "$HOME/Documents/bookmarks"
+#     tmux send-keys -t bookmarks "vim bookmarks" Enter
+# fi
+#
+# tmux switch-client -t bookmarks
+
+tmux popup -E -w 90% -h 90% -T Bookmarks vim "$HOME/Documents/bookmarks/bookmarks"
