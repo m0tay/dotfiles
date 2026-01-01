@@ -115,28 +115,27 @@ vim.cmd [[colorscheme rose-pine]]
 vim.cmd [[hi statusline guibg=NONE]]
 vim.cmd [[packadd nohlsearch]] -- life changer
 
-local map = vim.keymap.set
 vim.g.mapleader = " "
-map('n', '<leader>w', ':write<CR>')
-map('n', '<leader>q', ':quit<CR>')
-map('n', '<leader>Q', ':qa<CR>')
-map('n', '<leader>O', ':Open .<CR>')
-map('n', '<leader>m', ':update<CR> :make<CR>')
+vim.keymap.set('n', '<leader>w', ':write<CR>')
+vim.keymap.set('n', '<leader>q', ':quit<CR>')
+vim.keymap.set('n', '<leader>Q', ':qa<CR>')
+vim.keymap.set('n', '<leader>O', ':Open .<CR>')
+vim.keymap.set('n', '<leader>m', ':update<CR> :make<CR>')
 
-map({ 'n', 'v' }, '<leader>y', '"+y')
-map({ 'n', 'v' }, '<leader>d', '"+d')
+vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y')
+vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p')
 
-map({ 'n', 'v' }, '<leader>o', ':update<CR> :source<CR>')
+vim.keymap.set({ 'n', 'v' }, '<leader>o', ':update<CR> :source<CR>')
 
-map('n', '<leader>e', ":Ex<CR>")
+vim.keymap.set('n', '<leader>e', ":Ex<CR>")
 
-map("n", "n", "nzzzv", { desc = "next search result (centered)" })
-map("n", "N", "Nzzzv", { desc = "previous search result (centered)" })
-map("n", "<C-d>", "<C-d>zz", { desc = "half page down (centered)" })
-map("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
+vim.keymap.set("n", "n", "nzzzv", { desc = "next search result (centered)" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "previous search result (centered)" })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "half page down (centered)" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
 
-map("v", "<", "<gv", { desc = "Indent left and reselect" })
-map("v", ">", ">gv", { desc = "Indent right and reselect" })
+vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 
 -- highlight briefly yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
