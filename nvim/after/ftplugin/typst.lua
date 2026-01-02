@@ -1,7 +1,8 @@
 vim.o.wrap = true
 vim.o.wrapmargin = 8
 vim.o.spell = true
-vim.o.spelllang = "en"
+vim.cmd[[TypstPreviewFollowCursor]]
+vim.o.spelllang = [[en,pt]]
 
 local snippets = {
   md = "$  $<Left><Left>", -- math display
