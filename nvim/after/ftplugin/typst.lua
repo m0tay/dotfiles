@@ -7,7 +7,6 @@ vim.o.spelllang = [[en,pt]]
 local snippets = {
   md = "$  $<Left><Left>", -- math display
   mi = "$$<Left>",         -- math inline
-  -- Add more snippets here
 }
 for key, body in pairs(snippets) do
   vim.keymap.set('i', ';' .. key, body, { buffer = true })
