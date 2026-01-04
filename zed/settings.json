@@ -1,4 +1,5 @@
 {
+  "disable_ai": true,
   "calls": {
     "mute_on_join": true
   },
@@ -13,9 +14,9 @@
   "buffer_font_size": 20.0,
   "buffer_font_family": "0xProto Nerd Font Propo",
   "theme": {
-    "mode": "system",
-    "light": "Neovim default dark",
-    "dark": "Neovim default dark"
+    "mode": "dark",
+    "light": "Neovim default accented light",
+    "dark": "Rosé Pine"
   },
   "vim_mode": true,
   "helix_mode": false
