@@ -69,6 +69,7 @@ vim.lsp.enable({
   "sqls",
   "ts_ls",
   "tinymist",
+  "zls"
 })
 
 require "rose-pine".setup({
