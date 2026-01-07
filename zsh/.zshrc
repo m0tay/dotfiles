@@ -7,4 +7,3 @@ source $ZDOTDIR/plugins.zsh
 source $ZDOTDIR/prompt.zsh
 # source $ZDOTDIR/tmux.zsh
 # eval "$(~/.local/bin/mise/activate zsh)"
-eval "$(mise activate zsh)"
