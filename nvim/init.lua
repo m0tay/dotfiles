@@ -33,8 +33,10 @@ vim.pack.add({
 })
 
 -- Native Neovim 0.11+ Treesitter (yes!)
-local parsers = { "just", "typst", "ada", "bash", "c", "cpp", "css", "html", "java", "javascript", "json", "latex", "lua", "markdown",
-  "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc" }
+local parsers = {
+  "just", "typst", "ada", "bash", "fish", "c", "cpp", "css", "html", "java", "javascript", "json", "haskell",
+  "latex", "lua", "markdown", "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc"
+}
 
 vim.treesitter.language.register('bash', 'sh')
 vim.treesitter.language.register('just', 'just')
@@ -49,13 +51,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-
-vim.lsp.enable({
+-- Load LSP configurations
+local lsp_servers = {
   "ada_language_server",
   "bashls",
+  "basedpyright",
   "clangd",
   "cssls",
   "emmet_ls",
+  "fish_lsp",
   "html",
   "intelephense",
   "jdtls",
@@ -63,14 +67,26 @@ vim.lsp.enable({
   "perlnavigator",
   "racket_langserver",
   "rust_analyzer",
-  "ruff",
   "sqlls",
   "marksman",
   "sqls",
   "ts_ls",
   "tinymist",
-  "zls"
-})
+  "zls",
+  "harper_ls",
+  "haskell_language_server"
+}
+
+-- Register configs for each LSP server
+for _, server in ipairs(lsp_servers) do
+  local ok, config = pcall(require, 'lsp.' .. server)
+  if ok then
+    vim.lsp.config(server, config)
+  end
+end
+
+-- Enable all configured LSP servers
+vim.lsp.enable(lsp_servers)
 
 require "rose-pine".setup({
   styles = {
@@ -79,6 +95,9 @@ require "rose-pine".setup({
     transparency = true,
   }
 })
+vim.cmd [[colorscheme rose-pine]]
+
+vim.g.mapleader = " "
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('my.lsp', {}),
@@ -112,11 +131,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.cmd [[colorscheme rose-pine]]
 vim.cmd [[hi statusline guibg=NONE]]
 vim.cmd [[packadd nohlsearch]] -- life changer
 
-vim.g.mapleader = " "
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', '<leader>Q', ':qa<CR>')
@@ -137,6 +154,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
 
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
+
+vim.keymap.set("n", "<leader>tv", ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR>")
 
 -- highlight briefly yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
