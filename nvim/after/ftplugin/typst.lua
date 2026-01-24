@@ -1,13 +1,25 @@
 vim.o.wrap = true
-vim.o.wrapmargin = 8
+vim.o.wrapmargin = 16
 vim.o.spell = true
 vim.cmd[[TypstPreviewFollowCursor]]
 vim.o.spelllang = [[en,pt]]
 
+vim.bo.makeprg = [[typst compile --diagnostic-format short %]]
+
 local snippets = {
-  md = "$  $<Left><Left>", -- math display
-  mi = "$$<Left>",         -- math inline
+  md = "\\$ $1 \\$", -- math display
+  mi = "\\$$1\\$",         -- math inline
+  le = "#align(left)[$1]",
+  ri = "#align(right)[$1]",
+  ce = "#align(center)[$1]",
+  cl = "#align(center, block[\n\t#set align(left)\n\t$1\n])",
+  cr = "#align(center, block[\n\t#set align(right)\n\t$1\n])",
+  ho = "#align(horizontal)[$1]",
+  ve = "#align(vertical)[$1]",
+  fp = "#page(flipped: true)[\n\t$1\n]"
 }
 for key, body in pairs(snippets) do
-  vim.keymap.set('i', ';' .. key, body, { buffer = true })
+  vim.keymap.set('i', ';' .. key, function()
+    vim.snippet.expand(body)
+  end, { buffer = true })
 end
