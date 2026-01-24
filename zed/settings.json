@@ -1,4 +1,18 @@
 {
+  "ssh_connections": [
+    {
+      "host": "github.com",
+      "args": [],
+      "projects": []
+    },
+    {
+      "host": "lobo",
+      "args": [],
+      "projects": []
+    }
+  ],
+  "ui_font_size": 18.0,
+  "ui_font_family": ".ZedSans",
   "disable_ai": true,
   "calls": {
     "mute_on_join": true
@@ -11,12 +25,12 @@
   },
   "relative_line_numbers": "enabled",
   "buffer_line_height": "standard",
-  "buffer_font_size": 20.0,
-  "buffer_font_family": "0xProto Nerd Font Propo",
+  "buffer_font_size": 18.0,
+  "buffer_font_family": "0xProto Nerd Font",
   "theme": {
     "mode": "dark",
     "light": "Neovim default accented light",
-    "dark": "Rosé Pine"
+    "dark": "Dark Vaporwave (Blurred)"
   },
   "vim_mode": true,
   "helix_mode": false
