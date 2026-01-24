@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mkdir -p ~/Projects/"$1"
+
+source ~/.config/scripts/tmux-session-dispensary.sh "$1"
+
+tmux send-keys -t "$1" "cd ~/Projects/$1; clear" Enter
