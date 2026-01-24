@@ -1,1 +1,1 @@
-vim.bo.makeprg = [[cc -Wall -Wextra -g -o out/%:r %]]
+vim.bo.makeprg = [[cc -Wall -Wextra -g -o %:r %]]
