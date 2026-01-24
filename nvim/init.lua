@@ -156,6 +156,7 @@ vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 
 vim.keymap.set("n", "<leader>tv", ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR>")
+vim.keymap.set("n", "<leader>z", "1z=")
 
 -- highlight briefly yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
