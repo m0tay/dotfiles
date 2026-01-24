@@ -22,3 +22,11 @@ alias news newsraft
 function finder
   open .
 end
+
+function se --description "Fuzzy search"
+  ls | fzf --reverse --margin=20% --query="$argv[1]"
+end
+
+function lf --description "List file"
+  yazi
+end
