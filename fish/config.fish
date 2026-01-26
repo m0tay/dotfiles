@@ -20,18 +20,23 @@ alias vim nvim
 alias news newsraft
 
 function finder
-  open .
+    open .
 end
 
 function se --description "Fuzzy search"
-  ls | fzf --reverse --margin=20% --query="$argv[1]"
+    ls | fzf --reverse --margin=20% --query="$argv[1]"
+end
+
+function seb --description "Fuzzy search books"
+    ls "$BOOKS" | fzf --reverse --margin=20% | xargs -I {} open "$BOOKS/{}"
 end
 
 function y
-	set tmp (mktemp -t "yazi-cwd.XXXXXX")
-	command yazi $argv --cwd-file="$tmp"
-	if read -z cwd < "$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
-		builtin cd -- "$cwd"
-	end
-	rm -f -- "$tmp"
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    command yazi $argv --cwd-file="$tmp"
+    if read -z cwd <"$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
 end
+
