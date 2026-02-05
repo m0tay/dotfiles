@@ -9,12 +9,13 @@ set -gx READER sioyek
 
 set -gx CTESP "$HOME/Documents/CTeSP"
 set -gx BOOKS "$HOME/Library/Mobile Documents/iCloud~com~apple~iBooks/Documents"
+set -gx MONO_GAC_PREFIX "/opt/homebrew"
 
 fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.config/scripts"
 fish_add_path "$HOME/.local/share/bob/nvim-bin"
-fish_add_path "/opt/homebrew/opt/php@8.4/bin"
-fish_add_path "/opt/homebrew/opt/php@8.4/sbin"
+fish_add_path "$HOME/.dotnet/tools"
+fish_add_path "$HOME/omnisharp"
 
 alias vim nvim
 alias news newsraft
@@ -38,5 +39,9 @@ function y
         builtin cd -- "$cwd"
     end
     rm -f -- "$tmp"
+end
+
+function mira
+  rlwrap -- mira
 end
 
