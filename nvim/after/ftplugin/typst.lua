@@ -1,5 +1,8 @@
 vim.o.wrap = true
-vim.o.wrapmargin = 16
+vim.opt.linebreak = true
+vim.o.wrapmargin = 0
+vim.opt.textwidth = 0
+vim.opt.formatoptions:remove("t")
 vim.o.spell = true
 vim.cmd[[TypstPreviewFollowCursor]]
 vim.o.spelllang = [[en,pt]]
