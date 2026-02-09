@@ -10,12 +10,13 @@ set -gx READER sioyek
 set -gx CTESP "$HOME/Documents/CTeSP"
 set -gx BOOKS "$HOME/Library/Mobile Documents/iCloud~com~apple~iBooks/Documents"
 set -gx MONO_GAC_PREFIX "/opt/homebrew"
+set -gx DOTNET_ROOT /opt/homebrew/Cellar/dotnet/10.0.102/libexec
+set -gx DOTNET_ROOT_ARM64 $DOTNET_ROOT
 
 fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.config/scripts"
 fish_add_path "$HOME/.local/share/bob/nvim-bin"
 fish_add_path "$HOME/.dotnet/tools"
-fish_add_path "$HOME/omnisharp"
 
 alias vim nvim
 alias news newsraft
