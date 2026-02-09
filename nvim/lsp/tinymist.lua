@@ -52,10 +52,10 @@ return {
   root_markers = { '.git' },
   on_attach = function(client, bufnr)
     for _, command in ipairs {
+      'tinymist.exportPdf',
       'tinymist.exportSvg',
       'tinymist.exportPng',
-      'tinymist.exportPdf',
-      -- 'tinymist.exportHtml', -- Use typst 0.13
+      'tinymist.exportHtml', -- Use typst 0.13
       'tinymist.exportMarkdown',
       'tinymist.exportText',
       -- 'tinymist.exportQuery',

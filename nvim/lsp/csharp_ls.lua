@@ -1,30 +1,19 @@
----@brief
----
---- https://github.com/razzmatazz/csharp-language-server
----
---- Language Server for C#.
----
----
---- csharp-ls upstream config uses `lspconfig.util.root_pattern`; here we
---- replicate the same behavior using Neovim's built-in `vim.fs` helpers so
---- no external plugin is required.
-
 ---@type vim.lsp.Config
 return {
-	cmd = { '/Users/douglaslobo/.dotnet/tools/csharp-ls' },
-	root_dir = function(bufnr, on_dir)
-		local root = vim.fs.root(bufnr, function(name, _)
-			return name:match('%.sln[x]?$') ~= nil or name:match('%.csproj$') ~= nil
-		end)
-		if not root then
-			root = vim.fs.root(bufnr, { '.git' })
-		end
-		if root then
-			on_dir(root)
-		end
-	end,
+  cmd = { 'csharp-ls' },
   filetypes = { 'cs' },
-  init_options = {
-    AutomaticWorkspaceInit = true,
-  },
+  -- Explicit root_dir instead of broken glob markers
+  root_dir = function(bufnr, on_dir)
+    -- 1) Prefer a git repo root
+    local root = vim.fs.root(bufnr, { '.git' })
+    if not root then
+      -- 2) Fallback to the directory of the file
+      local name = vim.api.nvim_buf_get_name(bufnr)
+      if name ~= '' then
+        root = vim.fs.dirname(name)
+      end
+    end
+    on_dir(root)
+  end,
+  settings = {},
 }

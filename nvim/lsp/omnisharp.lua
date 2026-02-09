@@ -1,47 +1,32 @@
----@brief
----
---- https://github.com/omnisharp/omnisharp-roslyn
---- OmniSharp server based on Roslyn workspaces
----
---- `omnisharp-roslyn` can be installed by downloading and extracting a release from [here](https://github.com/OmniSharp/omnisharp-roslyn/releases).
---- OmniSharp can also be built from source by following the instructions [here](https://github.com/omnisharp/omnisharp-roslyn#downloading-omnisharp).
----
---- OmniSharp requires the [dotnet-sdk](https://dotnet.microsoft.com/download) to be installed.
----
---- **By default, omnisharp-roslyn doesn't have a `cmd` set.** This is because nvim-lspconfig does not make assumptions about your path. You must add the following to your init.vim or init.lua to set `cmd` to the absolute path ($HOME and ~ are not expanded) of the unzipped run script or binary.
----
---- For `go_to_definition` to work fully, extended `textDocument/definition` handler is needed, for example see [omnisharp-extended-lsp.nvim](https://github.com/Hoffs/omnisharp-extended-lsp.nvim)
----
----
-
-local util = require 'lspconfig.util'
-
+local function root_dir(bufnr, on_dir)
+  local fname = vim.api.nvim_buf_get_name(bufnr)
+  if fname == '' then
+    on_dir(vim.loop.cwd())
+    return
+  end
+  local start_dir = vim.fs.dirname(fname)
+  local root_files = { '*.sln', '*.csproj', 'omnisharp.json', 'function.json' }
+  local found = vim.fs.find(root_files, { upward = true, path = start_dir })[1]
+  if found then
+    on_dir(vim.fs.dirname(found))
+  else
+    on_dir(start_dir)
+  end
+end
 ---@type vim.lsp.Config
 return {
   cmd = {
-    vim.fn.executable('OmniSharp') == 1 and 'OmniSharp' or 'omnisharp',
-    '-z', -- https://github.com/OmniSharp/omnisharp-vscode/pull/4300
+    vim.fn.expand('$HOME/omnisharp/run'),
+    '--languageserver',
     '--hostPID',
     tostring(vim.fn.getpid()),
-    'DotNet:enablePackageRestore=false',
-    '--encoding',
-    'utf-8',
-    '--languageserver',
   },
   filetypes = { 'cs', 'vb' },
-  root_dir = function(bufnr, on_dir)
-    local fname = vim.api.nvim_buf_get_name(bufnr)
-    on_dir(
-      util.root_pattern '*.sln'(fname)
-        or util.root_pattern '*.csproj'(fname)
-        or util.root_pattern 'omnisharp.json'(fname)
-        or util.root_pattern 'function.json'(fname)
-    )
-  end,
+  root_dir = root_dir,
   init_options = {},
   capabilities = {
     workspace = {
-      workspaceFolders = false, -- https://github.com/OmniSharp/omnisharp-roslyn/issues/909
+      workspaceFolders = false, -- your existing setting
     },
   },
   settings = {
