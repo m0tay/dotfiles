@@ -30,13 +30,18 @@ vim.pack.add({
   { src = "https://github.com/rose-pine/neovim" },
   { src = "https://github.com/chomosuke/typst-preview.nvim" },
   { src = "https://github.com/Myriad-Dreamin/tinymist" },
+  { src = "https://github.com/vague-theme/vague.nvim" },
+  { src = "https://github.com/nvim-lualine/lualine.nvim" },
+  { src = "https://github.com/nvim-lua/plenary.nvim" },
+  { src = "https://github.com/GustavEikaas/easy-dotnet.nvim" },
+  { src = "https://github.com/ionide/Ionide-vim" },
 })
 
 -- Native Neovim 0.11+ Treesitter (yes!)
 local parsers = {
-	"just", "typst", "ada", "bash", "fish", "c", "cpp", "css", "html", "java", "javascript", "json", "haskell",
-	"latex", "lua", "markdown", "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc",
-	"c_sharp",
+  "just", "typst", "ada", "bash", "fish", "c", "cpp", "css", "html", "java", "javascript", "json", "haskell",
+  "latex", "lua", "markdown", "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc",
+  "razor", "c_sharp", "fsharp"
 }
 
 vim.treesitter.language.register('bash', 'sh')
@@ -54,8 +59,8 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Load LSP configurations
 local lsp_servers = {
-	"ada_language_server",
-	"bashls",
+  "ada_language_server",
+  "bashls",
   "basedpyright",
   "clangd",
   "cssls",
@@ -68,29 +73,20 @@ local lsp_servers = {
   "perlnavigator",
   "racket_langserver",
   "rust_analyzer",
-	"sqlls",
-	"marksman",
-	"sqls",
-	"ts_ls",
-	"tinymist",
-	"zls",
-	"harper_ls",
-	"haskell_language_server",
-	"omnisharp",
+  "sqlls",
+  "marksman",
+  "sqls",
+  "ts_ls",
+  "tinymist",
+  "zls",
+  "harper_ls",
+  "haskell_language_server",
 }
 
 -- Register configs for each LSP server
 for _, server in ipairs(lsp_servers) do
   local ok, config = pcall(require, 'lsp.' .. server)
   if ok then
-    if server == 'omnisharp' then
-      config.cmd = {
-        vim.fn.expand("$HOME/omnisharp/run"),
-        "--languageserver",
-        "--hostPID",
-        tostring(vim.fn.getpid()),
-      }
-    end
     vim.lsp.config(server, config)
   end
 end
@@ -98,14 +94,15 @@ end
 -- Enable all configured LSP servers
 vim.lsp.enable(lsp_servers)
 
-require "rose-pine".setup({
-  styles = {
-    bold = false,
-    italic = true,
-    transparency = true,
-  }
+require("vague").setup({
+  transparent = true, -- don't set background
 })
-vim.cmd [[colorscheme rose-pine]]
+
+vim.cmd("colorscheme vague")
+
+require("lualine").setup()
+
+require("easy-dotnet").setup()
 
 vim.g.mapleader = " "
 
@@ -152,6 +149,7 @@ vim.keymap.set('n', '<leader>m', ':update<CR> :make<CR>')
 
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y')
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p')
+vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P')
 
 vim.keymap.set({ 'n', 'v' }, '<leader>o', ':update<CR> :source<CR>')
 
