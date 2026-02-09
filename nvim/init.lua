@@ -34,8 +34,9 @@ vim.pack.add({
 
 -- Native Neovim 0.11+ Treesitter (yes!)
 local parsers = {
-  "just", "typst", "ada", "bash", "fish", "c", "cpp", "css", "html", "java", "javascript", "json", "haskell",
-  "latex", "lua", "markdown", "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc"
+	"just", "typst", "ada", "bash", "fish", "c", "cpp", "css", "html", "java", "javascript", "json", "haskell",
+	"latex", "lua", "markdown", "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc",
+	"c_sharp",
 }
 
 vim.treesitter.language.register('bash', 'sh')
@@ -53,8 +54,8 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Load LSP configurations
 local lsp_servers = {
-  "ada_language_server",
-  "bashls",
+	"ada_language_server",
+	"bashls",
   "basedpyright",
   "clangd",
   "cssls",
@@ -67,20 +68,29 @@ local lsp_servers = {
   "perlnavigator",
   "racket_langserver",
   "rust_analyzer",
-  "sqlls",
-  "marksman",
-  "sqls",
-  "ts_ls",
-  "tinymist",
-  "zls",
-  "harper_ls",
-  "haskell_language_server"
+	"sqlls",
+	"marksman",
+	"sqls",
+	"ts_ls",
+	"tinymist",
+	"zls",
+	"harper_ls",
+	"haskell_language_server",
+	"omnisharp",
 }
 
 -- Register configs for each LSP server
 for _, server in ipairs(lsp_servers) do
   local ok, config = pcall(require, 'lsp.' .. server)
   if ok then
+    if server == 'omnisharp' then
+      config.cmd = {
+        vim.fn.expand("$HOME/omnisharp/run"),
+        "--languageserver",
+        "--hostPID",
+        tostring(vim.fn.getpid()),
+      }
+    end
     vim.lsp.config(server, config)
   end
 end
@@ -155,7 +165,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 
-vim.keymap.set("n", "<leader>tv", ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR>")
+vim.keymap.set("n", "<leader>tv",
+  ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR>")
 vim.keymap.set("n", "<leader>z", "1z=")
 
 -- highlight briefly yanked text
@@ -169,6 +180,28 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'help',
   command = [[wincmd L]],
+})
+
+-- Shellcheck on save for shell scripts
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = shellcheckGroup,
+  pattern = { "*.sh", "*.bash" },
+  callback = function()
+    if vim.fn.executable "shellcheck" == 0 then
+      return
+    end
+
+    local output = vim.fn.system("shellcheck -f gcc " .. vim.fn.shellescape(vim.fn.expand "%"))
+    if vim.v.shell_error ~= 0 then
+      vim.fn.setqflist({}, "r", {
+        lines = vim.split(output, "\n"),
+        title = "Shellcheck: " .. vim.fn.expand "%:t",
+      })
+    else
+      vim.cmd "cclose"
+    end
+  end,
+  desc = "Run shellcheck and populate quickfix on save",
 })
 
 -- vim.net.request('tmpfile.com',

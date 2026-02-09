@@ -4,19 +4,25 @@
 ---
 --- Language Server for C#.
 ---
---- csharp-ls requires the [dotnet-sdk](https://dotnet.microsoft.com/download) to be installed.
 ---
---- The preferred way to install csharp-ls is with `dotnet tool install --global csharp-ls`.
-
-local util = require 'lspconfig.util'
+--- csharp-ls upstream config uses `lspconfig.util.root_pattern`; here we
+--- replicate the same behavior using Neovim's built-in `vim.fs` helpers so
+--- no external plugin is required.
 
 ---@type vim.lsp.Config
 return {
-  cmd = { 'csharp-ls' },
-  root_dir = function(bufnr, on_dir)
-    local fname = vim.api.nvim_buf_get_name(bufnr)
-    on_dir(util.root_pattern '*.sln'(fname) or util.root_pattern '*.slnx'(fname) or util.root_pattern '*.csproj'(fname))
-  end,
+	cmd = { '/Users/douglaslobo/.dotnet/tools/csharp-ls' },
+	root_dir = function(bufnr, on_dir)
+		local root = vim.fs.root(bufnr, function(name, _)
+			return name:match('%.sln[x]?$') ~= nil or name:match('%.csproj$') ~= nil
+		end)
+		if not root then
+			root = vim.fs.root(bufnr, { '.git' })
+		end
+		if root then
+			on_dir(root)
+		end
+	end,
   filetypes = { 'cs' },
   init_options = {
     AutomaticWorkspaceInit = true,
