@@ -2,8 +2,9 @@ term = xterm-ghostty
 
 # theme = CyberpunkScarletProtocol
 # custom-shader = ~/.config/ghostty/ghostty-shaders/retro-terminal.glsl
+custom-shader = ~/.config/ghostty/ghostty-shaders/cursor_tail.glsl
 
-shell-integration = zsh
+shell-integration = fish
 
 clipboard-read = allow
 clipboard-write = allow
@@ -25,4 +26,10 @@ window-decoration = true
 # background-blur = true
 
 # toggle_background_opacity = super+u # not yet implemented
+
+# Scroll through scrollback buffer (page up/down)
+keybind = shift+up=scroll_page_up
+keybind = shift+down=scroll_page_down
+keybind = shift+page_up=scroll_page_up
+keybind = shift+page_down=scroll_page_down
 
