@@ -8,11 +8,23 @@ cd "$DOTFILES"
 OS="$(uname -s)"
 
 # Cross-platform packages
-PACKAGES=(nvim fish tmux zed lazygit yazi scripts)
+PACKAGES=(fish nvim tmux zed lazygit yazi scripts)
 
 # macOS-only packages
 if [ "$OS" = "Darwin" ]; then
-    PACKAGES+=(ghostty aerospace kitty)
+    PACKAGES+=(aerospace kitty)
+
+    # Create machine-specific fish vars (gitignored)
+    LOCAL_FISH="$HOME/.config/fish/config.local.fish"
+    if [ ! -f "$LOCAL_FISH" ]; then
+        echo "Creating $LOCAL_FISH..."
+        cat > "$LOCAL_FISH" << 'EOF'
+set -gx BOOKS "$HOME/Library/Mobile Documents/iCloud~com~apple~iBooks/Documents"
+set -gx MONO_GAC_PREFIX "/opt/homebrew"
+set -gx DOTNET_ROOT /opt/homebrew/Cellar/dotnet/10.0.102/libexec
+set -gx DOTNET_ROOT_ARM64 $DOTNET_ROOT
+EOF
+    fi
 fi
 
 for pkg in "${PACKAGES[@]}"; do
