@@ -46,3 +46,6 @@ function mira
   rlwrap -- mira
 end
 
+
+# Added by Antigravity
+fish_add_path /Users/douglaslobo/.antigravity/antigravity/bin
