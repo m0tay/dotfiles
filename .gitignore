@@ -14,16 +14,16 @@ vim/.netrwhistory
 kak/plugins/
 
 # Zed runtime
-zed/prompts/*
-zed/settings_backup.json
-zed/config_bak
+zed/.config/zed/prompts/*
+zed/.config/zed/settings_backup.json
+zed/.config/zed/config_bak
 
 # Ghostty shaders (submodule/downloaded, not owned)
-ghostty/ghostty-shaders/
+ghostty/.config/ghostty/ghostty-shaders/
 
 # Machine-specific (not committed)
-fish/config.local.fish
+fish/.config/fish/config.local.fish
 
-# Abandoned / not stowed (leave in ~/.config but don't track)
+# Abandoned / not stowed
 m0tay/
 m0tay2/
