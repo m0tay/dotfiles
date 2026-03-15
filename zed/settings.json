@@ -11,7 +11,7 @@
       "projects": []
     }
   ],
-  "ui_font_size": 18.0,
+  "ui_font_size": 20.0,
   "ui_font_family": ".ZedSans",
   "disable_ai": true,
   "calls": {
@@ -25,12 +25,12 @@
   },
   "relative_line_numbers": "enabled",
   "buffer_line_height": "standard",
-  "buffer_font_size": 18.0,
+  "buffer_font_size": 20.0,
   "buffer_font_family": "0xProto Nerd Font",
   "theme": {
     "mode": "dark",
     "light": "Neovim default accented light",
-    "dark": "Dark Vaporwave (Blurred)"
+    "dark": "Terafox"
   },
   "vim_mode": true,
   "helix_mode": false
