@@ -29,3 +29,5 @@ for key, body in pairs(snippets) do
     vim.snippet.expand(body)
   end, { buffer = true })
 end
+
+vim.fn.setreg('h', [[I=]]) -- add = to start
