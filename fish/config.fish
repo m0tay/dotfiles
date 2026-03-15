@@ -8,10 +8,6 @@ set -gx EDITOR nvim
 set -gx READER sioyek
 
 set -gx CTESP "$HOME/Documents/CTeSP"
-set -gx BOOKS "$HOME/Library/Mobile Documents/iCloud~com~apple~iBooks/Documents"
-set -gx MONO_GAC_PREFIX "/opt/homebrew"
-set -gx DOTNET_ROOT /opt/homebrew/Cellar/dotnet/10.0.102/libexec
-set -gx DOTNET_ROOT_ARM64 $DOTNET_ROOT
 
 fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.config/scripts"
@@ -48,4 +44,9 @@ end
 
 
 # Added by Antigravity
-fish_add_path /Users/douglaslobo/.antigravity/antigravity/bin
+fish_add_path "$HOME/.antigravity/antigravity/bin"
+
+# Machine-specific overrides — not committed
+if test -f "$HOME/.config/fish/config.local.fish"
+    source "$HOME/.config/fish/config.local.fish"
+end
