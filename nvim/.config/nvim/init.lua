@@ -27,7 +27,6 @@ vim.g.netrw_banner = 0
 vim.diagnostic.config({ virtual_text = true })
 
 vim.pack.add({
-  { src = "https://github.com/rose-pine/neovim" },
   { src = "https://github.com/chomosuke/typst-preview.nvim" },
   { src = "https://github.com/Myriad-Dreamin/tinymist" },
   { src = "https://github.com/vague-theme/vague.nvim" },

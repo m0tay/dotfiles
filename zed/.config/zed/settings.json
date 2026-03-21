@@ -1,37 +1,19 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "ssh_connections": [
-    {
-      "host": "github.com",
-      "args": [],
-      "projects": []
-    },
-    {
-      "host": "lobo",
-      "args": [],
-      "projects": []
-    }
-  ],
-  "ui_font_size": 20.0,
-  "ui_font_family": ".ZedSans",
   "disable_ai": true,
-  "calls": {
-    "mute_on_join": true
-  },
-  "terminal": {
-    "shell": "system"
-  },
-  "search": {
-    "regex": true
-  },
-  "relative_line_numbers": "enabled",
-  "buffer_line_height": "standard",
-  "buffer_font_size": 20.0,
-  "buffer_font_family": "0xProto Nerd Font",
-  "theme": {
-    "mode": "dark",
-    "light": "Neovim default accented light",
-    "dark": "Terafox"
-  },
   "vim_mode": true,
-  "helix_mode": false
+  "ui_font_size": 16.0,
+  "buffer_font_size": 18.0,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark",
+  },
 }

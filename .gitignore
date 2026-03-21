@@ -1,5 +1,6 @@
 # Sensitive
 wireguard/
+gh/.config/gh/hosts.yml
 github-copilot/
 karabiner/
 kanata/
