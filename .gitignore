@@ -5,6 +5,12 @@ github-copilot/
 karabiner/
 kanata/
 
+# Colima runtime
+colima/.colima/_lima/
+colima/.colima/_store/
+colima/.colima/ssh_config
+colima/.colima/default/daemon/
+
 # Runtime noise
 .DS_Store
 zsh/.zcompdump

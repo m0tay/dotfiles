@@ -1,0 +1,18 @@
+[user]
+	name = Douglas Lobo
+	email = douglascnlobo@icloud.com
+[init]
+	defaultbranch = main
+[color]
+	ui = auto
+[merge]
+	tool = nvimdiff
+[core]
+	bare = false
+	filemode = true
+	logallrefsupdates = true
+	autocrlf = input
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = false
