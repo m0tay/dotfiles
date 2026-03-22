@@ -28,8 +28,6 @@ zed/.config/zed/config_bak
 # Ghostty shaders (submodule/downloaded, not owned)
 ghostty/.config/ghostty/ghostty-shaders/
 
-# Machine-specific (not committed)
-fish/.config/fish/config.local.fish
 
 # Abandoned / not stowed
 m0tay/
