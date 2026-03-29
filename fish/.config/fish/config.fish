@@ -11,7 +11,7 @@ fish_add_path "$HOME/.config/scripts"
 fish_add_path "$HOME/.local/share/bob/nvim-bin"
 fish_add_path "$HOME/.dotnet/tools"
 
-alias vim nvim
+alias vi nvim
 alias news newsraft
 
 function finder
@@ -47,3 +47,7 @@ fish_add_path "$HOME/.antigravity/antigravity/bin"
 if test -f "$HOME/.config/fish/config.local.fish"
     source "$HOME/.config/fish/config.local.fish"
 end
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
