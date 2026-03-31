@@ -34,6 +34,7 @@ vim.pack.add({
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/GustavEikaas/easy-dotnet.nvim" },
   { src = "https://github.com/ionide/Ionide-vim" },
+  { src = "https://github.com/milanglacier/minuet-ai.nvim" }
 })
 
 -- Native Neovim 0.11+ Treesitter (yes!)
@@ -103,6 +104,40 @@ require("lualine").setup()
 
 require("easy-dotnet").setup()
 
+-- require("minuet").setup({
+--   provider = "openai_fim_compatible",
+--
+--   n_completions = 1,
+--   context_window = 256,
+--   request_timeout = 5,
+--   throttle = 1000,
+--   debounce = 300,
+--
+--   virtualtext = {
+--     auto_trigger_ft = { "*" },
+--     keymap = {
+--       accept = "<A-a>",
+--       accept_line = "<A-l>",
+--       next = "<A-]>",
+--       prev = "<A-[>",
+--       dismiss = "<A-e>",
+--     },
+--   },
+--
+--   provider_options = {
+--     openai_fim_compatible = {
+--       api_key = "TERM",
+--       name = "Ollama",
+--       end_point = "http://localhost:11434/v1/completions",
+--       model = "qwen2.5-coder:1.5b",
+--       optional = {
+--         max_tokens = 64,
+--         top_p = 0.9,
+--       },
+--     },
+--   },
+-- })
+
 vim.g.mapleader = " "
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -164,6 +199,9 @@ vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 
 vim.keymap.set("n", "<leader>tv",
   ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR><CR>")
+vim.keymap.set("n", "<leader>ta",
+  require('minuet.virtualtext').action.toggle_auto_trigger,
+  { desc = "Toggle minuet AI autocomplete" })
 vim.keymap.set("n", "<leader>z", "1z=")
 
 -- highlight briefly yanked text
@@ -178,6 +216,7 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'help',
   command = [[wincmd L]],
 })
+
 
 -- Shellcheck on save for shell scripts
 vim.api.nvim_create_autocmd("BufWritePost", {
@@ -211,3 +250,5 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 --
 --     vim.print((vim.split(content.body, '\n', { plain = true })[1]))
 --   end))
+--
+
