@@ -12,6 +12,10 @@
       "rev": "47f91c416daef12db467145e16bed5bbfe00add8",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
+    "minuet-ai.nvim": {
+      "rev": "c7cb94070b701d6e44f05a03b49081c54f4fc2e5",
+      "src": "https://github.com/milanglacier/minuet-ai.nvim"
+    },
     "neovim": {
       "rev": "cf2a288696b03d0934da713d66c6d71557b5c997",
       "src": "https://github.com/rose-pine/neovim"
