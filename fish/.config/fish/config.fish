@@ -11,7 +11,7 @@ fish_add_path "$HOME/.config/scripts"
 fish_add_path "$HOME/.local/share/bob/nvim-bin"
 fish_add_path "$HOME/.dotnet/tools"
 
-alias vi nvim
+alias vim nvim
 alias news newsraft
 
 function finder
