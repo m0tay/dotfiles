@@ -28,6 +28,7 @@ zed/.config/zed/config_bak
 # Ghostty shaders (submodule/downloaded, not owned)
 ghostty/.config/ghostty/ghostty-shaders/
 
+*old
 
 # Abandoned / not stowed
 m0tay/
