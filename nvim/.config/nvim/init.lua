@@ -1,24 +1,27 @@
-vim.opt.mouse = ""
-vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes:1"
+vim.opt.confirm = true
+vim.opt.completeopt = "menuone,noinsert,preview,fuzzy,popup"
+vim.opt.textwidth = 100
 vim.opt.swapfile = false
+vim.opt.wildoptions:append { 'fuzzy' }
+vim.opt.path:append { '**' }
+vim.opt.smoothscroll = true
+vim.opt.termguicolors = true
 vim.opt.winborder = "rounded"
 vim.opt.cursorline = true
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.ignorecase = true
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 16
 vim.opt.smartindent = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.termguicolors = true
 vim.opt.undofile = true
-vim.opt.signcolumn = "yes:2"
-vim.opt.completeopt = { "menuone", "noinsert", "preview", "fuzzy", "popup" }
 vim.o.foldenable = true
 vim.o.foldlevel = 99
 vim.o.foldmethod = 'expr'
@@ -26,183 +29,49 @@ vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr'
 vim.g.netrw_banner = 0
 vim.diagnostic.config({ virtual_text = true })
 
-vim.pack.add({
-  { src = "https://github.com/chomosuke/typst-preview.nvim" },
-  { src = "https://github.com/Myriad-Dreamin/tinymist" },
-  { src = "https://github.com/vague-theme/vague.nvim" },
-  { src = "https://github.com/nvim-lualine/lualine.nvim" },
-  { src = "https://github.com/nvim-lua/plenary.nvim" },
-  { src = "https://github.com/GustavEikaas/easy-dotnet.nvim" },
-  { src = "https://github.com/ionide/Ionide-vim" },
-  { src = "https://github.com/milanglacier/minuet-ai.nvim" }
-})
 
--- Native Neovim 0.11+ Treesitter (yes!)
-local parsers = {
-  "just", "typst", "ada", "bash", "fish", "c", "cpp", "css", "html", "java", "javascript", "json", "haskell",
-  "latex", "lua", "markdown", "markdown_inline", "perl", "php", "python", "racket", "sql", "typescript", "vim", "vimdoc",
-  "razor", "c_sharp", "fsharp"
+vim.pack.add { 
+	"https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/vague-theme/vague.nvim",
+	"https://github.com/chomosuke/typst-preview.nvim",
 }
 
-vim.treesitter.language.register('bash', 'sh')
-vim.treesitter.language.register('just', 'just')
-
-for _, lang in ipairs(parsers) do
-  vim.treesitter.language.add(lang)
-end
-
-vim.api.nvim_create_autocmd("FileType", {
-  callback = function(args)
-    pcall(vim.treesitter.start, args.buf)
-  end,
-})
-
--- Load LSP configurations
-local lsp_servers = {
-  "ada_language_server",
-  "bashls",
-  "basedpyright",
-  "clangd",
-  "cssls",
-  "emmet_ls",
-  "fish_lsp",
-  "html",
-  "intelephense",
-  "jdtls",
-  "lua_ls",
-  "perlnavigator",
-  "racket_langserver",
-  "rust_analyzer",
-  "sqlls",
-  "marksman",
-  "sqls",
-  "ts_ls",
-  "tinymist",
-  "zls",
-  "harper_ls",
-  "haskell_language_server",
+require("vague").setup {
+	transparent = true
 }
-
--- Register configs for each LSP server
-for _, server in ipairs(lsp_servers) do
-  local ok, config = pcall(require, 'lsp.' .. server)
-  if ok then
-    vim.lsp.config(server, config)
-  end
-end
-
--- Enable all configured LSP servers
-vim.lsp.enable(lsp_servers)
-
-require("vague").setup({
-  transparent = true, -- don't set background
-})
-
-vim.cmd("colorscheme vague")
-
-require("lualine").setup()
-
-require("easy-dotnet").setup()
-
--- require("minuet").setup({
---   provider = "openai_fim_compatible",
---
---   n_completions = 1,
---   context_window = 256,
---   request_timeout = 5,
---   throttle = 1000,
---   debounce = 300,
---
---   virtualtext = {
---     auto_trigger_ft = { "*" },
---     keymap = {
---       accept = "<A-a>",
---       accept_line = "<A-l>",
---       next = "<A-]>",
---       prev = "<A-[>",
---       dismiss = "<A-e>",
---     },
---   },
---
---   provider_options = {
---     openai_fim_compatible = {
---       api_key = "TERM",
---       name = "Ollama",
---       end_point = "http://localhost:11434/v1/completions",
---       model = "qwen2.5-coder:1.5b",
---       optional = {
---         max_tokens = 64,
---         top_p = 0.9,
---       },
---     },
---   },
--- })
-
-vim.g.mapleader = " "
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('my.lsp', {}),
-  callback = function(args)
-    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-    if client:supports_method('textDocument/completion') then
-      -- Optional: trigger autocompletion on EVERY keypress. May be slow!
-      local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
-      client.server_capabilities.completionProvider.triggerCharacters = chars
-      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-
-      -- Disable Enter to accept completion, only use Ctrl-y
-      vim.keymap.set('i', '<CR>', function()
-        if vim.fn.pumvisible() == 1 then
-          return '<C-e><CR>'
-        else
-          return '<CR>'
-        end
-      end, { buffer = args.buf, expr = true })
-
-      vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help)
-      vim.keymap.set('n', 'grd', vim.lsp.buf.definition)
-      vim.keymap.set('n', 'grD', vim.lsp.buf.declaration)
-      vim.keymap.set('n', 'grf', vim.lsp.buf.format)
-      vim.keymap.set('n', 'gri', vim.lsp.buf.implementation)
-      vim.keymap.set('n', 'grr', vim.lsp.buf.references)
-      vim.keymap.set('n', 'grn', vim.lsp.buf.rename)
-      vim.keymap.set('n', 'gra', vim.lsp.buf.code_action)
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-    end
-  end,
-})
-
+vim.cmd [[colorscheme vague]]
 vim.cmd [[hi statusline guibg=NONE]]
 vim.cmd [[packadd nohlsearch]] -- life changer
 
+
+vim.g.mapleader = " "
+
+vim.keymap.set('n', '<leader><leader>', ":Ex<CR>")
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', '<leader>Q', ':qa<CR>')
 vim.keymap.set('n', '<leader>O', ':Open .<CR>')
 vim.keymap.set('n', '<leader>m', ':update<CR> :make<CR>')
-
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y')
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p')
 vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P')
-
 vim.keymap.set({ 'n', 'v' }, '<leader>o', ':update<CR> :source<CR>')
-
-vim.keymap.set('n', '<leader>e', ":Ex<CR>")
-
 vim.keymap.set("n", "n", "nzzzv", { desc = "next search result (centered)" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "previous search result (centered)" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "half page down (centered)" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
-
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
-
-vim.keymap.set("n", "<leader>tv",
-  ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR><CR>")
-vim.keymap.set("n", "<leader>ta",
-  require('minuet.virtualtext').action.toggle_auto_trigger,
-  { desc = "Toggle minuet AI autocomplete" })
+vim.keymap.set("n", "<leader>tv", ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR><CR>")
 vim.keymap.set("n", "<leader>z", "1z=")
+
+
+
+-- open help in vertical split
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'help',
+    command = [[wincmd L]],
+})
 
 -- highlight briefly yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -210,45 +79,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank()
   end,
 })
-
--- open help in vertical split
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'help',
-  command = [[wincmd L]],
-})
-
-
--- Shellcheck on save for shell scripts
-vim.api.nvim_create_autocmd("BufWritePost", {
-  group = shellcheckGroup,
-  pattern = { "*.sh", "*.bash" },
-  callback = function()
-    if vim.fn.executable "shellcheck" == 0 then
-      return
-    end
-
-    local output = vim.fn.system("shellcheck -f gcc " .. vim.fn.shellescape(vim.fn.expand "%"))
-    if vim.v.shell_error ~= 0 then
-      vim.fn.setqflist({}, "r", {
-        lines = vim.split(output, "\n"),
-        title = "Shellcheck: " .. vim.fn.expand "%:t",
-      })
-    else
-      vim.cmd "cclose"
-    end
-  end,
-  desc = "Run shellcheck and populate quickfix on save",
-})
-
--- vim.net.request('tmpfile.com',
---   { retry = 3 },
---   vim.schedule_wrap(function(err, content)
---     if err then
---       vim.notify(tostring(err), vim.log.levels.INFO)
---       return
---     end
---
---     vim.print((vim.split(content.body, '\n', { plain = true })[1]))
---   end))
---
-
