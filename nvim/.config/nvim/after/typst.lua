@@ -30,3 +30,5 @@ for key, body in pairs(snippets) do
 end
 
 vim.fn.setreg('h', [[I=]]) -- add = to start
+
+vim.lsp.enable [[typst_lsp]]
