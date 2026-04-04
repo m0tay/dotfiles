@@ -10,6 +10,7 @@ fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.config/scripts"
 fish_add_path "$HOME/.local/share/bob/nvim-bin"
 fish_add_path "$HOME/.dotnet/tools"
+fish_add_path /opt/homebrew/bin
 
 alias vim nvim
 alias news newsraft
@@ -35,19 +36,6 @@ function y
     rm -f -- "$tmp"
 end
 
-function mira
-  rlwrap -- mira
-end
-
-
-# Added by Antigravity
 fish_add_path "$HOME/.antigravity/antigravity/bin"
 
-# Machine-specific overrides — not committed
-if test -f "$HOME/.config/fish/config.local.fish"
-    source "$HOME/.config/fish/config.local.fish"
-end
-
-# Added by OrbStack: command-line tools and integration
-# This won't be added again if you remove it.
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
