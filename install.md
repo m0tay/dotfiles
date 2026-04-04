@@ -2,14 +2,9 @@
 
 Run from inside `~/.dotfiles`. Stow creates symlinks in `~` per `.stowrc`.
 
-## macOS
-
+or, run the following
 ```sh
-stow fish nvim tmux zed lazygit yazi scripts aerospace mac-fish git gh docker colima brew-bundle
+mkdir ~/.dotfiles && cd ~/.dotfiles
+stow fish nvim tmux zed lazygit yazi scripts aerospace git gh docker brew-bundle
 ```
 
-## Linux
-
-```sh
-stow fish nvim tmux zed lazygit yazi scripts git
-```
