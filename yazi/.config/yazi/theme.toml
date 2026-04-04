@@ -1,4 +1,0 @@
-[icon]
-prepend_exts = [
-  { name = "m", text = "󰘧", fg = "#3A515A" }
-]
