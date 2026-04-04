@@ -22,4 +22,4 @@
   wt = worktree
   sw = switch
   co = checkout
-  st = status
+  st = status -s
