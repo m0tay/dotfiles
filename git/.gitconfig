@@ -16,3 +16,15 @@
 	tool = nvimdiff
 [difftool]
 	prompt = false
+[alias]
+	l = log --oneline --graph --decorate
+  p = push
+	b = branch
+  w = worktree
+  s = switch
+  c = commit
+  a = add
+  co = checkout
+  d = diff
+  st = status
+  sts = status -s
