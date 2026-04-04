@@ -1,8 +1,11 @@
+vim.g.mapleader = " "
+
+-- OPTIONS ------------------------------------------------------------------
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes:1"
 vim.opt.confirm = true
-vim.opt.completeopt = "menuone,noinsert,preview,fuzzy,popup"
+vim.opt.completeopt = { "menuone", "noinsert", "preview", "fuzzy", "popup" }
 vim.opt.textwidth = 100
 vim.opt.swapfile = false
 vim.opt.wildoptions:append { 'fuzzy' }
@@ -22,31 +25,62 @@ vim.opt.smartindent = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.undofile = true
-vim.o.foldenable = true
-vim.o.foldlevel = 99
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr'
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr'
 vim.g.netrw_banner = 0
 vim.diagnostic.config({ virtual_text = true })
 
-
-vim.pack.add { 
-	"https://github.com/neovim/nvim-lspconfig",
+-- PLUGINS ------------------------------------------------------------------
+vim.pack.add {
+    "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/vague-theme/vague.nvim",
-	"https://github.com/chomosuke/typst-preview.nvim",
+    "https://github.com/chomosuke/typst-preview.nvim",
 }
 
-require("vague").setup {
-	transparent = true
+require("vague").setup { transparent = true }
+vim.cmd.colorscheme 'vague'
+vim.cmd.highlight 'statusline guibg=NONE'
+vim.cmd.packadd 'nohlsearch' -- life changer
+
+-- LSP ----------------------------------------------------------------------
+vim.lsp.enable {
+    "basedpyright",
+    "bashls",
+    "clangd",
+    "emmet_ls",
+    "fish_lsp",
+    "html",
+    "jdtls",
+    "lua_ls",
+    "racket_langserver",
+    "tinymist",
 }
-vim.cmd [[colorscheme vague]]
-vim.cmd [[hi statusline guibg=NONE]]
-vim.cmd [[packadd nohlsearch]] -- life changer
 
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('my.lsp', {}),
+    callback = function(args)
+        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+        if client:supports_method('textDocument/completion') then
+            local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+            client.server_capabilities.completionProvider.triggerCharacters = chars
+            vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
 
-vim.g.mapleader = " "
+            -- Don't accept completion with Enter, only Ctrl-y
+            vim.keymap.set('i', '<CR>', function()
+                return vim.fn.pumvisible() == 1 and '<C-e><CR>' or '<CR>'
+            end, { buffer = args.buf, expr = true })
 
-vim.keymap.set('n', '<leader><leader>', ":Ex<CR>")
+            vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help, { buffer = args.buf })
+            vim.keymap.set('n', 'grD', vim.lsp.buf.declaration,      { buffer = args.buf })
+            vim.keymap.set('n', 'grf', vim.lsp.buf.format,           { buffer = args.buf })
+        end
+    end,
+})
+
+-- KEYMAPS ------------------------------------------------------------------
+vim.keymap.set('n', '<leader><leader>', ':Ex<CR>')
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', '<leader>Q', ':qa<CR>')
@@ -56,26 +90,27 @@ vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y')
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p')
 vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P')
 vim.keymap.set({ 'n', 'v' }, '<leader>o', ':update<CR> :source<CR>')
-vim.keymap.set("n", "n", "nzzzv", { desc = "next search result (centered)" })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "previous search result (centered)" })
+vim.keymap.set("n", "n", "nzzzv",    { desc = "next search result (centered)" })
+vim.keymap.set("n", "N", "Nzzzv",    { desc = "previous search result (centered)" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "half page down (centered)" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "half page up (centered)" })
-vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
-vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
-vim.keymap.set("n", "<leader>tv", ":lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR><CR>")
+vim.keymap.set("v", "<", "<gv",      { desc = "indent left and reselect" })
+vim.keymap.set("v", ">", ">gv",      { desc = "indent right and reselect" })
+vim.keymap.set("n", "<leader>tv", function()
+    vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+end, { desc = "toggle diagnostic virtual text" })
 vim.keymap.set("n", "<leader>z", "1z=")
 
-
-
--- open help in vertical split
+-- AUTOCMDS -----------------------------------------------------------------
 vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('help_vertical', { clear = true }),
     pattern = 'help',
-    command = [[wincmd L]],
+    command = 'wincmd L',
+    desc = 'open help in vertical split',
 })
 
--- highlight briefly yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+    group = vim.api.nvim_create_augroup('yank_highlight', { clear = true }),
+    callback = function() vim.highlight.on_yank() end,
+    desc = 'briefly highlight yanked text',
 })
