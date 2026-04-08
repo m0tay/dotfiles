@@ -19,7 +19,16 @@
 [alias]
 	l = log --oneline --graph --decorate
 	b = branch
-  wt = worktree
-  sw = switch
-  co = checkout
-  st = status -s
+	ba = branch -a
+    wt = worktree
+    sw = switch
+    co = checkout
+	ci = commit
+    amend = commit --all --amend --no-edit
+    st = status -s
+	pr = pull --rebase
+	m = merge
+	sta = status
+	rh = reset HEAD
+	aa = add --all
+    release = tag -a "$1" -m "release $2"
