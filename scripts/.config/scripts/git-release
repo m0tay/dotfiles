@@ -23,9 +23,9 @@ tag () {
 }
 
 push () {
-    git push &> /dev/null && \
-    git push origin "v$1.$2.$3" &> /dev/null
-    echo "Pushed v$1.$2.$3"
+    git push "$1" &> /dev/null && \
+    git push "$1" "v$2.$3.$4" &> /dev/null
+    echo "Pushed v$2.$3.$4"
 }
 
 if test $# -lt 1; then
@@ -40,19 +40,28 @@ case $cmd in
         tag "$semvermajor" "$semverminor" "$((semverpatch + 1))"
         ;;
     minor)
-        newver="v$semvermajor.$((semverminor + 1)).0"
-        confirm "$newver" && tag "$semvermajor" "$((semverminor + 1))" "0"
+        tag "$semvermajor" "$((semverminor + 1))" "0"
         ;;
     major)
         newver="v$((semvermajor + 1)).0.0"
         confirm "$newver" && tag "$((semvermajor + 1))" "0" "0"
         ;;
     push)
-        push "$semvermajor" "$semverminor" "$semverpatch"
+        remote=$(git config branch."$(git rev-parse --abbrev-ref HEAD)".remote 2>/dev/null || echo "origin")
+        pushall=0
+        for arg in "$@"; do
+            if test "$arg" = "-a"; then pushall=1; fi
+        done
+        if test $pushall -eq 1; then
+            for r in $(git remote); do push "$r" "$semvermajor" "$semverminor" "$semverpatch"; done
+        else
+            push "$remote" "$semvermajor" "$semverminor" "$semverpatch"
+        fi
         ;;
     *)
-        echo "Usage: git release [patch|minor|major] [-y]"
-        echo "    (every release increments by one)"
+        echo "Usage: git release [patch|minor|major|push] [-y] [-a]"
+        echo "    patch/minor/major: tag the next version (-y to skip confirmation)"
+        echo "    push: push commits and tag to tracking remote (-a for all remotes)"
         exit 1
         ;;
 esac
