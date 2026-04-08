@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+semverpatch=$(git tag --sort=-v:refname | head -1 | grep -oP 'v\d+\.\d+\.\K\d+')
+semverminor=$(git tag --sort=-v:refname | head -1 | grep -oP 'v\d+\.\K\d+(?=\.\d+)')
+semvermajor=$(git tag --sort=-v:refname | head -1 | grep -oP 'v\K\d+(?=\.\d+\.\d+)')
+
+autoconfirm=0
+for arg in "$@"; do
+    if test "$arg" = "-y"; then
+        autoconfirm=1
+    fi
+done
+
+confirm () {
+    local version=$1
+    if test $autoconfirm -eq 1; then return 0; fi
+    read -p "Tag $version? [y/N] " answer
+    test "$answer" = "y"
+}
+
+tag () {
+    git tag -a "v$1.$2.$3" -m "release v$1.$2.$3"
+    echo "Tagged v$1.$2.$3"
+}
+
+if test $# -lt 1; then
+    git tag --sort=-v:refname | head -1
+    exit
+fi
+
+cmd=$1
+
+case $cmd in
+    patch)
+        tag "$semvermajor" "$semverminor" "$((semverpatch + 1))"
+        ;;
+    minor)
+        newver="v$semvermajor.$((semverminor + 1)).0"
+        confirm "$newver" && tag "$semvermajor" "$((semverminor + 1))" "0"
+        ;;
+    major)
+        newver="v$((semvermajor + 1)).0.0"
+        confirm "$newver" && tag "$((semvermajor + 1))" "0" "0"
+        ;;
+    *)
+        echo "Usage: git release [patch|minor|major] [-y]"
+        echo "    (every release increments by one)"
+        exit 1
+        ;;
+esac
+
