@@ -52,7 +52,7 @@ case $cmd in
         pushall=0
         notags=0
         for arg in "$@"; do
-            if test "$arg" = "-a"; then pushall=1; fi
+            if test "$arg" = "--all"; then pushall=1; fi
             if test "$arg" = "--no-tags"; then notags=1; fi
         done
         if test $notags -eq 1 && test $pushall -eq 1; then
