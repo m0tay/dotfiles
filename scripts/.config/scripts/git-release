@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-semverpatch=$(git tag --sort=-v:refname | head -1 | grep -oP 'v\d+\.\d+\.\K\d+')
-semverminor=$(git tag --sort=-v:refname | head -1 | grep -oP 'v\d+\.\K\d+(?=\.\d+)')
-semvermajor=$(git tag --sort=-v:refname | head -1 | grep -oP 'v\K\d+(?=\.\d+\.\d+)')
+latest=$(git tag --sort=-v:refname | head -1)
+semvermajor=$(echo "$latest" | sed 's/v\([0-9]*\)\..*/\1/')
+semverminor=$(echo "$latest" | sed 's/v[0-9]*\.\([0-9]*\)\..*/\1/')
+semverpatch=$(echo "$latest" | sed 's/.*\.\([0-9]*\)$/\1/')
 
 autoconfirm=0
 for arg in "$@"; do
