@@ -49,19 +49,25 @@ case $cmd in
     push)
         remote=$(git config branch."$(git rev-parse --abbrev-ref HEAD)".remote 2>/dev/null || echo "origin")
         pushall=0
+        notags=0
         for arg in "$@"; do
             if test "$arg" = "-a"; then pushall=1; fi
+            if test "$arg" = "--no-tags"; then notags=1; fi
         done
-        if test $pushall -eq 1; then
+        if test $notags -eq 1 && test $pushall -eq 1; then
+            for r in $(git remote); do git push "$r" && echo "Pushed to $r"; done
+        elif test $notags -eq 1; then
+            git push "$remote" && echo "Pushed to $remote"
+        elif test $pushall -eq 1; then
             for r in $(git remote); do push "$r" "$semvermajor" "$semverminor" "$semverpatch"; done
         else
             push "$remote" "$semvermajor" "$semverminor" "$semverpatch"
         fi
         ;;
     *)
-        echo "Usage: git release [patch|minor|major|push] [-y] [-a]"
+        echo "Usage: git release [patch|minor|major|push] [-y] [-a] [--no-tags]"
         echo "    patch/minor/major: tag the next version (-y to skip confirmation)"
-        echo "    push: push commits and tag to tracking remote (-a for all remotes)"
+        echo "    push: push commits and tag to tracking remote (-a for all remotes, --no-tags to skip tag)"
         exit 1
         ;;
 esac
