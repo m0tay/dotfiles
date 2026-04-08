@@ -22,6 +22,12 @@ tag () {
     echo "Tagged v$1.$2.$3"
 }
 
+push () {
+    git push &> /dev/null && \
+    git push origin "v$1.$2.$3" &> /dev/null
+    echo "Pushed v$1.$2.$3"
+}
+
 if test $# -lt 1; then
     git tag --sort=-v:refname | head -1
     exit
@@ -40,6 +46,9 @@ case $cmd in
     major)
         newver="v$((semvermajor + 1)).0.0"
         confirm "$newver" && tag "$((semvermajor + 1))" "0" "0"
+        ;;
+    push)
+        push "$semvermajor" "$semverminor" "$semverpatch"
         ;;
     *)
         echo "Usage: git release [patch|minor|major] [-y]"
