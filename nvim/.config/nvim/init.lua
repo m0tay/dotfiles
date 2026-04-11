@@ -37,9 +37,34 @@ vim.pack.add {
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/vague-theme/vague.nvim",
     "https://github.com/chomosuke/typst-preview.nvim",
+    "https://github.com/alex35mil/pi.nvim",
 }
 
 require("vague").setup { transparent = true }
+require("pi").setup({
+    layout = {
+        -- Default layout when opening the chat: "side" or "float".
+        default = "side",
+        side = {
+            -- Side panel position: "right" or "bottom".
+            position = "right",
+            -- Width in columns when position is "right".
+            width = 60,
+            panels = {
+                -- Show winbars on each panel in side layout.
+                history = { winbar = true },
+                prompt = { winbar = true },
+                attachments = { winbar = true },
+            },
+        },
+        float = {
+            -- Width/height: fraction (<1) or columns/lines (>=1).
+            width = 0.6,
+            height = 0.8,
+            border = "rounded",
+        },
+    },
+})
 vim.cmd.colorscheme 'vague'
 vim.cmd.highlight 'statusline guibg=NONE'
 vim.cmd.packadd 'nohlsearch' -- life changer
@@ -100,6 +125,12 @@ vim.keymap.set("n", "<leader>tv", function()
     vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
 end, { desc = "toggle diagnostic virtual text" })
 vim.keymap.set("n", "<leader>z", "1z=")
+vim.keymap.set({ "n", "v" }, "<Leader>pp", function() vim.cmd("Pi layout=side")  end, { desc = "Pi side"  })
+vim.keymap.set({ "n", "v" }, "<Leader>pl", "<Cmd>PiToggleLayout<CR>",                 { desc = "Pi toggle layout" })
+vim.keymap.set({ "n", "v" }, "<Leader>pc", "<Cmd>PiContinue<CR>",                     { desc = "Pi continue last session" })
+vim.keymap.set({ "n", "v" }, "<Leader>pr", "<Cmd>PiResume<CR>",                       { desc = "Pi resume past session" })
+vim.keymap.set({ "n", "v" }, "<Leader>pm", "<Cmd>PiSendMention<CR>",                  { desc = "Pi mention file/selection" })
+vim.keymap.set({ "n", "v" }, "<Leader>pa", "<Cmd>PiAttention<CR>",                    { desc = "Pi open next attention request" })
 
 -- AUTOCMDS -----------------------------------------------------------------
 vim.api.nvim_create_autocmd('FileType', {
