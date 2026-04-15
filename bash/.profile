@@ -26,6 +26,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export DOTNET_ROOT=/home/linuxbrew/.linuxbrew/Cellar/dotnet@8/8.0.124/libexec
-export PATH="$PATH:/home/linuxbrew/.linuxbrew/opt/dotnet@8/bin"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+if [[ "$(uname)" == "Darwin" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv bash)"
+else
+    export DOTNET_ROOT=/home/linuxbrew/.linuxbrew/Cellar/dotnet@8/8.0.124/libexec
+    export PATH="$PATH:/home/linuxbrew/.linuxbrew/opt/dotnet@8/bin"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+fi

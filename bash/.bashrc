@@ -14,12 +14,25 @@ shopt -s histappend
 # ─── Shell options ────────────────────────────────────────────────────────────
 shopt -s checkwinsize
 
-# ─── PATH ─────────────────────────────────────────────────────────────────────
-export PATH="\
+# ─── PATH & Homebrew ──────────────────────────────────────────────────────────
+if [[ "$(uname)" == "Darwin" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv bash)"
+    export PATH="\
+/opt/homebrew/bin:\
+/opt/homebrew/sbin:\
+$HOME/.config/scripts:\
+/usr/local/bin:\
+/usr/local/sbin:\
+/usr/bin:\
+/usr/sbin:\
+/bin:\
+/sbin"
+else
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+    export PATH="\
 /home/linuxbrew/.linuxbrew/bin:\
 /home/linuxbrew/.linuxbrew/sbin:\
 $HOME/.dotnet/tools:\
-$HOME/.local/share/bob/nvim-bin:\
 $HOME/.config/scripts:\
 /usr/local/bin:\
 /usr/local/sbin:\
@@ -29,9 +42,7 @@ $HOME/.config/scripts:\
 /sbin:\
 /usr/games:\
 /usr/lib/wsl/lib"
-
-# ─── Homebrew ─────────────────────────────────────────────────────────────────
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+fi
 
 # ─── Prompt ───────────────────────────────────────────────────────────────────
 __prompt() {
@@ -55,14 +66,17 @@ __prompt() {
 
 PROMPT_COMMAND=__prompt
 
-# ─── Colors ───────────────────────────────────────────────────────────────────
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+# ─── Colors & Aliases ─────────────────────────────────────────────────────────
+if [[ "$(uname)" == "Darwin" ]]; then
+    alias ls='ls -G'
+    alias ll='ls -lahG'
+else
+    if [ -x /usr/bin/dircolors ]; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    fi
+    alias ls='ls --color=auto'
+    alias ll='ls -lah --color=auto'
 fi
-
-# ─── Aliases ──────────────────────────────────────────────────────────────────
-alias ls='ls --color=auto'
-alias ll='ls -lah --color=auto'
 alias grep='grep --color=auto'
 alias vim=nvim
 alias manh='f(){ help -m "$1" | bat -l man -p; }; f'
