@@ -32,3 +32,5 @@
 	rh = reset HEAD
 	aa = add --all
     release = tag -a "$1" -m "release $2"
+[rebase]
+	autostash = true
