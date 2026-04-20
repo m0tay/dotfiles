@@ -27,8 +27,8 @@ vim.opt.splitbelow = true
 vim.opt.undofile = true
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr'
+vim.opt.foldmethod = 'marker'
+-- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr'
 vim.g.netrw_banner = 0
 vim.diagnostic.config({ virtual_text = true })
 
