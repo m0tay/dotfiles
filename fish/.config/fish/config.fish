@@ -39,3 +39,4 @@ end
 fish_add_path "$HOME/.antigravity/antigravity/bin"
 
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+direnv hook fish | source
