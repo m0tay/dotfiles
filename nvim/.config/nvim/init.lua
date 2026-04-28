@@ -38,6 +38,27 @@ vim.pack.add {
     "https://github.com/vague-theme/vague.nvim",
     "https://github.com/chomosuke/typst-preview.nvim",
     "https://github.com/alex35mil/pi.nvim",
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/ej-shafran/compile-mode.nvim",
+    "https://github.com/m00qek/baleia.nvim",
+}
+
+---module "compile-mode"
+---@type CompileModeOpts
+vim.g.compile_mode = {
+    baleia_setup = true,
+    bang_expansion = true,
+    use_pseudo_terminal = true,
+    default_command = function()
+        local filetype = vim.bo.filetype
+        if filetype == "cpp" then
+            return "c++ -Wall -Wextra -o %< % && ./%<"
+        elseif filetype == "c" then
+            return "cc -Wall -Wextra -o %< % && ./%<"
+        else
+            return ""
+        end
+    end,
 }
 
 require("vague").setup { transparent = true }
