@@ -342,3 +342,49 @@ shellcheck about
 bash about
 vim about
 vim
+ls
+vim main.cpp 
+lp
+ls
+rm a.out
+vim main.cpp 
+./a.out
+docker search baileys
+fastfetch
+vim
+vi
+brew update vim && brew upgrade vim
+vi
+npm i -g @mariozechner/pi-coding-agent
+tree ~/.dotfiles/ -L3
+tree ~/.dotfiles/ -L4
+tree ~/.dotfiles/ -L3
+tree ~/.dotfiles/ -L2
+tree ~/.dotfiles/ -L1
+tree ~/.dotfiles/ -lL2
+tree ~/.dotfiles/ -lL3
+tree ~/.dotfiles/ -aL 3
+tree ~/.dotfiles/ -aL 3 | grep -v .git
+tree ~/.dotfiles/ -aL 3 | grep -v .git | grep nvim sioyek
+tree ~/.dotfiles/ -aL 3 | grep -v .git | grep nvim\|sioyek
+tree ~/.dotfiles/ -aL 3 | grep -v .git | grep "nvim\|sioyek"
+tree ~/.dotfiles/ -aL 3 | grep -v .git | grep "nvim\|sioyek\|fish"
+tree ~/.dotfiles/ -aL 4 | grep -v .git | grep "nvim\|sioyek\|fish"
+tree ~/.dotfiles/ -aL 4 | grep -v .git | tree ~/.dotfiles/ -aL 4 | grep -v .git
+pwd
+mkdir ~/Developer/marcio_python
+echo $$
+echo $!
+which mkdir
+functions mkdir
+ls ~/Developer/
+vim .bashrc
+cd ~/Developer/marcio_python/
+pwd
+i
+oe
+st
+pwd
+uv venv
+source .venv/bin/activate.fish
+source .venv/bin/activate
