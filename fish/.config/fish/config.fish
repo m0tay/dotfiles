@@ -3,8 +3,19 @@ end
 set -g fish_autosuggestion_enabled 0
 set -gx EDITOR nvim
 set -gx READER sioyek
+if test (uname) = Darwin
+    set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+    set -gx MANROFFOPT "-c"
+else
+    set -gx MANPAGER "bat -l man -p"
+end
 
 set -gx CTESP "$HOME/Documents/CTeSP"
+# Optional but clean—sets where docsets live (defaults to ~/.local/share/dasht/docsets otherwise)
+set -gx DASHT_DOCSETS_DIR ~/.local/share/dasht/docsets
+
+# Optional cache directory (defaults to ~/.cache/dasht)
+set -gx DASHT_CACHE_DIR ~/.cache/dasht
 
 fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.config/scripts"
@@ -14,6 +25,11 @@ fish_add_path /opt/homebrew/bin
 
 alias vim nvim
 alias news newsraft
+
+function cppman
+    set -lx PAGER "bat -l man -p"
+    command cppman $argv
+end
 
 function finder
     open .
