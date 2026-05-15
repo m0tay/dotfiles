@@ -43,6 +43,22 @@ vim.pack.add {
     "https://github.com/m00qek/baleia.nvim",
 }
 
+-- baleia's PATTERN only matches SGR sequences (ending in 'm'), so non-SGR CSI
+-- sequences like ESC[K (Erase in Line, emitted by GCC/Clang color diagnostics)
+-- are never stripped and show up literally as ^[[K in the buffer.
+-- Fix: extend the pattern to all CSI sequences and guard apply() so non-SGR
+-- sequences (which have no digit params and would otherwise trigger reset())
+-- become no-ops instead of accidentally clearing active colors.
+do
+    local ansi = require("baleia.ansi")
+    ansi.PATTERN = "\x1b%[[%d;:]*[A-Za-z]"
+    local orig_apply = ansi.apply
+    ansi.apply = function(seq, style)
+        if seq:sub(-1) ~= "m" then return style or {} end
+        return orig_apply(seq, style)
+    end
+end
+
 ---module "compile-mode"
 ---@type CompileModeOpts
 vim.g.compile_mode = {
@@ -52,9 +68,9 @@ vim.g.compile_mode = {
     default_command = function()
         local filetype = vim.bo.filetype
         if filetype == "cpp" then
-            return "c++ -Wall -Wextra -o %< % && ./%<"
+            return "c++ -std=c++23 -Wall -Wextra -o %< % && ./%<"
         elseif filetype == "c" then
-            return "cc -Wall -Wextra -o %< % && ./%<"
+            return "cc -std=c23 -Wall -Wextra -o %< % && ./%<"
         else
             return ""
         end
