@@ -5,7 +5,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes:1"
 vim.opt.confirm = true
-vim.opt.completeopt = { "menuone", "noinsert", "preview", "fuzzy", "popup" }
+vim.opt.completeopt = { "menuone", "noinsert", "fuzzy", "popup" }
 vim.opt.textwidth = 100
 vim.opt.swapfile = false
 vim.opt.wildoptions:append { 'fuzzy' }
@@ -114,10 +114,10 @@ vim.lsp.enable {
     "emmet_ls",
     "fish_lsp",
     "html",
-    "jdtls",
     "lua_ls",
     "racket_langserver",
     "tinymist",
+    "zls"
 }
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -125,8 +125,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
         if client:supports_method('textDocument/completion') then
-            local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
-            client.server_capabilities.completionProvider.triggerCharacters = chars
             vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
 
             -- Don't accept completion with Enter, only Ctrl-y
