@@ -46,3 +46,8 @@ end
 
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
 direnv hook fish | source
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/douglaslobo/.lmstudio/bin
+# End of LM Studio CLI section
+
