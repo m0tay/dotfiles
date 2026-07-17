@@ -33,3 +33,8 @@ else
     export PATH="$PATH:/home/linuxbrew/.linuxbrew/opt/dotnet@8/bin"
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/douglaslobo/.lmstudio/bin"
+# End of LM Studio CLI section
+
