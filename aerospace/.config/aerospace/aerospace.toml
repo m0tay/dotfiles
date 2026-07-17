@@ -14,12 +14,19 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 on-focus-changed = "move-mouse window-lazy-center"
 
 [gaps]
-inner.horizontal = 8
-inner.vertical =   8
-outer.left =       16
-outer.bottom =     16
-outer.top =        16
-outer.right =      16
+# inner.horizontal = 8
+# inner.vertical =   8
+# outer.left =       16
+# outer.bottom =     16
+# outer.top =        16
+# outer.right =      16
+
+inner.horizontal = 0
+inner.vertical =   0
+outer.left =       0
+outer.bottom =     0
+outer.top =        0
+outer.right =      0
 
 # in this mode I can type freely on my portuguese diacritics
 [mode.input.binding]
@@ -68,14 +75,6 @@ alt-shift-9 = 'move-node-to-workspace 9'
 alt-shift-0 = 'move-node-to-workspace 0'
 alt-tab = 'workspace-back-and-forth'
 
-# alt-a = 'workspace A' # Obsidian
-# alt-t = 'workspace T' # Terminal
-# alt-s = 'workspace S' # Search (browser)
-# alt-d = 'workspace D' # Emacs / Android Studio / IntelliJ / Zed
-# alt-r = 'workspace R' # PDFs / Kiwix / Dash
-# alt-m = 'workspace M' # Mail
-# alt-v = 'workspace V' # DaVinci
-
 alt-shift-semicolon = 'mode service'
 
 [mode.service.binding]
@@ -91,80 +90,3 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
-
-# [[on-window-detected]]
-# if.app-id = 'com.apple.Safari'
-# run = 'move-node-to-workspace S'
-#
-# [[on-window-detected]]
-# if.app-id = 'app.zen-browser.zen'
-# run = 'move-node-to-workspace S'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.mitchellh.ghostty'
-# run = 'move-node-to-workspace T'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.jetbrains.intellij'
-# run = 'move-node-to-workspace D'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.google.android.studio'
-# run = 'move-node-to-workspace D'
-#
-# [[on-window-detected]]
-# if.app-id = 'dev.zed.Zed'
-# run = 'move-node-to-workspace D'
-#
-# [[on-window-detected]]
-# if.app-id = 'org.kicad.kicad'
-# run = 'move-node-to-workspace 3'
-#
-# [[on-window-detected]]
-# if.app-id = 'self.Kiwix'
-# run = 'move-node-to-workspace R'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.apple.iBooksX'
-# run = 'move-node-to-workspace R'
-#
-# [[on-window-detected]]
-# if.app-id = 'md.obsidian'
-# run = 'move-node-to-workspace A'
-#
-# [[on-window-detected]]
-# if.app-id = 'net.ankiweb.dtop'
-# run = 'move-node-to-workspace R'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.apple.mail'
-# run = 'move-node-to-workspace M'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.apple.mail'
-# run = 'move-node-to-workspace M'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.seriflabs.affinitydesigner'
-# run = 'move-node-to-workspace 7'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.seriflabs.affinityphoto'
-# run = 'move-node-to-workspace 8'
-#
-# [[on-window-detected]]
-# if.app-id = 'org.gnu.Emacs'
-# run = 'move-node-to-workspace D'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.electron.logseq'
-# run = 'move-node-to-workspace A'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.blackmagic-design.DaVinciResolve'
-# run = 'move-node-to-workspace V'
-
-# [[on-window-detected]]
-# if.app-id = 'com.figma.Desktop'
-# run = 'move-node-to-workspace C'
-
