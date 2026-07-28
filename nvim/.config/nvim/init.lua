@@ -119,3 +119,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function() vim.highlight.on_yank() end,
     desc = 'briefly highlight yanked text',
 })
+
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    local pid = vim.fn.jobpid(vim.b.terminal_job_id)
+    vim.api.nvim_buf_set_name(0, "terminal " .. pid)
+  end,
+})
