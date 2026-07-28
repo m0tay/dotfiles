@@ -54,6 +54,7 @@ vim.pack.add {
     "NeogitOrg/neogit",
     "sindrets/diffview.nvim",
     "ibhagwan/fzf-lua",
+    "https://github.com/seblyng/roslyn.nvim.git"
 }
 
 
@@ -74,8 +75,10 @@ vim.lsp.enable {
     "lua_ls",
     "racket_langserver",
     "tinymist",
-    "zls"
+    "zls",
 }
+
+require("roslyn").setup()
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('my.lsp', {}),
