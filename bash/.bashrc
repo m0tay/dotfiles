@@ -20,6 +20,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export PATH="\
 /opt/homebrew/bin:\
 /opt/homebrew/sbin:\
+$HOME/.dotnet/tools:\
 $HOME/.config/scripts:\
 /usr/local/bin:\
 /usr/local/sbin:\
