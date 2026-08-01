@@ -101,3 +101,7 @@ fi
 export PATH="$PATH:/Users/douglaslobo/.lmstudio/bin"
 # End of LM Studio CLI section
 
+# Open files in parent Neovim instance when inside a Neovim terminal
+if [[ -n "$NVIM" ]]; then
+    alias nvim='nvim --server $NVIM --remote'
+fi
