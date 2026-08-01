@@ -1,6 +1,5 @@
 vim.g.mapleader = " "
 
--- Fix PATH for GUI environments
 local paths_to_add = {
     "/opt/homebrew/bin",
     vim.fn.expand("~/.dotnet/tools"),
@@ -13,7 +12,6 @@ for _, p in ipairs(paths_to_add) do
     end
 end
 
--- OPTIONS ------------------------------------------------------------------
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes:1"
@@ -45,17 +43,28 @@ vim.opt.foldmethod = 'marker'
 vim.g.netrw_banner = 0
 vim.diagnostic.config({ virtual_text = true })
 
--- PLUGINS ------------------------------------------------------------------
 vim.pack.add {
-    "neovim/nvim-lspconfig",
-    "vague-theme/vague.nvim",
-    "chomosuke/typst-preview.nvim",
-    "nvim-lua/plenary.nvim",
-    "NeogitOrg/neogit",
-    "sindrets/diffview.nvim",
-    "ibhagwan/fzf-lua",
-    "https://github.com/seblyng/roslyn.nvim.git"
+    "https://github.com/vague-theme/vague.nvim",
+    "https://github.com/chomosuke/typst-preview.nvim",
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/NeogitOrg/neogit",
+    "https://github.com/sindrets/diffview.nvim",
+    "https://github.com/nvim-tree/nvim-web-devicons.git",
+    "https://github.com/neovim/nvim-lspconfig.git",
+    "https://github.com/williamboman/mason.nvim.git",
+    "https://github.com/williamboman/mason-lspconfig.nvim.git",
+    "https://github.com/romus204/tree-sitter-manager.nvim.git",
+    "https://github.com/seblyng/roslyn.nvim.git",
+    "https://github.com/x3ero0/dired.nvim.git",
+    "https://github.com/MunifTanjim/nui.nvim.git",
+    "https://github.com/mfussenegger/nvim-dap.git",
+    "https://github.com/nvim-neotest/nvim-nio.git",
+    "https://github.com/rcarriga/nvim-dap-ui.git",
+    "https://github.com/jay-babu/mason-nvim-dap.nvim.git",
+    "https://github.com/JavaHello/spring-boot.nvim.git",
+    "https://github.com/nvim-java/nvim-java.git"
 }
+
 
 
 require("vague").setup { transparent = true }
@@ -64,42 +73,75 @@ vim.cmd.colorscheme 'vague'
 vim.cmd.highlight 'statusline guibg=NONE'
 vim.cmd.packadd 'nohlsearch' -- life changer
 
--- LSP ----------------------------------------------------------------------
-vim.lsp.enable {
-    "basedpyright",
-    "bashls",
-    "clangd",
-    "emmet_ls",
-    "fish_lsp",
-    "html",
-    "lua_ls",
-    "racket_langserver",
-    "tinymist",
-    "zls",
-}
+require("mason").setup({
+    registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+    },
+})
+require("tree-sitter-manager").setup()
+
+require("java").setup()
+
+require("mason-lspconfig").setup({
+    handlers = {
+        function(server_name)
+            if server_name ~= "roslyn" then
+                require("lspconfig")[server_name].setup({})
+            end
+        end,
+    },
+})
+
+vim.filetype.add({
+    extension = {
+        razor = "razor",
+        cshtml = "razor",
+    },
+})
 
 require("roslyn").setup()
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('my.lsp', {}),
     callback = function(args)
-        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-        if client:supports_method('textDocument/completion') then
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client and client.server_capabilities.completionProvider then
             vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-
-            -- -- Don't accept completion with Enter, only Ctrl-y
-            -- vim.keymap.set('i', '<CR>', function()
-            --     return vim.fn.pumvisible() == 1 and '<C-e><CR>' or '<CR>'
-            -- end, { buffer = args.buf, expr = true })
-
-            vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help, { buffer = args.buf })
-            vim.keymap.set('n', 'grD', vim.lsp.buf.declaration, { buffer = args.buf })
-            vim.keymap.set('n', 'grf', vim.lsp.buf.format, { buffer = args.buf })
         end
     end,
 })
 
--- KEYMAPS ------------------------------------------------------------------
+local dap = require("dap")
+local dapui = require("dapui")
+
+dapui.setup()
+
+require("mason-nvim-dap").setup({
+    automatic_installation = false,
+    handlers = {
+        function(config)
+            require('mason-nvim-dap').default_setup(config)
+        end,
+    },
+})
+
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+end
+
+vim.keymap.set('n', '<F5>', dap.continue, { desc = "Debug: Continue" })
+vim.keymap.set('n', '<F10>', dap.step_over, { desc = "Debug: Step Over" })
+vim.keymap.set('n', '<F11>', dap.step_into, { desc = "Debug: Step Into" })
+vim.keymap.set('n', '<F12>', dap.step_out, { desc = "Debug: Step Out" })
+vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
+
 vim.keymap.set('n', '<leader><leader>', ':Ex<CR>')
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
@@ -122,7 +164,6 @@ end, { desc = "toggle diagnostic virtual text" })
 vim.keymap.set("n", "<leader>z", "1z=")
 vim.keymap.set("n", "<leader>g", "<cmd>Neogit<cr>", { desc = "Open Neogit UI" })
 
--- AUTOCMDS -----------------------------------------------------------------
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('help_vertical', { clear = true }),
     pattern = 'help',
@@ -134,12 +175,4 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     group = vim.api.nvim_create_augroup('yank_highlight', { clear = true }),
     callback = function() vim.highlight.on_yank() end,
     desc = 'briefly highlight yanked text',
-})
-
-vim.api.nvim_create_autocmd("TermOpen", {
-  pattern = "*",
-  callback = function()
-    local pid = vim.fn.jobpid(vim.b.terminal_job_id)
-    vim.api.nvim_buf_set_name(0, "terminal " .. pid)
-  end,
 })
