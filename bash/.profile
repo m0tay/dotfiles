@@ -38,3 +38,7 @@ fi
 export PATH="$PATH:/Users/douglaslobo/.lmstudio/bin"
 # End of LM Studio CLI section
 
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init.bash 2>/dev/null || :

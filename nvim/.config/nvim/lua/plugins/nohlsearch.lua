@@ -1,1 +1,1 @@
-vim.cmd.packadd 'nohlsearch' -- life changer
+vim.cmd.packadd("nohlsearch") -- life changer
