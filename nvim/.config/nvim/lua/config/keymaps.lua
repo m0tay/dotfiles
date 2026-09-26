@@ -37,3 +37,24 @@ if vim.g.neovide then
     vim.keymap.set('c', '<D-v>', '<C-r>+', { noremap = true, silent = true })
     vim.keymap.set('t', '<D-v>', '<C-\\><C-n>"+pi', { noremap = true, silent = true })
 end
+
+local function open_term_here()
+    local buf_name = vim.api.nvim_buf_get_name(0)
+    local dir
+    if buf_name ~= "" and vim.uv.fs_stat(buf_name) then
+        dir = vim.fs.dirname(buf_name)
+    else
+        dir = vim.fn.getcwd()
+    end
+    vim.cmd.split()
+    vim.fn.termopen(vim.o.shell, { cwd = dir })
+    vim.cmd.startinsert()
+end
+
+vim.api.nvim_create_user_command("TermHere", open_term_here, {
+    desc = "open terminal split rooted at active file dir",
+})
+vim.keymap.set("n", "<leader>te", "<cmd>TermHere<CR>", {
+    silent = true,
+    desc = "terminal in current file dir",
+})

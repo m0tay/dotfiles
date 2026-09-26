@@ -84,3 +84,18 @@ vim.api.nvim_create_user_command("PackClean", function()
     vim.pack.del(inactive)
     vim.notify("Removed: " .. table.concat(inactive, ", "), vim.log.levels.INFO)
 end, { desc = "Remove plugins not in vim.pack.add() specs" })
+
+vim.api.nvim_create_autocmd("TermRequest", {
+    desc = "handle OSC 7 dir reporting from terminal",
+    callback = function(ev)
+        local seq = ev.data and ev.data.sequence
+        if not seq then return end
+        local dir = seq:match("^\027%]7;file://[^/]*(/[^\027\\]+)")
+        if dir then
+            dir = dir:gsub("%%(%x%x)", function(hex) return string.char(tonumber(hex, 16)) end)
+            if vim.uv.fs_stat(dir) then
+                vim.cmd.tcd(dir)
+            end
+        end
+    end,
+})
