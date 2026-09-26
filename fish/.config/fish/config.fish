@@ -51,3 +51,7 @@ direnv hook fish | source
 set -gx PATH $PATH /Users/douglaslobo/.lmstudio/bin
 # End of LM Studio CLI section
 
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+set --export --prepend PATH "/Users/douglaslobo/.rd/bin"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

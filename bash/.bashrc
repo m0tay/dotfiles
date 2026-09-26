@@ -103,5 +103,19 @@ export PATH="$PATH:/Users/douglaslobo/.lmstudio/bin"
 
 # Open files in parent Neovim instance when inside a Neovim terminal
 if [[ -n "$NVIM" ]]; then
-    alias nvim='nvim --server $NVIM --remote'
+    nvim() {
+        if [[ $# -eq 0 ]]; then
+            # No args: open a new Neovide window instead of erroring
+            open -a Neovide
+        else
+            command nvim --server "$NVIM" --remote "$@"
+        fi
+    }
 fi
+alias neovide="/Applications/Neovide.app/Contents/MacOS/neovide &>/dev/null &"
+alias neovide="open -a Neovide"
+export KUBECONFIG="$HOME/.kube/config"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/douglaslobo/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
