@@ -57,7 +57,6 @@ fi
 autoload -Uz compinit
 compinit
 
-# Enable interactive completion menu and colors
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ''
 
@@ -73,10 +72,10 @@ precmd() {
     [[ -n "$branch" ]] && git_part=" %F{cyan}on%f %B${branch}%b"
 
     PROMPT="%F{cyan}[%f%1~%F{cyan}]%f${git_part} ${glyph_color}β%f "
+    printf '\e]7;file://%s%s\e\\' "$HOST" "$PWD"
 }
 
 # ─── Colors & Aliases ─────────────────────────────────────────────────────────
-# Enable dircolors for uutils ls
 if [ -x /opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors ]; then
     test -r ~/.dircolors && eval "$(/opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors -b ~/.dircolors)" || eval "$(/opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors -b)"
 fi
@@ -86,7 +85,6 @@ alias grep='grep --color=auto'
 alias vim=nvim
 
 manh() {
-    # In zsh, run-help is equivalent to bash's help command
     run-help "$1" 2>/dev/null | bat -l man -p
 }
 

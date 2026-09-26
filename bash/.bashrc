@@ -66,12 +66,12 @@ __prompt() {
     [[ -n "$branch" ]] && git_part=" ${cyan}on${reset} ${bold}${branch}${reset}"
 
     PS1="${cyan}[${reset}\W${cyan}]${reset}${git_part} ${glyph_color}β${reset} "
+    printf '\e]7;file://%s%s\e\\' "$HOSTNAME" "$PWD"
 }
 
 PROMPT_COMMAND=__prompt
 
 # ─── Colors & Aliases ─────────────────────────────────────────────────────────
-# Enable dircolors for uutils ls
 if [ -x /opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors ]; then
     test -r ~/.dircolors && eval "$(/opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors -b ~/.dircolors)" || eval "$(/opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors -b)"
 fi
