@@ -23,6 +23,7 @@ $HOME/.config/scripts:\
 /sbin"
 
 autoload -Uz compinit && compinit
+zmodload zsh/complist
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ''
 
