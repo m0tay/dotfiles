@@ -99,3 +99,28 @@ vim.api.nvim_create_autocmd("TermRequest", {
         end
     end,
 })
+
+-- intercept all native terminal commands to use buffer-aware logic
+vim.api.nvim_create_user_command("TermHere", function(opts)
+    if vim.bo.buftype == "terminal" then
+        vim.notify("Already in a terminal buffer", vim.log.levels.WARN)
+        return
+    end
+
+    local buf_name = vim.api.nvim_buf_get_name(0)
+    local dir = (buf_name ~= "" and vim.fn.filereadable(buf_name) == 1) and vim.fs.dirname(buf_name) or vim.fn.getcwd()
+
+    local term_buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_win_set_buf(0, term_buf)
+
+    local cmd = vim.o.shell
+    if opts.args ~= "" then cmd = opts.args end
+    vim.fn.jobstart(cmd, { term = true, cwd = dir })
+    vim.cmd.startinsert()
+end, { nargs = "*", desc = "buffer-aware terminal" })
+
+vim.cmd([[
+  cnoreabbrev <expr> te getcmdtype() == ':' && getcmdline() == 'te' ? 'TermHere' : 'te'
+  cnoreabbrev <expr> term getcmdtype() == ':' && getcmdline() == 'term' ? 'TermHere' : 'term'
+  cnoreabbrev <expr> terminal getcmdtype() == ':' && getcmdline() == 'terminal' ? 'TermHere' : 'terminal'
+]])
