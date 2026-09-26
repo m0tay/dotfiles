@@ -2,6 +2,8 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=2000
 setopt append_history hist_ignore_space hist_ignore_dups prompt_subst
+setopt inc_append_history share_history hist_ignore_all_dups hist_reduce_blanks extended_history
+setopt auto_cd interactive_comments multios
 
 [ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
 [ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
@@ -24,8 +26,15 @@ $HOME/.config/scripts:\
 
 autoload -Uz compinit && compinit
 zmodload zsh/complist
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select
-zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 precmd() {
     local exit_status=$?
@@ -71,3 +80,5 @@ fi
 export PATH="$PATH:/Users/douglaslobo/.lmstudio/bin"
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 export PATH="/Users/douglaslobo/.rd/bin:$PATH"
+
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null || :
