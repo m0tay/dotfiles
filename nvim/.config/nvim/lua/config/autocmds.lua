@@ -1,12 +1,14 @@
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('my.lsp', {}),
-    callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client and client.server_capabilities.completionProvider then
-            vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-        end
-    end,
-})
+-- NOTE: Native LSP completion is disabled because nvim-cmp handles all
+-- completion. Enabling both causes conflicts (e.g. C-n/C-p breaks in Java).
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--     group = vim.api.nvim_create_augroup('my.lsp', {}),
+--     callback = function(args)
+--         local client = vim.lsp.get_client_by_id(args.data.client_id)
+--         if client and client.server_capabilities.completionProvider then
+--             vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+--         end
+--     end,
+-- })
 
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('help_vertical', { clear = true }),

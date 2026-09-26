@@ -1,4 +1,5 @@
 vim.pack.add {
+    "https://github.com/MunifTanjim/nui.nvim.git",
     "https://github.com/JavaHello/spring-boot.nvim.git",
     "https://github.com/nvim-java/nvim-java.git",
 }
