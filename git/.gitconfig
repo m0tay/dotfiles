@@ -1,6 +1,7 @@
 [user]
 	name = Douglas Lobo
 	email = douglascnlobo@icloud.com
+	signingkey = C17A78D5551E2126ED7D60EFB51E5F7876988A66
 [init]
 	defaultbranch = main
 [color]
@@ -34,3 +35,5 @@
     release = tag -a "$1" -m "release $2"
 [rebase]
 	autostash = true
+[commit]
+	gpgsign = true
