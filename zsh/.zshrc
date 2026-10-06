@@ -82,3 +82,7 @@ source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 export PATH="/Users/douglaslobo/.rd/bin:$PATH"
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null || :
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
