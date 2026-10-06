@@ -81,3 +81,4 @@ fi
 export KUBECONFIG="$HOME/.kube/config"
 export PATH="$PATH:/Users/douglaslobo/.lmstudio/bin"
 export PATH="/Users/douglaslobo/.rd/bin:$PATH"
+. "$HOME/.cargo/env"
