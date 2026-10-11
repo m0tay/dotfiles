@@ -58,6 +58,8 @@ alias ll='ls -lah --color=auto'
 alias grep='grep --color=auto'
 alias vim=nvim
 alias neovide="open -a Neovide"
+alias ff=fastfetch
+alias k=kubectl
 
 manh() {
     run-help "$1" 2>/dev/null | bat -l man -p
@@ -86,3 +88,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/douglaslobo/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
