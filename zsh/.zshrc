@@ -15,8 +15,10 @@ export PATH="\
 /opt/homebrew/opt/uutils-diffutils/libexec/uubin:\
 /opt/homebrew/bin:\
 /opt/homebrew/sbin:\
+$HOME/.local/bin:\
 $HOME/.dotnet/tools:\
 $HOME/.config/scripts:\
+$HOME/.cargo/bin:\
 /usr/local/bin:\
 /usr/local/sbin:\
 /usr/bin:\
