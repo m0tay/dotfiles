@@ -1,96 +1,113 @@
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
-setopt append_history hist_ignore_space hist_ignore_dups prompt_subst
-setopt inc_append_history share_history hist_ignore_all_dups hist_reduce_blanks extended_history
-setopt auto_cd interactive_comments multios
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+export XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+mkdir -p $XDG_CACHE_HOME/zsh $XDG_STATE_HOME/zsh
 
-[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
-[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-export PATH="\
-/opt/homebrew/opt/uutils-coreutils/libexec/uubin:\
-/opt/homebrew/opt/uutils-findutils/libexec/uubin:\
-/opt/homebrew/opt/uutils-diffutils/libexec/uubin:\
-/opt/homebrew/bin:\
-/opt/homebrew/sbin:\
-$HOME/.local/bin:\
-$HOME/.dotnet/tools:\
-$HOME/.config/scripts:\
-$HOME/.cargo/bin:\
-/usr/local/bin:\
-/usr/local/sbin:\
-/usr/bin:\
-/usr/sbin:\
-/bin:\
-/sbin"
+typeset -U path fpath
+path=(
+  $HOME/.local/bin
+  $HOME/.config/scripts
+  $HOME/.nix-profile/bin
+  /etc/profiles/per-user/$USER/bin
+  /run/current-system/sw/bin
+  /nix/var/nix/profiles/default/bin
+  /opt/homebrew/opt/uutils-{coreutils,findutils,diffutils}/libexec/uubin
+  $HOME/.cargo/bin
+  $HOME/.dotnet/tools
+  $HOME/.lmstudio/bin
+  $path
+)
+path=( ${^path}(N-/) )
 
-autoload -Uz compinit && compinit
-zmodload zsh/complist
+fpath=(
+  $HOME/.nix-profile/share/zsh/site-functions
+  /etc/profiles/per-user/$USER/share/zsh/site-functions
+  /run/current-system/sw/share/zsh/site-functions
+  $fpath
+)
+fpath=( ${^fpath}(N-/) )
 
+export EDITOR=nvim VISUAL=nvim
+export LESS='-R -F -X -i -M'
+export MANPAGER="sh -c 'col -bx | bat -l man -p --color=always'"
+export MANROFFOPT="-c"
+export HOMEBREW_NO_ANALYTICS=1 HOMEBREW_NO_ENV_HINTS=1
+
+HISTFILE=$XDG_STATE_HOME/zsh/history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt share_history hist_ignore_all_dups hist_ignore_space hist_reduce_blanks extended_history
+setopt auto_cd
+
+# before the zstyle that reads LS_COLORS
+if (( $+commands[dircolors] )); then
+  if [[ -r ~/.dircolors ]]; then eval "$(dircolors -b ~/.dircolors)"; else eval "$(dircolors -b)"; fi
+fi
+
+autoload -Uz compinit; zmodload zsh/complist
+() {
+  setopt local_options extended_glob
+  local dump=$XDG_CACHE_HOME/zsh/zcompdump
+  if [[ -n $dump(#qN.mh+24) ]]; then compinit -d $dump; else compinit -C -d $dump; fi
+}
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
+zstyle ':completion:*:options' description yes
 zstyle ':completion:*:options' auto-description '%d'
 zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:messages'    format ' %F{purple}-- %d --%f'
+zstyle ':completion:*:warnings'    format ' %F{red}-- no matches found --%f'
 
-precmd() {
-    local exit_status=$?
-    local glyph_color="%F{magenta}"
-    [[ $exit_status -ne 0 ]] && glyph_color="%F{red}"
-    
-    local git_part=""
-    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    [[ -n "$branch" ]] && git_part=" %F{cyan}on%f %B${branch}%b"
-    
-    PROMPT="%F{cyan}[%f%1~%F{cyan}]%f${git_part} ${glyph_color}β%f "
-    printf '\e]7;file://%s%s\e\\' "$HOST" "$PWD"
+_cache_comp() {
+  (( $+commands[$1] )) || return 0
+  local f=$XDG_CACHE_HOME/zsh/comp-$1.zsh
+  [[ -s $f ]] || "$@" >| $f 2>/dev/null
+  source $f
 }
+_cache_comp ng completion script
 
-if [ -x /opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(/opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors -b ~/.dircolors)" || eval "$(/opt/homebrew/opt/uutils-coreutils/libexec/uubin/dircolors -b)"
+_prompt_precmd() {
+  local exit_status=$?   # must stay first
+  local glyph="%F{magenta}"; (( exit_status )) && glyph="%F{red}"
+  local branch git_part=""
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  [[ -n $branch ]] && git_part=" %F{cyan}on%f %B${branch}%b"
+  [[ -n $IN_NIX_SHELL ]] && git_part+=" %F{yellow}(nix)%f"
+  PROMPT="%F{cyan}[%f%1~%F{cyan}]%f${git_part} ${glyph}β%f "
+  printf '\e]7;file://%s%s\e\\' "$HOST" "$PWD"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _prompt_precmd
+
+alias ls='ls --color=auto' ll='ls -lah --color=auto' grep='grep --color=auto'
+alias vim=nvim k=kubectl ff=fastfetch
+alias neovide='open -a Neovide'
+alias ndev='nix develop -c $SHELL'
+alias nrs='sudo darwin-rebuild switch --flake ~/.config/nix-darwin'
+
+
+manh() { run-help "$1" 2>/dev/null | bat -l man -p }
+
+if [[ -n $NVIM ]]; then
+  nvim() {
+    if (( $# == 0 )); then open -a Neovide
+    else command nvim --server "$NVIM" --remote "$@"; fi
+  }
 fi
 
-alias ls='ls --color=auto'
-alias ll='ls -lah --color=auto'
-alias grep='grep --color=auto'
-alias vim=nvim
-alias neovide="open -a Neovide"
-alias ff=fastfetch
-alias k=kubectl
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
+[[ -r ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
 
-manh() {
-    run-help "$1" 2>/dev/null | bat -l man -p
-}
-
-export MANPAGER="sh -c 'col -bx | bat -l man -p --color=always'"
-export MANROFFOPT="-c"
-export KUBECONFIG="$HOME/.kube/config"
-
-if [[ -n "$NVIM" ]]; then
-    nvim() {
-        if [[ $# -eq 0 ]]; then
-            open -a Neovide
-        else
-            command nvim --server "$NVIM" --remote "$@"
-        fi
-    }
-fi
-
-export PATH="$PATH:/Users/douglaslobo/.lmstudio/bin"
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :
-export PATH="/Users/douglaslobo/.rd/bin:$PATH"
-
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null || :
-
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/douglaslobo/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+# must be last
+for f in \
+  $HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /etc/profiles/per-user/$USER/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+do [[ -r $f ]] && { source $f; break; } done
+unset f

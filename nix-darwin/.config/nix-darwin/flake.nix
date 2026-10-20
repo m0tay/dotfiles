@@ -11,95 +11,49 @@
     let
       configuration = { pkgs, ... }: {
         environment.systemPackages = with pkgs; [
-          # Já tinhas
-          vim
           kubectl
           bat
           fastfetch
           direnv
           neovim
 
-          # Shell e utilitários
           uutils-coreutils-noprefix
           fzf
           fd
           ripgrep
           tmux
-          htop
-          btop
-          curl
+          htop                        
+          curl                        
           wget
-          parallel
-          rlwrap
-          rename
-          entr
+          rename                      # TALVEZ: nicho
           stow
           yq-go
           just
           tealdeer
           yazi
-          nnn
-          micro
-          skim
-          sc-im
-          nushell
+          micro                       # REMOVER: tens neovim
           zsh-syntax-highlighting
           lazygit
           gh
           gnupg
           pinentry_mac
-          qrencode
-          pandoc
-          typst
-          imagemagick
-          newsraft
-          yewtube
+          pandoc                      # TALVEZ: só se usares
+          typst                       # TALVEZ: só se usares
+          newsraft                    # TALVEZ: só se leres RSS
 
-          # Rede e operações
           nmap
           ipcalc
-          tcptraceroute
           wireguard-tools
-          httpie
-          hey
-          ansible
-          opentofu
-          awscli2
-          kind
-          ctop
-          reg
+          httpie                      # REMOVER: curl chega
+          opentofu                    # TALVEZ: só se usas
+          awscli2                     # TALVEZ: só se usas AWS
 
-          # Desenvolvimento
           go
-          zig
           rustup
           uv
-          pnpm
-          ruff
           gnumake
-          cmake
-          meson
-          xmake
-          nasm
-          re2c
-          bison
-          automake
-          autoconf-archive
-          ccache
-          clang-tools
           tree-sitter
-          luarocks
-          lua5_4
-          ghc
-          gradle
-          maven
-          jdk21
-          esptool
-          raylib
-          mongosh
-          codeberg-cli
-          harper
-          fish-lsp
+          harper                      # TALVEZ: só se usas no nvim
         ];
 
         homebrew = {
@@ -112,77 +66,50 @@
           };
 
           taps = [
-            "d12frosted/emacs-plus"
             "derailed/k9s"
-            "docker/tap"
-            "hashicorp/tap"
-            "homebrew-zathura/zathura"
-            "jesseduffield/lazydocker"
             {
               name = "m0tay/miranda";
               clone_target = "git@github.com:m0tay/homebrew-miranda.git";
             }
             "nikitabobko/tap"
-            "oven-sh/bun"
-            "spring-io/tap"
             "y3owk1n/tap"
           ];
 
           brews = [
-            "uutils-coreutils"
             "uutils-findutils"
             "uutils-diffutils"
             "ollama"
-            "postgresql@18"
+            "postgresql@18"           # TALVEZ: o teu trabalho é SQL Server
             "mpv"
             "iproute2mac"
-            "bbrew"
-            "herdr"
           ];
 
           casks = [
             "aerospace"
             "anki"
-            "antigravity-cli"
-            "balenaetcher"
-            "bettercapture"
-            "brave-browser"
-            "bruno"
-            "dash@6"
+            "bruno"                   # TALVEZ: só se usas
             "discord"
             "dotnet-sdk"
-            "firefox"
             "ghostty"
-            "handy"
-            "helium-browser"
-            "intellij-idea"
-            "jetbrains-toolbox"
-            "kiwix"
+            "handy"                   # TALVEZ: testado e esquecido?
+            "helium-browser"          # TALVEZ: um browser chega
+            "jetbrains-toolbox"       # TALVEZ: duplica intellij-idea
+            "kiwix"                   # TALVEZ: uso raro
             "localsend"
-            "mongodb-compass"
+            "mongodb-compass"         # TALVEZ: o teu trabalho é SQL Server
             "neovide-app"
-            "neru"
-            "notunes"
+            "neru"                    # TALVEZ: testado e esquecido?
+            "notunes"                 # TALVEZ: uso raro
             "obsidian"
             "orbstack"
-            "pgadmin4"
+            "pgadmin4"                # TALVEZ: só se usas Postgres
             "sioyek"
-            "transmission"
-            "visual-studio-code"
-            "vlc"
-            "vscodium"
+            "transmission"            # TALVEZ: uso raro
+            "vlc"                     # TALVEZ: tens mpv
             "whatsapp"
-            "zotero"
 
-            # Fontes
             "font-0xproto-nerd-font"
-            "font-annotationmono-nerd-font"
-            "font-libertinus-math"
-            "font-linux-libertine"
-            "font-new-computer-modern"
-            "font-ubuntu"
-            "font-vollkorn"
-            "font-vollkorn-sc"
+            "font-annotationmono-nerd-font" # TALVEZ: uma Nerd Font chega
           ];
         };
 
