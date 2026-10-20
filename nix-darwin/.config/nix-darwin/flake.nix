@@ -25,35 +25,35 @@
           htop                        
           curl                        
           wget
-          rename                      # TALVEZ: nicho
+          rename                      
           stow
           yq-go
           just
           tealdeer
           yazi
-          micro                       # REMOVER: tens neovim
+          micro                       
           zsh-syntax-highlighting
           lazygit
           gh
           gnupg
           pinentry_mac
-          pandoc                      # TALVEZ: só se usares
-          typst                       # TALVEZ: só se usares
-          newsraft                    # TALVEZ: só se leres RSS
+          pandoc                      
+          typst                       
+          newsraft                    
 
           nmap
           ipcalc
           wireguard-tools
-          httpie                      # REMOVER: curl chega
-          opentofu                    # TALVEZ: só se usas
-          awscli2                     # TALVEZ: só se usas AWS
+          httpie                      
+          opentofu                    
+          awscli2                     
 
           go
           rustup
           uv
           gnumake
           tree-sitter
-          harper                      # TALVEZ: só se usas no nvim
+          harper                      
         ];
 
         homebrew = {
@@ -62,7 +62,7 @@
           onActivation = {
             autoUpdate = false;
             upgrade = false;
-            cleanup = "none";
+            cleanup = "uninstall";
           };
 
           taps = [
@@ -79,7 +79,6 @@
             "uutils-findutils"
             "uutils-diffutils"
             "ollama"
-            "postgresql@18"           # TALVEZ: o teu trabalho é SQL Server
             "mpv"
             "iproute2mac"
           ];
@@ -87,25 +86,24 @@
           casks = [
             "aerospace"
             "anki"
-            "bruno"                   # TALVEZ: só se usas
+            "bruno"                   
             "discord"
             "dotnet-sdk"
             "ghostty"
-            "handy"                   # TALVEZ: testado e esquecido?
-            "helium-browser"          # TALVEZ: um browser chega
-            "jetbrains-toolbox"       # TALVEZ: duplica intellij-idea
-            "kiwix"                   # TALVEZ: uso raro
+            "handy"                   
+            "helium-browser"          
+            "jetbrains-toolbox"       
+            "kiwix"                   
             "localsend"
-            "mongodb-compass"         # TALVEZ: o teu trabalho é SQL Server
+            "mongodb-compass"         
             "neovide-app"
-            "neru"                    # TALVEZ: testado e esquecido?
-            "notunes"                 # TALVEZ: uso raro
+            "neru"                    
+            "notunes"                 
             "obsidian"
             "orbstack"
-            "pgadmin4"                # TALVEZ: só se usas Postgres
-            "sioyek"
-            "transmission"            # TALVEZ: uso raro
-            "vlc"                     # TALVEZ: tens mpv
+            "pgadmin4"                
+            "transmission"            
+            "vlc"                     
             "whatsapp"
 
             "font-0xproto-nerd-font"
