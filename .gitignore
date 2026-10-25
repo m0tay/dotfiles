@@ -40,3 +40,4 @@ m0tay2/
 # Pages worktree
 pages/
 /bash/.bash_history
+.kube/
