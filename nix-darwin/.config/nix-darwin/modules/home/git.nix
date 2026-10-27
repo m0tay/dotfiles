@@ -7,6 +7,10 @@
       signByDefault = true;
     };
 
+    ignores = [
+      "**/.claude/settings.local.json"
+    ];
+
     settings = {
       user = {
         name = "Douglas Lobo";
