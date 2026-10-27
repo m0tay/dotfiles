@@ -1,0 +1,52 @@
+{...}: {
+  programs.tmux = {
+    enable = true;
+    mouse = true;
+    baseIndex = 1;
+    keyMode = "vi";
+
+    extraConfig = ''
+      set -a terminal-features "tmux-256color:RGB"
+      set -g renumber-windows on
+      set -g pane-base-index 1
+      set -g status-position top
+      set -g status-justify absolute-centre
+      set -g status-style 'fg=color8 bg=default'
+      set -g status-left '#S'
+      set -g status-left-style 'fg=color8'
+      set -g status-left-length 100
+      set -g status-right ""
+      set -g status-right-length 0
+      setw -g window-status-style 'fg=color8'
+      setw -g window-status-current-style 'fg=colour6 bg=default bold'
+      setw -g window-status-current-format '#I:#W '
+      setw -g window-status-format '#I:#W '
+
+      bind '"' split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+      bind r source-file "~/.config/tmux/tmux.conf"
+      bind b set -g status
+      bind f display-popup -E ~/.config/scripts/tmux-session-dispensary.sh
+
+      # Pane movement with vim keys
+      unbind h; unbind j; unbind k; unbind l
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      bind J display-popup -E 'tmux list-sessions -F "#S" | grep -vF "$(tmux display-message -p "#S")" | fzf | xargs tmux switch-client -t'
+      bind g popup -E -w 70% -h 90% -d "#{pane_current_path}" -T lazygit lazygit
+      bind S command-prompt -p "new session:" "new-session -A -s '%%'"
+      bind-key -T prefix o select-pane -t :.+
+
+      bind-key -T copy-mode-vi v send -X begin-selection
+      bind-key -T copy-mode-vi 'C-v' send -X begin-selection \; send -X rectangle-toggle
+      bind-key -T copy-mode-vi Escape send -X cancel
+      bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+
+      set -g extended-keys on
+      set -g extended-keys-format csi-u
+    '';
+  };
+}

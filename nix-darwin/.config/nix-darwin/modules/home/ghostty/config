@@ -1,0 +1,34 @@
+custom-shader = ~/.config/ghostty/shaders/cursor_tail.glsl
+
+theme = Vague
+
+font-family = 0xProto Nerd Font
+font-size = 20
+font-thicken = true
+
+cursor-style = bar
+cursor-style-blink = false
+
+window-padding-x = 12
+window-padding-y = 8
+window-colorspace = display-p3
+# background-opacity = 0.95
+background-blur = 20
+window-save-state = always
+scrollbar = never
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+confirm-close-surface = false
+
+macos-icon = retro
+macos-titlebar-style = transparent
+macos-option-as-alt = true
+
+clipboard-read = allow
+clipboard-write = allow
+link-url = true
+shell-integration = zsh
+shell-integration-features = sudo,ssh-env,ssh-terminfo
+
+keybind = cmd+y=scroll_page_lines:-1
+keybind = cmd+e=scroll_page_lines:1

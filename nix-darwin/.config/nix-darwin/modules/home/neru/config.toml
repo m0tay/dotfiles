@@ -1,0 +1,28 @@
+[hotkeys]  
+"Ctrl+Shift+N" = "hints"  
+"Ctrl+Shift+E" = "grid"
+"Ctrl+Shift+I" = "recursive_grid"
+"Ctrl+Shift+O" = "scroll"
+
+[hints.hotkeys]
+"Shift+N" = ["action left_click", "idle"] 
+"Shift+E" = ["action right_click", "idle"] 
+"Ctrl+[" = "idle"
+
+[grid.hotkeys]
+"Shift+N" = ["action left_click", "idle"] 
+"Shift+E" = ["action right_click", "idle"] 
+"Ctrl+[" = "idle"
+
+[recursive_grid.hotkeys]
+"Shift+N" = ["action left_click", "idle"] 
+"Shift+E" = ["action right_click", "idle"] 
+"Ctrl+[" = "idle"
+
+[scroll.hotkeys]
+"Shift+N" = ["action left_click", "idle"] 
+"Shift+E" = ["action right_click", "idle"] 
+"Ctrl+[" = "idle"
+
+[general]  
+passthrough_unbounded_keys = true  # Let Cmd/Ctrl/Alt shortcuts reach macOS
