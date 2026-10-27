@@ -4,7 +4,6 @@
     bat
     fastfetch
     direnv
-    neovim
 
     uutils-coreutils-noprefix
     fzf

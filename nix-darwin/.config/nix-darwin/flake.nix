@@ -7,16 +7,19 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.url = "github:nix-community/nixvim/nixos-26.05";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
     self,
     nix-darwin,
     home-manager,
+    nixvim,
     ...
   }: {
     darwinConfigurations."Douglass-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      specialArgs = {inherit self;};
+      specialArgs = {inherit self nixvim;};
       modules = [
         ./modules/system.nix
         ./modules/packages.nix
