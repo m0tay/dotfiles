@@ -51,7 +51,6 @@
       ff = "fastfetch";
       neovide = "open -a Neovide";
       ndev = "nix develop -c $SHELL";
-      nrs = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
     };
 
     initContent = ''
