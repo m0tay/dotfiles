@@ -8,36 +8,6 @@
         options.silent = true;
       }
       {
-        mode = "n";
-        key = "<leader>w";
-        action = ":write<CR>";
-        options.silent = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>q";
-        action = ":quit<CR>";
-        options.silent = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>Q";
-        action = ":qa<CR>";
-        options.silent = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>O";
-        action = ":Open .<CR>";
-        options.silent = true;
-      }
-      {
-        mode = "n";
-        key = "<leader>m";
-        action = ":update<CR> :make<CR>";
-        options.silent = true;
-      }
-      {
         mode = [
           "n"
           "v"
@@ -60,14 +30,6 @@
         ];
         key = "<leader>P";
         action = "\"+P";
-      }
-      {
-        mode = [
-          "n"
-          "v"
-        ];
-        key = "<leader>o";
-        action = ":update<CR> :source<CR>";
       }
       {
         mode = "n";
@@ -119,35 +81,43 @@
       {
         mode = "n";
         key = "<leader>tv";
-        action.__raw = ''
-          function()
-            vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
-          end
-        '';
+        action = "<cmd>lua vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })<CR>";
         options.desc = "toggle diagnostic virtual text";
       }
       {
         mode = "n";
         key = "<leader>cfg";
-        action.__raw = ''
-          function()
-            vim.cmd(":e ~/.dotfiles/nix/.config/nix-darwin/modules/home/nvim/options.nix")
-          end
-        '';
+        action = ":e ~/.dotfiles/nix/.config/nix-darwin/modules/home/nvim/options.nix<CR>";
         options.desc = "edit nixvim config";
       }
+      # Neovide / macOS clipboard
+      {
+        mode = "v";
+        key = "<D-c>";
+        action = "\"+y";
+        options.silent = true;
+      }
+      {
+        mode = [
+          "n"
+          "v"
+        ];
+        key = "<D-v>";
+        action = "\"+P";
+        options.silent = true;
+      }
+      {
+        mode = "i";
+        key = "<D-v>";
+        action = "<C-r><C-p>+";
+        options.silent = true;
+      }
+      {
+        mode = "c";
+        key = "<D-v>";
+        action = "<C-r>+";
+        options.silent = true;
+      }
     ];
-
-    extraConfigLua = ''
-      if vim.g.neovide then
-        vim.opt.clipboard = "unnamedplus"
-        vim.g.neovide_input_use_logo = 1
-        vim.keymap.set('v', '<D-c>', '"+y', { noremap = true, silent = true })
-        vim.keymap.set({ 'n', 'v' }, '<D-v>', '"+P', { noremap = true, silent = true })
-        vim.keymap.set('i', '<D-v>', '<C-r><C-p>+', { noremap = true, silent = true })
-        vim.keymap.set('c', '<D-v>', '<C-r>+', { noremap = true, silent = true })
-        vim.keymap.set('t', '<D-v>', '<C-\\><C-n>"+pi', { noremap = true, silent = true })
-      end
-    '';
   };
 }

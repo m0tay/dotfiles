@@ -50,17 +50,9 @@
         };
       };
 
-      neogit = {
-        enable = true;
-      };
-
-      diffview = {
-        enable = true;
-      };
-
-      lazydev = {
-        enable = true;
-      };
+      neogit.enable = true;
+      diffview.enable = true;
+      lazydev.enable = true;
 
       cmp-nvim-lsp.enable = true;
       cmp-buffer.enable = true;
@@ -81,12 +73,13 @@
             {name = "path";}
           ];
           mapping = {
-            "<C-n>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end, { 'i', 's' })";
-            "<C-p>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end, { 'i', 's' })";
+            "<C-n>" = "cmp.mapping.select_next_item()";
+            "<C-p>" = "cmp.mapping.select_prev_item()";
             "<C-b>" = "cmp.mapping.scroll_docs(-4)";
             "<C-f>" = "cmp.mapping.scroll_docs(4)";
-            "<Tab>" = "cmp.mapping(function(fallback) if vim.snippet.active({ direction = 1 }) then vim.snippet.jump(1) else fallback() end end, { 'i', 's' })";
-            "<S-Tab>" = "cmp.mapping(function(fallback) if vim.snippet.active({ direction = -1 }) then vim.snippet.jump(-1) else fallback() end end, { 'i', 's' })";
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.abort()";
+            "<CR>" = "cmp.mapping.confirm({ select = false })";
           };
         };
       };
@@ -112,6 +105,7 @@
               };
             };
           };
+
           gopls.enable = true;
           rust_analyzer = {
             enable = true;
@@ -137,44 +131,7 @@
         };
       };
 
-      typst-preview = {
-        enable = true;
-      };
-
-      roslyn = {
-        enable = true;
-      };
-
-      easy-dotnet = {
-        enable = true;
-      };
-
-      java = {
-        enable = true;
-        settings = {
-          java_test.enable = false;
-          java_debug_adapter.enable = false;
-        };
-      };
-
-      spring-boot = {
-        enable = true;
-      };
+      typst-preview.enable = true;
     };
-
-    extraConfigLua = ''
-      -- CMP manual trigger keymap
-      vim.keymap.set('i', '<C-x><C-o>', function()
-        require('cmp').complete()
-      end, { noremap = true, silent = true })
-
-      -- Filetypes for C# razor/cshtml
-      vim.filetype.add({
-        extension = {
-          razor = "razor",
-          cshtml = "razor",
-        },
-      })
-    '';
   };
 }
