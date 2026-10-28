@@ -56,54 +56,45 @@
 
     initContent = ''
       [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-
-      # Completions styling
-      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-      zstyle ':completion:*' menu select
-      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-      zstyle ':completion:*' use-cache yes
-      local zsh_cache="''${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
-      mkdir -p "$zsh_cache"
-      zstyle ':completion:*' cache-path "$zsh_cache/zcompcache"
-      zstyle ':completion:*:options' description yes
-      zstyle ':completion:*:options' auto-description '%d'
-      zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
-      zstyle ':completion:*:messages'    format ' %F{purple}-- %d --%f'
-      zstyle ':completion:*:warnings'    format ' %F{red}-- no matches found --%f'
-
-      _cache_comp() {
-        (( $+commands[$1] )) || return 0
-        local f="$zsh_cache/comp-$1.zsh"
-        [[ -s $f ]] || "$@" >| "$f" 2>/dev/null
-        [[ -r $f ]] && source "$f"
-      }
-      _cache_comp ng completion script
-
-      # Custom prompt
-      _prompt_precmd() {
-        local exit_status=$?
-        local glyph="%F{magenta}"; (( exit_status )) && glyph="%F{red}"
-        local branch git_part=""
-        branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-        [[ -n $branch ]] && git_part=" %F{cyan}on%f %B''${branch}%b"
-        [[ -n $IN_NIX_SHELL ]] && git_part+=" %F{yellow}(nix)%f"
-        PROMPT="%F{cyan}[%f%1~%F{cyan}]%f''${git_part} ''${glyph}β%f "
-        printf '\e]7;file://%s%s\e\\' "$HOST" "$PWD"
-      }
-      autoload -Uz add-zsh-hook
-      add-zsh-hook precmd _prompt_precmd
-
-      # Utilities
-      manh() { run-help "$1" 2>/dev/null | bat -l man -p; }
-
-      if [[ -n $NVIM ]]; then
-        nvim() {
-          if (( $# == 0 )); then open -a Neovide
-          else command nvim --server "$NVIM" --remote "$@"; fi
-        }
-      fi
-
       [[ -r ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
     '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      add_newline = false;
+      format = "$directory$git_branch$nix_shell$sudo$character";
+
+      directory = {
+        format = "[$path]($style) ";
+        style = "cyan";
+        truncation_length = 1;
+        truncate_to_repo = false;
+      };
+
+      git_branch = {
+        format = "on [$branch]($style) ";
+        style = "bold cyan";
+      };
+
+      nix_shell = {
+        format = "[(nix)]($style) ";
+        style = "bold yellow";
+      };
+
+      character = {
+        success_symbol = "[λ](bold magenta) ";
+        error_symbol = "[λ](bold red) ";
+      };
+
+      sudo = {
+        disabled = false;
+        symbol = "# ";
+        style = "bold red";
+        format = "[$symbol]($style)";
+      };
+    };
   };
 }
