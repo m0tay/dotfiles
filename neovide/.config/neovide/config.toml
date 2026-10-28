@@ -1,6 +1,0 @@
-neovim-bin = "/opt/homebrew/bin/nvim"
-frame = "transparent"
-
-[font]
-normal = ["0xProto Nerd Font"]
-size = 20
