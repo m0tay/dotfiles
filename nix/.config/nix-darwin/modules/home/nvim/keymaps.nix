@@ -131,7 +131,7 @@
         key = "<leader>cfg";
         action.__raw = ''
           function()
-            vim.cmd(":e ~/.dotfiles/nix-darwin/.config/nix-darwin/modules/home/nvim/options.nix")
+            vim.cmd(":e ~/.dotfiles/nix/.config/nix-darwin/modules/home/nvim/options.nix")
           end
         '';
         options.desc = "edit nixvim config";
