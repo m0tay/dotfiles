@@ -47,6 +47,7 @@
       "whatsapp"
       "racket"
       "modrinth"
+      "macusb"
 
       "font-0xproto-nerd-font"
       "font-annotationmono-nerd-font" # TALVEZ: uma Nerd Font chega

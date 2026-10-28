@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, config, ...}: {
   programs.nixvim = {
     colorschemes.vague = {
       enable = true;
@@ -43,6 +43,7 @@
 
       treesitter = {
         enable = true;
+        grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
         settings = {
           highlight.enable = true;
           indent.enable = true;
@@ -93,7 +94,22 @@
       lsp = {
         enable = true;
         servers = {
-          nixd.enable = true;
+          nixd = {
+            enable = true;
+            settings = {
+              nixpkgs = {
+                expr = "import (builtins.getFlake \"${config.home.homeDirectory}/.config/nix-darwin\").inputs.nixpkgs { }";
+              };
+              options = {
+                darwin = {
+                  expr = ''(builtins.getFlake "${config.home.homeDirectory}/.config/nix-darwin").darwinConfigurations."Douglass-MacBook-Pro".options'';
+                };
+                home_manager = {
+                  expr = ''(builtins.getFlake "${config.home.homeDirectory}/.config/nix-darwin").darwinConfigurations."Douglass-MacBook-Pro".options.home-manager.users.value.douglaslobo'';
+                };
+              };
+            };
+          };
           gopls.enable = true;
           rust_analyzer = {
             enable = true;
@@ -101,6 +117,21 @@
             installRustc = false;
           };
           tinymist.enable = true;
+          pyright.enable = true;
+          ruff.enable = true;
+          lua_ls.enable = true;
+          bashls = {
+            enable = true;
+            filetypes = [
+              "sh"
+              "bash"
+              "zsh"
+            ];
+          };
+          racket_langserver = {
+            enable = true;
+            package = null;
+          };
         };
       };
 
