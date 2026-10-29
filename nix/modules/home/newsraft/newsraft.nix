@@ -1,5 +1,5 @@
 {config, ...}: let
-  dir = "${config.home.homeDirectory}/.dotfiles/nix/.config/nix-darwin/modules/home/newsraft";
+  dir = "${config.home.homeDirectory}/.dotfiles/nix/modules/home/newsraft";
   link = config.lib.file.mkOutOfStoreSymlink;
 in {
   xdg.configFile."newsraft/config".source = link "${dir}/config";

@@ -93,14 +93,14 @@
             enable = true;
             settings = {
               nixpkgs = {
-                expr = "import (builtins.getFlake \"${config.home.homeDirectory}/.config/nix-darwin\").inputs.nixpkgs { }";
+                expr = "import (builtins.getFlake \"${config.home.homeDirectory}/.dotfiles/nix\").inputs.nixpkgs { }";
               };
               options = {
                 darwin = {
-                  expr = ''(builtins.getFlake "${config.home.homeDirectory}/.config/nix-darwin").darwinConfigurations."Douglass-MacBook-Pro".options'';
+                  expr = ''(builtins.getFlake "${config.home.homeDirectory}/.dotfiles/nix").darwinConfigurations."Douglass-MacBook-Pro".options'';
                 };
                 home_manager = {
-                  expr = ''(builtins.getFlake "${config.home.homeDirectory}/.config/nix-darwin").darwinConfigurations."Douglass-MacBook-Pro".options.home-manager.users.value.douglaslobo'';
+                  expr = ''(builtins.getFlake "${config.home.homeDirectory}/.dotfiles/nix").darwinConfigurations."Douglass-MacBook-Pro".options.home-manager.users.value.douglaslobo'';
                 };
               };
             };

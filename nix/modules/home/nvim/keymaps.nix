@@ -87,7 +87,7 @@
       {
         mode = "n";
         key = "<leader>cfg";
-        action = ":e ~/.dotfiles/nix/.config/nix-darwin/modules/home/nvim/options.nix<CR>";
+        action = ":e ~/.dotfiles/nix/modules/home/nvim/options.nix<CR>";
         options.desc = "edit nixvim config";
       }
       # Neovide / macOS clipboard
