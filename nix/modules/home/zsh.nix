@@ -11,7 +11,6 @@
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
-    "${config.home.homeDirectory}/.config/scripts"
     "${config.home.homeDirectory}/.cargo/bin"
     "${config.home.homeDirectory}/.dotnet/tools"
     "${config.home.homeDirectory}/.lmstudio/bin"
