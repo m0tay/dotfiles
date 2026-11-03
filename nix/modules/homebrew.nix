@@ -50,6 +50,8 @@
       "macusb"
       "vorssaint"
       "caskhub"
+      "codex"
+      "mach-local/validation/mach" # Verified local archive; public release pending GitHub authentication.
 
       "font-0xproto-nerd-font"
       "font-annotationmono-nerd-font" # TALVEZ: uma Nerd Font chega

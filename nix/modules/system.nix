@@ -21,5 +21,4 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   nix.enable = false;
   system.primaryUser = "douglaslobo";
-  environment.pathsToLink = ["/share/zsh-syntax-highlighting"];
 }

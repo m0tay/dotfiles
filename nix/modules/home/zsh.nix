@@ -12,6 +12,7 @@
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
     "${config.home.homeDirectory}/.cargo/bin"
+    "${config.home.homeDirectory}/go/bin"
     "${config.home.homeDirectory}/.dotnet/tools"
     "${config.home.homeDirectory}/.lmstudio/bin"
     "/opt/homebrew/opt/uutils-coreutils/libexec/uubin"
@@ -48,7 +49,6 @@
       vim = "nvim";
       k = "kubectl";
       ff = "fastfetch";
-      neovide = "open -a Neovide";
       ndev = "nix develop -c $SHELL";
     };
 

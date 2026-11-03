@@ -1,4 +1,8 @@
-{pkgs, config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs.nixvim = {
     colorschemes.vague = {
       enable = true;
@@ -87,8 +91,6 @@
       lsp = {
         enable = true;
         servers = {
-          nil_ls.enable = true;
-
           nixd = {
             enable = true;
             settings = {

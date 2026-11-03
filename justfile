@@ -11,3 +11,7 @@ update:
 
 gc:
     nix-collect-garbage -d
+
+fmt:
+    alejandra ~/.dotfiles/nix
+

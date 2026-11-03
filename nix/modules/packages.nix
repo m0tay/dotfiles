@@ -20,8 +20,6 @@
     tealdeer
     yazi
     micro
-    zsh-syntax-highlighting
-    lazygit
     gh
     gnupg
     pinentry_mac
@@ -44,6 +42,5 @@
     gnumake
     tree-sitter
     harper
-    neovide
   ];
 }
