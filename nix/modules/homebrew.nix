@@ -31,7 +31,6 @@
       "bruno"
       "discord"
       "dotnet-sdk"
-      "ghostty"
       "handy"
       "helium-browser"
       "jetbrains-toolbox"
@@ -51,6 +50,7 @@
       "vorssaint"
       "caskhub"
       "codex"
+      "snapzy"
       "mach-local/validation/mach" # Verified local archive; public release pending GitHub authentication.
 
       "font-0xproto-nerd-font"
