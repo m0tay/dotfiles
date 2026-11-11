@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  neovim-nightly-overlay,
+  ...
+}: {
+  nixpkgs.overlays = [neovim-nightly-overlay.overlays.default];
+
   environment.systemPackages = with pkgs; [
     kubectl
     bat

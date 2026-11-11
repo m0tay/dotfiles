@@ -9,6 +9,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim/nixos-26.05";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = {
@@ -16,10 +17,11 @@
     nix-darwin,
     home-manager,
     nixvim,
+    neovim-nightly-overlay,
     ...
   }: {
     darwinConfigurations."Douglass-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      specialArgs = {inherit self nixvim;};
+      specialArgs = {inherit self nixvim neovim-nightly-overlay;};
       modules = [
         ./modules/system.nix
         ./modules/packages.nix
