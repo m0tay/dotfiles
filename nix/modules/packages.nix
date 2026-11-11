@@ -4,6 +4,7 @@
     bat
     fastfetch
     direnv
+    nh
 
     uutils-coreutils-noprefix
     fzf
